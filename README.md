@@ -15,9 +15,6 @@ Demonstration of my PHP / React abilities for Skiddle
 - [Inertia.js](https://inertiajs.com/)
   *Inertia.js is a wonderful way to integrate a modern React user interface with the complete backend power of the Laravel framework. I recommend it for any new Laravel projects. I have also built plenty of API-driven projects.*
 
-- [MUI Material UI](https://mui.com/material-ui/getting-started/)
-  *I would usually use [Blueprint.js](https://blueprintjs.com) for my personal projects and other homemade components for professional projects. But Material UI components seem a little more playful for this project.*
-
 ### Want to continue the conversation?
 
 Have some questions? Can I join the team?
