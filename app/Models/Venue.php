@@ -46,4 +46,20 @@ class Venue extends Model
     protected $casts = [
         'is_active' => 'boolean',
     ];
+
+    /**
+     * Get all of the events for the venue.
+     */
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
+
+    /**
+     * Get all of the artists for the venue.
+     */
+    public function artists()
+    {
+        return $this->hasMany(Artist::class);
+    }
 }

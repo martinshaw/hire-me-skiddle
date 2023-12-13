@@ -10,6 +10,7 @@ Description: description
 */
 import { ReactNode, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
+import { rootLayoutHeaderHeight } from "../components/RootLayoutHeader";
 
 const viewportContainerDimensionVariantTerms = [
     "desktop",
@@ -26,21 +27,20 @@ const viewportContainerDimensionsTermCookieName =
     "viewportContainerDimensions" as const;
 
 const useViewportContainer = () => {
-    const headerHeight = 40 + 2;
     const viewportContainerDimensionVariants: {
         [viewportTerm in ViewportContainerDimensionVariantTerm]: ViewportContainerDimensionType;
     } = {
         desktop: {
             width: window.innerWidth,
-            height: window.innerHeight - headerHeight,
+            height: window.innerHeight - rootLayoutHeaderHeight,
         },
         tablet: {
-            width: (window.innerHeight - headerHeight - 50) * 0.75,
-            height: window.innerHeight - headerHeight - 50,
+            width: (window.innerHeight - rootLayoutHeaderHeight - 50) * 0.75,
+            height: window.innerHeight - rootLayoutHeaderHeight - 50,
         },
         mobile: {
-            width: (window.innerHeight - headerHeight - 200) * 0.5,
-            height: window.innerHeight - headerHeight - 200,
+            width: (window.innerHeight - rootLayoutHeaderHeight - 200) * 0.5,
+            height: window.innerHeight - rootLayoutHeaderHeight - 200,
         },
     };
 
@@ -72,7 +72,7 @@ const useViewportContainer = () => {
     let additionalViewportContainerClassNames = "";
     if (viewportContainerDimensionsTerm === "mobile")
         additionalViewportContainerClassNames =
-            "border-2 border-gray-500 rounded";
+            "border-2 border-gray-500 rounded-lg";
     else if (viewportContainerDimensionsTerm === "tablet")
         additionalViewportContainerClassNames =
             "border-2 border-gray-500 rounded-2xl";

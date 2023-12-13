@@ -4,14 +4,14 @@ import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
-import { User } from "@/types";
+import { UserModelType } from "@/types";
 import RootLayout from "./RootLayout";
 
 const AuthenticatedLayout = ({
     user,
     header,
     children,
-}: PropsWithChildren<{ user: User; header?: ReactNode }>) => {
+}: PropsWithChildren<{ user: UserModelType; header?: ReactNode }>) => {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
@@ -28,10 +28,36 @@ const AuthenticatedLayout = ({
 
                                 <div className="hidden space-x-8 @sm:-my-px @sm:ms-10 @sm:flex">
                                     <NavLink
-                                        href={route("dashboard")}
-                                        active={route().current("dashboard")}
+                                        href={route(
+                                            "venue-management-app.events.show",
+                                            ["EVENTID"]
+                                        )}
+                                        active={route().current(
+                                            "venue-management-app.events.show",
+                                            ["EVENTID"]
+                                        )}
                                     >
-                                        Dashboard
+                                        Ongoing Event
+                                    </NavLink>
+                                    <NavLink
+                                        href={route(
+                                            "venue-management-app.events.index"
+                                        )}
+                                        active={route().current(
+                                            "venue-management-app.events.index"
+                                        )}
+                                    >
+                                        Events
+                                    </NavLink>
+                                    <NavLink
+                                        href={route(
+                                            "venue-management-app.artists.index"
+                                        )}
+                                        active={route().current(
+                                            "venue-management-app.artists.index"
+                                        )}
+                                    >
+                                        Artists
                                     </NavLink>
                                 </div>
                             </div>
@@ -64,11 +90,11 @@ const AuthenticatedLayout = ({
                                         </Dropdown.Trigger>
 
                                         <Dropdown.Content>
-                                            <Dropdown.Link
+                                            {/* <Dropdown.Link
                                                 href={route("profile.edit")}
                                             >
                                                 Profile
-                                            </Dropdown.Link>
+                                            </Dropdown.Link> */}
                                             <Dropdown.Link
                                                 href={route("logout")}
                                                 method="post"
@@ -132,10 +158,32 @@ const AuthenticatedLayout = ({
                     >
                         <div className="pt-2 pb-3 space-y-1">
                             <ResponsiveNavLink
-                                href={route("dashboard")}
-                                active={route().current("dashboard")}
+                                href={route(
+                                    "venue-management-app.events.show",
+                                    ['EVENTID']
+                                )}
+                                active={route().current(
+                                    "venue-management-app.events.show",
+                                    ['EVENTID']
+                                )}
                             >
-                                Dashboard
+                                Ongoing Event
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                href={route("venue-management-app.events.index")}
+                                active={route().current(
+                                    "venue-management-app.events.index"
+                                )}
+                            >
+                                Events
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                href={route("venue-management-app.artists.index")}
+                                active={route().current(
+                                    "venue-management-app.artists.index"
+                                )}
+                            >
+                                Artists
                             </ResponsiveNavLink>
                         </div>
 
@@ -144,15 +192,17 @@ const AuthenticatedLayout = ({
                                 <div className="font-medium text-base text-gray-800">
                                     {user.name}
                                 </div>
-                                <div className="font-medium text-sm text-gray-500">
-                                    {user.email}
-                                </div>
+                                {user.venue && (
+                                    <div className="font-medium text-sm text-gray-500">
+                                        {user.venue.name}
+                                    </div>
+                                )}
                             </div>
 
                             <div className="mt-3 space-y-1">
-                                <ResponsiveNavLink href={route("profile.edit")}>
+                                {/* <ResponsiveNavLink href={route("profile.edit")}>
                                     Profile
-                                </ResponsiveNavLink>
+                                </ResponsiveNavLink> */}
                                 <ResponsiveNavLink
                                     method="post"
                                     href={route("logout")}

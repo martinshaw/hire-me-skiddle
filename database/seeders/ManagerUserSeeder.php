@@ -15,8 +15,9 @@ class ManagerUserSeeder extends Seeder
      */
     public function run(): void
     {
-        $venue = DB::table('venues')->first();
-        $emailServer = Str::slug($venue->name, '.') . '.' . Str::lower($venue->country);
+        $venue = DB::table('venues')->inRandomOrder()->first();
+
+        $emailServer = Str::slug($venue->name, '-') . '.co.uk';
 
         $firstName = fake()->firstName();
         $lastName = fake()->lastName();
@@ -28,6 +29,7 @@ class ManagerUserSeeder extends Seeder
             'email' => $email,
             'password' => Hash::make('password'),
             'role' => User::ROLE_MANAGER,
+            'venue_id' => $venue->id,
         ]);
     }
 }

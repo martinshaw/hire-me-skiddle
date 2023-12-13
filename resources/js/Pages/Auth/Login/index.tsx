@@ -1,4 +1,11 @@
-import { useEffect, FormEventHandler, ReactNode, createRef, FormEvent, useCallback } from "react";
+import {
+    useEffect,
+    FormEventHandler,
+    ReactNode,
+    createRef,
+    FormEvent,
+    useCallback,
+} from "react";
 import Checkbox from "@/Components/Checkbox";
 import GuestLayout from "@/Layouts/GuestLayout";
 import InputError from "@/Components/InputError";
@@ -7,7 +14,6 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Head, Link, useForm } from "@inertiajs/react";
 import SecondaryButton from "@/Components/SecondaryButton";
-import useSimulateFormInput from "./hooks/useSimulateFormInput";
 
 type LoginPropsType = {
     status?: string;
@@ -29,9 +35,9 @@ export type LoginFormDataType = {
 const Login = (props: LoginPropsType) => {
     const { data, setData, post, processing, errors, reset } =
         useForm<LoginFormDataType>({
-            email: "",
-            password: "",
-            remember: false,
+            email: props.simulateFormInput?.email || "",
+            password: props.simulateFormInput?.password || "",
+            remember: true,
             to: props.to || "",
         });
 
@@ -41,29 +47,11 @@ const Login = (props: LoginPropsType) => {
         };
     }, []);
 
-    const submit = useCallback((event: FormEvent | null = null) => {
+    const submit = (event: FormEvent | null = null) => {
         if (event != null) event.preventDefault();
 
-        console.log('submitting data ', data.email, data.password)
-
         post(route("login"));
-    }, [data]);
-
-    console.log('main comonponent data ', data.email, data.password)
-
-    useSimulateFormInput({
-        data,
-        setData,
-        simulateFormInput: props.simulateFormInput,
-        submit: () => {
-            console.log('then', data.email, data.password);
-
-            setTimeout(() => {
-                console.log('then again', data.email, data.password)
-                post(route("login"));
-            }, 1000);
-        },
-    });
+    };
 
     return (
         <>

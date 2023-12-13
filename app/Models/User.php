@@ -31,6 +31,14 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'venue_id',
+    ];
+
+    /**
+     * Relationships eager loaded by default.
+     */
+    protected $with = [
+        'venue',
     ];
 
     /**
@@ -83,5 +91,13 @@ class User extends Authenticatable
     public function scopeSafetyOfficers(Builder $query): void
     {
         $query->where('role', self::ROLE_SAFETY_OFFICER);
+    }
+
+    /**
+     * Get User's Venue.
+     */
+    public function venue()
+    {
+        return $this->belongsTo(Venue::class);
     }
 }

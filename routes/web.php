@@ -1,8 +1,7 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialMediaVideoMakerAppController;
-use App\Http\Controllers\VenueManagementAppAppController;
+use App\Http\Controllers\VenueManagementAppController;
 use App\Http\Controllers\WhyHireMeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -24,7 +23,12 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/apps/venue-management-app', [VenueManagementAppAppController::class, 'index'])->name('venue-management-app.index');
+    Route::get('/apps/venue-management-app', [VenueManagementAppController::class, 'index'])->name('venue-management-app.index');
+    Route::get('/apps/venue-management-app/events', [VenueManagementAppController::class, 'eventIndex'])->name('venue-management-app.events.index');
+    Route::get('/apps/venue-management-app/events/{event}', [VenueManagementAppController::class, 'eventShow'])->name('venue-management-app.events.show');
+    Route::get('/apps/venue-management-app/artists', [VenueManagementAppController::class, 'artistIndex'])->name('venue-management-app.artists.index');
+    Route::get('/apps/venue-management-app/artists/{artist}', [VenueManagementAppController::class, 'artistShow'])->name('venue-management-app.artists.show');
+    Route::get('/apps/venue-management-app/venue-details', [VenueManagementAppController::class, 'venueDetails'])->name('venue-management-app.venue-details');
 });
 
 Route::get('/apps/social-media-video-maker', [SocialMediaVideoMakerAppController::class, 'index'])->name('social-media-video-maker.index');
