@@ -42,8 +42,8 @@ const Breadcrumbs = (props: BreadcrumbsPropsType) => {
                 );
 
                 return (
-                    <>
-                        <Link href={item.href} key={item.name}>
+                    <div className="flex flex-row justify-center items-center gap-4" key={item.name + "_" + index}>
+                        <Link href={item.href}>
                             {item.isActive ? (
                                 <PrimaryButton {...buttonProps}>
                                     {inner}
@@ -66,7 +66,7 @@ const Breadcrumbs = (props: BreadcrumbsPropsType) => {
                                 ""
                             )}
                         </div>
-                    </>
+                    </div>
                 );
             })}
         </div>
