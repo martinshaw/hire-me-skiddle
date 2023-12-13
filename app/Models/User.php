@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -11,6 +13,11 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+    const ROLE_MANAGER = 'manager';
+    const ROLE_EMPLOYEE = 'employee';
+    const ROLE_AUDITOR = 'auditor';
+    const ROLE_SAFETY_OFFICER = 'safety_officer';
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +28,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -42,4 +50,36 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * Scope a query to only include managers.
+     */
+    public function scopeManagers(Builder $query): void
+    {
+        $query->where('role', self::ROLE_MANAGER);
+    }
+
+    /**
+     * Scope a query to only include employees.
+     */
+    public function scopeEmployees(Builder $query): void
+    {
+        $query->where('role', self::ROLE_EMPLOYEE);
+    }
+
+    /**
+     * Scope a query to only include auditors.
+     */
+    public function scopeAuditors(Builder $query): void
+    {
+        $query->where('role', self::ROLE_AUDITOR);
+    }
+
+    /**
+     * Scope a query to only include safety officers.
+     */
+    public function scopeSafetyOfficers(Builder $query): void
+    {
+        $query->where('role', self::ROLE_SAFETY_OFFICER);
+    }
 }

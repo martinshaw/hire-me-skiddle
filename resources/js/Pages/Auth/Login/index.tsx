@@ -1,24 +1,30 @@
-import { useEffect, FormEventHandler, ReactNode } from "react";
+import { useEffect, FormEventHandler, ReactNode, createRef } from "react";
 import Checkbox from "@/Components/Checkbox";
 import GuestLayout from "@/Layouts/GuestLayout";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
-import TextInput from "@/Components/TextInput";
+import TextInput, { TextInputForwardRefType } from "@/Components/TextInput";
 import { Head, Link, useForm } from "@inertiajs/react";
 import SecondaryButton from "@/Components/SecondaryButton";
+import useSimulateFormInput from "./hooks/useSimulateFormInput";
 
-const Login = ({
-    status,
-    canResetPassword,
-}: {
+type LoginPropsType = {
     status?: string;
     canResetPassword: boolean;
-}) => {
+    to: string | null;
+    simulateFormInput?: {
+        email: string;
+        password: string;
+    };
+};
+
+const Login = (props: LoginPropsType) => {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: "",
         password: "",
         remember: false,
+        to: props.to || "",
     });
 
     useEffect(() => {
@@ -33,13 +39,24 @@ const Login = ({
         post(route("login"));
     };
 
+    const emailInputRef = createRef<TextInputForwardRefType>();
+    const passwordInputRef = createRef<TextInputForwardRefType>();
+    const submitButtonRef = createRef<HTMLButtonElement>();
+
+    useSimulateFormInput({
+        emailInputRef,
+        passwordInputRef,
+        submitButtonRef,
+        simulateFormInput: props.simulateFormInput,
+    });
+
     return (
         <>
             <Head title="Log in" />
 
-            {status && (
+            {props.status && (
                 <div className="mb-4 font-medium text-sm text-green-600">
-                    {status}
+                    {props.status}
                 </div>
             )}
 
@@ -48,13 +65,13 @@ const Login = ({
                     <InputLabel htmlFor="email" value="Email" />
 
                     <TextInput
+                        ref={emailInputRef}
                         id="email"
                         type="email"
                         name="email"
                         value={data.email}
                         className="mt-1 block w-full"
                         autoComplete="username"
-                        isFocused={true}
                         onChange={(e) => setData("email", e.target.value)}
                     />
 
@@ -65,6 +82,7 @@ const Login = ({
                     <InputLabel htmlFor="password" value="Password" />
 
                     <TextInput
+                        ref={passwordInputRef}
                         id="password"
                         type="password"
                         name="password"
@@ -93,7 +111,7 @@ const Login = ({
                 </div>
 
                 <div className="flex items-center justify-end mt-4">
-                    {canResetPassword && (
+                    {props.canResetPassword && (
                         <Link
                             href={route("password.request")}
                             className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -104,6 +122,7 @@ const Login = ({
 
                     <Link href={route("welcome")}>
                         <SecondaryButton
+
                             className="ms-4 float-left"
                             disabled={processing}
                         >
@@ -111,7 +130,11 @@ const Login = ({
                         </SecondaryButton>
                     </Link>
 
-                    <PrimaryButton className="ms-4" disabled={processing}>
+                    <PrimaryButton
+                        className="ms-4"
+                        disabled={processing}
+                        ref={submitButtonRef}
+                    >
                         Log in
                     </PrimaryButton>
                 </div>

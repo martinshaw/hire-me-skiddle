@@ -1,6 +1,11 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, InputHTMLAttributes } from 'react';
 
-export default forwardRef(function TextInput(
+export type TextInputForwardRefType = {
+    focus: () => void;
+    self: HTMLInputElement | null;
+};
+
+export default forwardRef<TextInputForwardRefType>(function TextInput(
     { type = 'text', className = '', isFocused = false, ...props }: InputHTMLAttributes<HTMLInputElement> & { isFocused?: boolean },
     ref
 ) {
@@ -8,6 +13,7 @@ export default forwardRef(function TextInput(
 
     useImperativeHandle(ref, () => ({
         focus: () => localRef.current?.focus(),
+        self: localRef.current,
     }));
 
     useEffect(() => {
