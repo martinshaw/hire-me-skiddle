@@ -37,7 +37,7 @@ class AuthenticatedSessionController extends Controller
                 null :
                 [
                     'email' => $managerUser->email,
-                    'password' => $managerUser->password,
+                    'password' => 'password',
                 ]
         ]);
     }
