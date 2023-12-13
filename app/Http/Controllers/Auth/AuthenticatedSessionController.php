@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -17,11 +18,27 @@ class AuthenticatedSessionController extends Controller
     /**
      * Display the login view.
      */
-    public function create(): Response
+    public function create(Request $request): Response
     {
-        return Inertia::render('Auth/Login', [
+        /**
+         * I am passing the details of the seeded 'manager' user to the login view for visual demonstration.
+         *
+         * Of course, I would never do this in a production application.
+         *
+         * In a real application, I might use the wonderful Laravel Permissions package to manage roles and permissions.
+         */
+        $managerUser = User::managers()->first();
+
+        return Inertia::render('Auth/Login/index', [
             'canResetPassword' => Route::has('password.request'),
             'status' => session('status'),
+            'to' => $request->get('to'),
+            'simulateFormInput' => $managerUser == null ?
+                null :
+                [
+                    'email' => $managerUser->email,
+                    'password' => $managerUser->password,
+                ]
         ]);
     }
 
@@ -34,7 +51,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        return redirect()->intended(empty($request->get('to')) ? RouteServiceProvider::HOME : $request->get('to'));
     }
 
     /**

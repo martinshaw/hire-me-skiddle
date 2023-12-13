@@ -9,6 +9,7 @@ Modified: 2023-12-12T13:02:38.722Z
 Description: description
 */
 
+import { Link } from "@inertiajs/react";
 import PrimaryButton from "./PrimaryButton";
 import SecondaryButton from "./SecondaryButton";
 
@@ -21,6 +22,7 @@ export type BreadcrumbItemType = {
 
 type BreadcrumbsPropsType = {
     items: BreadcrumbItemType[];
+    transparentButtons?: boolean;
 };
 
 const Breadcrumbs = (props: BreadcrumbsPropsType) => {
@@ -41,17 +43,28 @@ const Breadcrumbs = (props: BreadcrumbsPropsType) => {
 
                 return (
                     <>
-                        {item.isActive ? (
-                            <PrimaryButton {...buttonProps}>
-                                {inner}
-                            </PrimaryButton>
-                        ) : (
-                            <SecondaryButton {...buttonProps}>
-                                {inner}
-                            </SecondaryButton>
-                        )}
+                        <Link href={item.href} key={item.name}>
+                            {item.isActive ? (
+                                <PrimaryButton {...buttonProps}>
+                                    {inner}
+                                </PrimaryButton>
+                            ) : (
+                                <SecondaryButton
+                                    {...buttonProps}
+                                    transparent={
+                                        props.transparentButtons || false
+                                    }
+                                >
+                                    {inner}
+                                </SecondaryButton>
+                            )}
+                        </Link>
                         <div className="text-stone-500">
-                            {index !== props.items.length - 1 ? <>&rarr;</> : ""}
+                            {index !== props.items.length - 1 ? (
+                                <>&rarr;</>
+                            ) : (
+                                ""
+                            )}
                         </div>
                     </>
                 );

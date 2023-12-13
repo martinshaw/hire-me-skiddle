@@ -43,13 +43,13 @@ const RootLayoutHeaderRight = (props: RootLayoutHeaderRightPropsType) => {
     return (
         <div className="flex flex-row gap-2 justify-center items-center">
             {props.viewportContainerDimensionsTerm === "mobile" && <PrimaryButton onClick={() => props.setViewportContainerDimensionsTerm("mobile")}>{mobileButtonText}</PrimaryButton>}
-            {props.viewportContainerDimensionsTerm !== "mobile" && <SecondaryButton onClick={() => props.setViewportContainerDimensionsTerm("mobile")}>{mobileButtonText}</SecondaryButton>}
+            {props.viewportContainerDimensionsTerm !== "mobile" && <SecondaryButton transparent={true} onClick={() => props.setViewportContainerDimensionsTerm("mobile")}>{mobileButtonText}</SecondaryButton>}
 
             {props.viewportContainerDimensionsTerm === "tablet" && <PrimaryButton onClick={() => props.setViewportContainerDimensionsTerm("tablet")}>{tabletButtonText}</PrimaryButton>}
-            {props.viewportContainerDimensionsTerm !== "tablet" && <SecondaryButton onClick={() => props.setViewportContainerDimensionsTerm("tablet")}>{tabletButtonText}</SecondaryButton>}
+            {props.viewportContainerDimensionsTerm !== "tablet" && <SecondaryButton transparent={true} onClick={() => props.setViewportContainerDimensionsTerm("tablet")}>{tabletButtonText}</SecondaryButton>}
 
             {props.viewportContainerDimensionsTerm === "desktop" && <PrimaryButton onClick={() => props.setViewportContainerDimensionsTerm("desktop")}>{desktopButtonText}</PrimaryButton>}
-            {props.viewportContainerDimensionsTerm !== "desktop" && <SecondaryButton onClick={() => props.setViewportContainerDimensionsTerm("desktop")}>{desktopButtonText}</SecondaryButton>}
+            {props.viewportContainerDimensionsTerm !== "desktop" && <SecondaryButton transparent={true} onClick={() => props.setViewportContainerDimensionsTerm("desktop")}>{desktopButtonText}</SecondaryButton>}
         </div>
     );
 };

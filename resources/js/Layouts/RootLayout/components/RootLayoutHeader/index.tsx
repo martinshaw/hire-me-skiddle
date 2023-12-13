@@ -21,7 +21,7 @@ type RootLayoutHeaderPropsType = {
 
 const RootLayoutHeader = (props: RootLayoutHeaderPropsType) => {
     return (
-        <div className="bg-gradient-to-r from-blue-100 to-emerald-100 h-10 w-screen flex flex-row gap-4 justify-between items-center px-4">
+        <div className="select-none bg-gradient-to-r from-blue-100 to-emerald-100 h-10 w-screen flex flex-row gap-4 justify-between items-center px-4">
             <RootLayoutHeaderLeft />
 
             <RootLayoutHeaderCenter />

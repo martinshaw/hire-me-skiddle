@@ -11,14 +11,17 @@ import SecondaryButton from "@/Components/SecondaryButton";
 const Login = ({
     status,
     canResetPassword,
+    to,
 }: {
     status?: string;
     canResetPassword: boolean;
+    to: string | null;
 }) => {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: "",
         password: "",
         remember: false,
+        to: to || "",
     });
 
     useEffect(() => {

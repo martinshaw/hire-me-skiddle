@@ -24,7 +24,7 @@ const navigableApplications: {
 }[] = [
     {
         name: "Venue Management App",
-        href: route("venue-management-app.index"),
+        href: route("login", { to: route("venue-management-app.index") }),
         icon: "/images/icons/music.svg",
         routePrefix: "venue-management-app",
     },
@@ -49,7 +49,17 @@ type RootLayoutHeaderCenterPropsType = {
 const RootLayoutHeaderCenter = (props: RootLayoutHeaderCenterPropsType) => {
     return (
         <div className="flex flex-row gap-4 justify-center items-center">
-            <Breadcrumbs items={navigableApplications.map(app => ({...app, isActive: (route().current() || '').startsWith(app.routePrefix)})) as BreadcrumbItemType[]} />
+            <Breadcrumbs
+                transparentButtons={true}
+                items={
+                    navigableApplications.map((app) => ({
+                        ...app,
+                        isActive: (route().current() || "").startsWith(
+                            app.routePrefix
+                        ),
+                    })) as BreadcrumbItemType[]
+                }
+            />
         </div>
     );
 };
