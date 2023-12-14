@@ -48,6 +48,7 @@ export type ArtistModelType = {
     deleted_at: string;
 
     venue: VenueModelType | null;
+    events?: EventModelType[];
 
     events_count: number;
 };
@@ -56,8 +57,8 @@ export type EventModelType = {
     id: number;
     name: string;
     description: string | null;
-    start_date: string | null;
-    end_date: string | null;
+    starts_at: string | null;
+    ends_at: string | null;
     category: 'concert' | 'conference' | 'party' | 'wedding' | 'cinema' | 'theatre' | 'other' | null;
 
     tickets_purchasable_at: string | null;

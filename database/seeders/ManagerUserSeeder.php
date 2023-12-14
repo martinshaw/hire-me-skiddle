@@ -30,6 +30,8 @@ class ManagerUserSeeder extends Seeder
             'password' => Hash::make('password'),
             'role' => User::ROLE_MANAGER,
             'venue_id' => $venue->id,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
     }
 }

@@ -27,8 +27,8 @@ class Event extends Model
     protected $fillable = [
         'name',
         'description',
-        'start_date',
-        'end_date',
+        'starts_at',
+        'ends_at',
         'category',
 
         'tickets_purchasable_at',
@@ -51,8 +51,8 @@ class Event extends Model
      * The attributes that should be cast.
      */
     protected $casts = [
-        'start_date' => 'datetime',
-        'end_date' => 'datetime',
+        'starts_at' => 'datetime',
+        'ends_at' => 'datetime',
         'tickets_purchasable_at' => 'datetime',
         'cancelled_at' => 'datetime',
         'postponed_at' => 'datetime',
@@ -62,8 +62,8 @@ class Event extends Model
      * The attributes that should be mutated to dates.
      */
     protected $dates = [
-        'start_date',
-        'end_date',
+        'starts_at',
+        'ends_at',
         'tickets_purchasable_at',
         'cancelled_at',
         'postponed_at',

@@ -6,7 +6,7 @@
  * Author: Martin Shaw (developer@martinshaw.co)
  * File Name: VenueManagementAppController.php
  * Created:  2023-12-12T12:32:52.178Z
- * Modified: 2023-12-14T02:17:36.746Z
+ * Modified: 2023-12-14T17:31:11.566Z
  *
  * Description: description
  */
@@ -62,7 +62,7 @@ class VenueManagementAppController extends Controller
 
     public function artistShow(Request $request, Artist $artist): Response
     {
-        dd($artist);
+        $artist = $artist->load('events');
 
         if ($artist->venue_id !== $request->user()->venue_id || $request->user()->venue === null) return abort(404);
 

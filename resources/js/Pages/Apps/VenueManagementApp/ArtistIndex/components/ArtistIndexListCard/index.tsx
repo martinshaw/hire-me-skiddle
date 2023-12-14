@@ -31,11 +31,11 @@ const ArtistIndexListCard = (props: ArtistIndexListCardPropsType) => {
 
     return (
         <Link
-            href={route("venue-management-app.events.show", [props.artist.id])}
+            href={route("venue-management-app.artists.show", [props.artist.id])}
         >
             <div
                 className={
-                    "bg-white overflow-hidden shadow-sm sm:rounded-lg flex flex-col gap-3 hover:shadow-xl transition-all duration-500 ease-in-out cursor-pointer " +
+                    "bg-white overflow-hidden shadow-sm @sm:rounded-lg flex flex-col gap-3 hover:shadow-xl transition-all duration-500 ease-in-out cursor-pointer " +
                     additionalClassNames
                 }
             >
@@ -75,7 +75,7 @@ const ArtistIndexListCard = (props: ArtistIndexListCardPropsType) => {
                                 <span className="inline-block @2xl:hidden">
                                     More about their&nbsp;
                                 </span>
-                                {props.artist.events_count} events
+                                {props.artist.events_count} event{props.artist.events_count > 1 ? "s" : ""}
                                 <span className="hidden @2xl:inline-block">
                                     &nbsp;which {props.artist.name} has at{" "}
                                     {page.props?.auth?.user?.venue?.name == null

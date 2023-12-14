@@ -48,6 +48,14 @@ class Venue extends Model
     ];
 
     /**
+     * Add virtual attributes to serialization.
+     */
+    protected $appends = [
+        'events_count',
+        'artists_count',
+    ];
+
+    /**
      * Get all of the events for the venue.
      */
     public function events()

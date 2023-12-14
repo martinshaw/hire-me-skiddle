@@ -11,25 +11,44 @@ Description: description
 import AuthenticatedLayout, {
     AuthenticatedLayoutPropsType,
 } from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
+import { Head, usePage } from "@inertiajs/react";
 import { ArtistModelType, PageProps } from "@/types";
 import { ReactNode } from "react";
+import ArtistCategoryTag from "../ArtistIndex/components/ArtistCategoryTag";
+import ArtistShowEventCard from "./components/ArtistShowEventCard";
 
 type ArtistShowPropsType = {
     artist: ArtistModelType;
 } & AuthenticatedLayoutPropsType;
 
 const ArtistShow = (props: ArtistShowPropsType) => {
+    const page = usePage<ArtistShowPropsType & PageProps>();
+
+    console.log('events', props.artist.events, props.artist)
+
     return (
         <>
             <Head title="Artist" />
 
             <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">jkl</div>
+                {props.artist.events != null ? (
+                    <div className="max-w-7xl mx-auto px-0 @sm:px-6 @lg:px-8">
+                        {(props.artist.events || []).map((event, index) => (
+                            <ArtistShowEventCard
+                                key={index}
+                                event={event}
+                                artist={props.artist}
+                            />
+                        ))}
                     </div>
-                </div>
+                ) : (
+                    <div className="max-w-7xl mx-auto px-0 @sm:px-6 @lg:px-8 justify-center items-center m-auto w-full h-full flex flex-col">
+                        <div className="text-stone-400">
+                            No events found for {props.artist.name} at{" "}
+                            {page.props.auth.user.venue?.name}
+                        </div>
+                    </div>
+                )}
             </div>
         </>
     );
@@ -41,14 +60,37 @@ ArtistShow.layout = (
     const headerTitle =
         page.props?.auth?.user?.venue?.name == null
             ? page.props.artist.name
-            : page.props.artist.name + " at " + page.props.auth.user.venue?.name;
+            : page.props.artist.name +
+              " at " +
+              page.props.auth.user.venue?.name;
 
     return (
         <AuthenticatedLayout
             header={
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    {headerTitle}
-                </h2>
+                <div className="flex flex-col gap-3">
+                    <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+                        {headerTitle}
+                    </h2>
+
+                    <div className="flex flex-col @md:flex-row gap-2 @md:gap-6 justify-start items-start @md:items-center text-sm @md:text-base">
+                        {page.props.artist.category !== null && (
+                            <ArtistCategoryTag artist={page.props.artist} />
+                        )}
+
+                        {page.props.artist.events_count > 0 && (
+                            <div className="text-gray-600">
+                                {page.props.artist.events_count} event
+                                {page.props.artist.events_count > 1 ? "s" : ""}
+                            </div>
+                        )}
+                    </div>
+
+                    {page.props.artist.description !== null && (
+                        <div className="select-text text-gray-500 hidden @md:block">
+                            {page.props.artist.description}
+                        </div>
+                    )}
+                </div>
             }
             children={page}
         />

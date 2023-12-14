@@ -16,8 +16,8 @@ return new class extends Migration
 
             $table->string('name');
             $table->longText('description')->nullable();
-            $table->string('start_date')->nullable();
-            $table->string('end_date')->nullable();
+            $table->dateTime('starts_at')->nullable();
+            $table->dateTime('ends_at')->nullable();
             $table->string('category')->nullable();
 
             $table->dateTime('cancelled_at')->nullable();

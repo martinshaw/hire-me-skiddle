@@ -53,6 +53,13 @@ class Artist extends Model
     ];
 
     /**
+     * Add virtual attributes to serialization.
+     */
+    protected $appends = [
+        'events_count',
+    ];
+
+    /**
      * Get all of the events for the artist.
      */
     public function events()

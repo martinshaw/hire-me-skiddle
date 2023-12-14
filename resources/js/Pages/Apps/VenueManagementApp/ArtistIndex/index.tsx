@@ -26,7 +26,7 @@ const ArtistIndex = (props: ArtistIndexPropsType) => {
             <Head title="Artists" />
 
             <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-col gap-6">
+                <div className="max-w-7xl mx-auto @sm:px-6 @lg:px-8 flex flex-col gap-6">
                     {props.artists.map((artist, index) => (
                         <ArtistIndexListCard artist={artist} key={index} />
                     ))}

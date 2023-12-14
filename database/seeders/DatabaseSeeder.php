@@ -16,6 +16,9 @@ class DatabaseSeeder extends Seeder
             VenueSeeder::class,
             ManagerUserSeeder::class,
             ArtistSeeder::class,
+            EventSeeder::class,
         ]);
+
+        cache()->flush();
     }
 }

@@ -138,6 +138,8 @@ class VenueSeeder extends Seeder
             "country" => "GB",
             'logo_url' => null,
             'typical_capacity' => $realVenue['max_capacity'] * 0.9,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]));
     }
 }

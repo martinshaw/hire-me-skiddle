@@ -51,9 +51,9 @@ const AuthenticatedLayout = (props: AuthenticatedLayoutPropsType) => {
                                         href={route(
                                             "venue-management-app.events.index"
                                         )}
-                                        active={route().current(
-                                            "venue-management-app.events.index"
-                                        )}
+                                        active={route().current()?.startsWith(
+                                            "venue-management-app.events."
+                                        ) || false}
                                     >
                                         Events
                                     </NavLink>
@@ -61,9 +61,9 @@ const AuthenticatedLayout = (props: AuthenticatedLayoutPropsType) => {
                                         href={route(
                                             "venue-management-app.artists.index"
                                         )}
-                                        active={route().current(
-                                            "venue-management-app.artists.index"
-                                        )}
+                                        active={route().current()?.startsWith(
+                                            "venue-management-app.artists."
+                                        ) || false}
                                     >
                                         Artists
                                     </NavLink>
@@ -80,8 +80,11 @@ const AuthenticatedLayout = (props: AuthenticatedLayoutPropsType) => {
                                                     className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                                 >
                                                     {firstName}
-                                                    <span className="block @md:hidden">
-                                                        {" " + remainderOfName}
+                                                    <span className="hidden @2xl:block">
+                                                        &nbsp;{remainderOfName}
+                                                    </span>
+                                                    <span className="hidden @2xl:block text-stone-400">
+                                                        &nbsp;at {page.props.auth.user.venue?.name}
                                                     </span>
 
                                                     <svg
