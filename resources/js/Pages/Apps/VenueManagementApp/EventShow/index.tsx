@@ -33,7 +33,9 @@ const EventShow = (props: EventShowPropsType) => {
     );
 };
 
-EventShow.layout = (page: ReactNode) => (
+EventShow.layout = (
+    page: ReactNode & { props: EventShowPropsType & PageProps }
+) => (
     <AuthenticatedLayout
         header={
             <h2 className="font-semibold text-xl text-gray-800 leading-tight">

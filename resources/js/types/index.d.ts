@@ -24,9 +24,13 @@ export type VenueModelType = {
     logo_url: string | null,
     typical_capacity: number | null,
     max_capacity: number | null,
+
     created_at: string;
     updated_at: string;
     deleted_at: string;
+
+    events_count: number;
+    artists_count: number;
 };
 
 export type ArtistModelCategoryType = 'musician' | 'band' | 'dj' | 'comedian' | 'speaker' | 'other';
@@ -37,9 +41,15 @@ export type ArtistModelType = {
     description: string | null;
     category: ArtistModelCategoryType | null;
     born_at: string | null;
+    venue_id: number | null;
+
     created_at: string;
     updated_at: string;
     deleted_at: string;
+
+    venue: VenueModelType | null;
+
+    events_count: number;
 };
 
 export type EventModelType = {

@@ -8,7 +8,9 @@ Modified: 2023-12-13T07:32:24.912Z
 
 Description: description
 */
-import AuthenticatedLayout, { AuthenticatedLayoutPropsType } from "@/Layouts/AuthenticatedLayout";
+import AuthenticatedLayout, {
+    AuthenticatedLayoutPropsType,
+} from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { ArtistModelType, PageProps } from "@/types";
 import { ReactNode } from "react";
@@ -33,15 +35,24 @@ const ArtistShow = (props: ArtistShowPropsType) => {
     );
 };
 
-ArtistShow.layout = (page: ReactNode) => (
-    <AuthenticatedLayout
-        header={
-            <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                Artist
-            </h2>
-        }
-        children={page}
-    />
-);
+ArtistShow.layout = (
+    page: ReactNode & { props: ArtistShowPropsType & PageProps }
+) => {
+    const headerTitle =
+        page.props?.auth?.user?.venue?.name == null
+            ? page.props.artist.name
+            : page.props.artist.name + " at " + page.props.auth.user.venue?.name;
+
+    return (
+        <AuthenticatedLayout
+            header={
+                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+                    {headerTitle}
+                </h2>
+            }
+            children={page}
+        />
+    );
+};
 
 export default ArtistShow;

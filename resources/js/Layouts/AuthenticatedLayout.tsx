@@ -17,8 +17,6 @@ const AuthenticatedLayout = (props: AuthenticatedLayoutPropsType) => {
 
     const page = usePage<AuthenticatedLayoutPropsType & PageProps>();
 
-    console.log('page.props.auth.user', page)
-
     const firstName = page.props.auth.user.name.split(" ")[0];
     const remainderOfName = page.props.auth.user.name
         .split(" ")

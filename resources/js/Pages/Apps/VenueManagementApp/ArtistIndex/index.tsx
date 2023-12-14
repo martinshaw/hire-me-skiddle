@@ -16,7 +16,7 @@ import { ArtistModelType, PageProps } from "@/types";
 import { ReactNode } from "react";
 import ArtistIndexListCard from "./components/ArtistIndexListCard";
 
-type ArtistIndexPropsType = {
+export type ArtistIndexPropsType = {
     artists: ArtistModelType[];
 } & AuthenticatedLayoutPropsType;
 
@@ -36,15 +36,24 @@ const ArtistIndex = (props: ArtistIndexPropsType) => {
     );
 };
 
-ArtistIndex.layout = (page: ReactNode) => (
-    <AuthenticatedLayout
-        header={
-            <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                Artists
-            </h2>
-        }
-        children={page}
-    />
-);
+ArtistIndex.layout = (
+    page: ReactNode & { props: ArtistIndexPropsType & PageProps }
+) => {
+    const headerTitle =
+        page.props?.auth?.user?.venue?.name == null
+            ? "Artists"
+            : "Artists at " + page.props.auth.user.venue?.name;
+
+    return (
+        <AuthenticatedLayout
+            header={
+                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+                    {headerTitle}
+                </h2>
+            }
+            children={page}
+        />
+    );
+};
 
 export default ArtistIndex;

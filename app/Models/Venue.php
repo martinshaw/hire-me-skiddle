@@ -62,4 +62,28 @@ class Venue extends Model
     {
         return $this->hasMany(Artist::class);
     }
+
+    /**
+     * Virtual attribute to get the venue's count of events.
+     */
+    public function getEventsCountAttribute()
+    {
+        return cache()->remember(
+            'venues:' . $this->id . ':events_count',
+            60 * 60,
+            fn () => $this->events()->count()
+        );
+    }
+
+    /**
+     * Virtual attribute to get the venue's count of artists.
+     */
+    public function getArtistsCountAttribute()
+    {
+        return cache()->remember(
+            'venues:' . $this->id . ':artists_count',
+            60 * 60,
+            fn () => $this->artists()->count()
+        );
+    }
 }

@@ -8,13 +8,15 @@ Modified: 2023-12-13T07:32:24.912Z
 
 Description: description
 */
-import AuthenticatedLayout, { AuthenticatedLayoutPropsType } from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
-import { EventModelType, PageProps } from '@/types';
-import { ReactNode } from 'react';
+import AuthenticatedLayout, {
+    AuthenticatedLayoutPropsType,
+} from "@/Layouts/AuthenticatedLayout";
+import { Head } from "@inertiajs/react";
+import { EventModelType, PageProps } from "@/types";
+import { ReactNode } from "react";
 
 type EventIndexPropsType = {
-    events: EventModelType[]
+    events: EventModelType[];
 } & AuthenticatedLayoutPropsType;
 
 const EventIndex = (props: EventIndexPropsType) => {
@@ -31,17 +33,26 @@ const EventIndex = (props: EventIndexPropsType) => {
             </div>
         </>
     );
-}
+};
 
-EventIndex.layout = (page: ReactNode) => (
-    <AuthenticatedLayout
-        header={
-            <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                Events
-            </h2>
-        }
-        children={page}
-    />
-);
+EventIndex.layout = (
+    page: ReactNode & { props: EventIndexPropsType & PageProps }
+) => {
+    const headerTitle =
+        page.props?.auth?.user?.venue?.name == null
+            ? "Events"
+            : "Events at " + page.props.auth.user.venue?.name;
+
+    return (
+        <AuthenticatedLayout
+            header={
+                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+                    {headerTitle}
+                </h2>
+            }
+            children={page}
+        />
+    );
+};
 
 export default EventIndex;

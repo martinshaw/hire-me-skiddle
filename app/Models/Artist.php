@@ -67,4 +67,16 @@ class Artist extends Model
     {
         return $this->belongsTo(Venue::class);
     }
+
+    /**
+     * Virtual attribute for the artist's count of events
+     */
+    public function getEventsCountAttribute()
+    {
+        return cache()->remember(
+            'artists:' . $this->id . ':events_count',
+            60 * 60,
+            fn () => $this->events()->count()
+        );
+    }
 }
