@@ -28,6 +28,7 @@ class Artist extends Model
         'description',
         'category',
         'born_at',
+        'venue_id',
     ];
 
     /**
@@ -57,5 +58,13 @@ class Artist extends Model
     public function events()
     {
         return $this->hasMany(Event::class);
+    }
+
+    /**
+     * Get venue for the artist.
+     */
+    public function venue()
+    {
+        return $this->belongsTo(Venue::class);
     }
 }

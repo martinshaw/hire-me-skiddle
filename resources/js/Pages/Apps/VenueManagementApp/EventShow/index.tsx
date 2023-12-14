@@ -8,20 +8,18 @@ Modified: 2023-12-13T07:32:24.912Z
 
 Description: description
 */
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
-import { PageProps } from '@/types';
+import AuthenticatedLayout, { AuthenticatedLayoutPropsType } from "@/Layouts/AuthenticatedLayout";
+import { Head } from "@inertiajs/react";
+import { EventModelType, PageProps } from "@/types";
+import { ReactNode } from "react";
 
 type EventShowPropsType = {
-    event: EventModelType
-} & PageProps;
+    event: EventModelType;
+} & AuthenticatedLayoutPropsType;
 
 const EventShow = (props: EventShowPropsType) => {
     return (
-        <AuthenticatedLayout
-            user={props.auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Event</h2>}
-        >
+        <>
             <Head title="Event" />
 
             <div className="py-12">
@@ -31,8 +29,19 @@ const EventShow = (props: EventShowPropsType) => {
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </>
     );
-}
+};
+
+EventShow.layout = (page: ReactNode) => (
+    <AuthenticatedLayout
+        header={
+            <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+                Event
+            </h2>
+        }
+        children={page}
+    />
+);
 
 export default EventShow;

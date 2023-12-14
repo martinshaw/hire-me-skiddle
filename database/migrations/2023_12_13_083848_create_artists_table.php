@@ -19,7 +19,10 @@ return new class extends Migration
             $table->string('category')->nullable();
             $table->dateTime('born_at')->nullable();
 
+            $table->foreignId('venue_id')->nullable()->constrained('venues');
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -6,7 +6,7 @@
  * Author: Martin Shaw (developer@martinshaw.co)
  * File Name: VenueManagementAppController.php
  * Created:  2023-12-12T12:32:52.178Z
- * Modified: 2023-12-13T09:43:06.468Z
+ * Modified: 2023-12-13T10:11:00.514Z
  *
  * Description: description
  */
@@ -34,7 +34,7 @@ class VenueManagementAppController extends Controller
     public function eventIndex(Request $request): Response
     {
         $venue = $request?->user()?->venue;
-        $events = $venue?->events() || [];
+        $events = $venue?->events()?->get() ?? [];
 
         return Inertia::render('Apps/VenueManagementApp/EventIndex/index', [
             'events' => $events,
@@ -53,7 +53,7 @@ class VenueManagementAppController extends Controller
     public function artistIndex(Request $request): Response
     {
         $venue = $request?->user()?->venue;
-        $artists = $venue?->artists() || [];
+        $artists = $venue?->artists()?->get() ?? [];
 
         return Inertia::render('Apps/VenueManagementApp/ArtistIndex/index', [
             'artists' => $artists,

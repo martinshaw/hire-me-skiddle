@@ -8,20 +8,18 @@ Modified: 2023-12-13T07:32:24.912Z
 
 Description: description
 */
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
-import { PageProps } from '@/types';
+import AuthenticatedLayout, { AuthenticatedLayoutPropsType } from "@/Layouts/AuthenticatedLayout";
+import { Head } from "@inertiajs/react";
+import { ArtistModelType, PageProps } from "@/types";
+import { ReactNode } from "react";
 
 type ArtistShowPropsType = {
-    artist: ArtistModelType
-} & PageProps;
+    artist: ArtistModelType;
+} & AuthenticatedLayoutPropsType;
 
 const ArtistShow = (props: ArtistShowPropsType) => {
     return (
-        <AuthenticatedLayout
-            user={props.auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Artist</h2>}
-        >
+        <>
             <Head title="Artist" />
 
             <div className="py-12">
@@ -31,8 +29,19 @@ const ArtistShow = (props: ArtistShowPropsType) => {
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </>
     );
-}
+};
+
+ArtistShow.layout = (page: ReactNode) => (
+    <AuthenticatedLayout
+        header={
+            <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+                Artist
+            </h2>
+        }
+        children={page}
+    />
+);
 
 export default ArtistShow;

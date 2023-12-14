@@ -34,7 +34,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
             <div className="bg-stone-700 flex-1 w-screen flex flex-col justify-center items-center m-auto">
                 <div
                     className={
-                        "@container overflow-hidden " +
+                        "@container overflow-x-hidden " +
                         additionalViewportContainerClassNames
                     }
                     style={{

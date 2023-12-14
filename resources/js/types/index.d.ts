@@ -29,11 +29,13 @@ export type VenueModelType = {
     deleted_at: string;
 };
 
+export type ArtistModelCategoryType = 'musician' | 'band' | 'dj' | 'comedian' | 'speaker' | 'other';
+
 export type ArtistModelType = {
     id: number;
     name: string;
     description: string | null;
-    category: 'musician' | 'band' | 'dj' | 'comedian' | 'speaker' | 'other' | null;
+    category: ArtistModelCategoryType | null;
     born_at: string | null;
     created_at: string;
     updated_at: string;

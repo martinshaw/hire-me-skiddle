@@ -8,20 +8,18 @@ Modified: 2023-12-13T07:32:24.912Z
 
 Description: description
 */
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import AuthenticatedLayout, { AuthenticatedLayoutPropsType } from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-import { PageProps } from '@/types';
+import { EventModelType, PageProps } from '@/types';
+import { ReactNode } from 'react';
 
 type EventIndexPropsType = {
     events: EventModelType[]
-} & PageProps;
+} & AuthenticatedLayoutPropsType;
 
 const EventIndex = (props: EventIndexPropsType) => {
     return (
-        <AuthenticatedLayout
-            user={props.auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Events</h2>}
-        >
+        <>
             <Head title="Events" />
 
             <div className="py-12">
@@ -31,8 +29,19 @@ const EventIndex = (props: EventIndexPropsType) => {
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </>
     );
 }
+
+EventIndex.layout = (page: ReactNode) => (
+    <AuthenticatedLayout
+        header={
+            <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+                Events
+            </h2>
+        }
+        children={page}
+    />
+);
 
 export default EventIndex;

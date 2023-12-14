@@ -3,21 +3,31 @@ import ApplicationLogo from "@/Components/ApplicationLogo";
 import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
-import { Link } from "@inertiajs/react";
-import { UserModelType } from "@/types";
+import { Link, usePage } from "@inertiajs/react";
+import { PageProps, UserModelType } from "@/types";
 import RootLayout from "./RootLayout";
 
-const AuthenticatedLayout = ({
-    user,
-    header,
-    children,
-}: PropsWithChildren<{ user: UserModelType; header?: ReactNode }>) => {
+export type AuthenticatedLayoutPropsType = PropsWithChildren<{
+    header?: ReactNode;
+}>;
+
+const AuthenticatedLayout = (props: AuthenticatedLayoutPropsType) => {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
+    const page = usePage<AuthenticatedLayoutPropsType & PageProps>();
+
+    console.log('page.props.auth.user', page)
+
+    const firstName = page.props.auth.user.name.split(" ")[0];
+    const remainderOfName = page.props.auth.user.name
+        .split(" ")
+        .slice(1)
+        .join(" ");
+
     return (
         <RootLayout>
-            <div className="min-h-full bg-gray-100">
+            <div className="select-none min-h-full bg-gray-100">
                 <nav className="bg-white border-b border-gray-100">
                     <div className="max-w-7xl mx-auto px-4 @sm:px-6 @lg:px-8">
                         <div className="flex justify-between h-16">
@@ -71,7 +81,10 @@ const AuthenticatedLayout = ({
                                                     type="button"
                                                     className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                                 >
-                                                    {user.name}
+                                                    {firstName}
+                                                    <span className="block @md:hidden">
+                                                        {" " + remainderOfName}
+                                                    </span>
 
                                                     <svg
                                                         className="ms-2 -me-0.5 h-4 w-4"
@@ -160,17 +173,19 @@ const AuthenticatedLayout = ({
                             <ResponsiveNavLink
                                 href={route(
                                     "venue-management-app.events.show",
-                                    ['EVENTID']
+                                    ["EVENTID"]
                                 )}
                                 active={route().current(
                                     "venue-management-app.events.show",
-                                    ['EVENTID']
+                                    ["EVENTID"]
                                 )}
                             >
                                 Ongoing Event
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
-                                href={route("venue-management-app.events.index")}
+                                href={route(
+                                    "venue-management-app.events.index"
+                                )}
                                 active={route().current(
                                     "venue-management-app.events.index"
                                 )}
@@ -178,7 +193,9 @@ const AuthenticatedLayout = ({
                                 Events
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
-                                href={route("venue-management-app.artists.index")}
+                                href={route(
+                                    "venue-management-app.artists.index"
+                                )}
                                 active={route().current(
                                     "venue-management-app.artists.index"
                                 )}
@@ -190,11 +207,11 @@ const AuthenticatedLayout = ({
                         <div className="pt-4 pb-1 border-t border-gray-200">
                             <div className="px-4">
                                 <div className="font-medium text-base text-gray-800">
-                                    {user.name}
+                                    {page.props.auth.user.name}
                                 </div>
-                                {user.venue && (
+                                {page.props.auth.user.venue && (
                                     <div className="font-medium text-sm text-gray-500">
-                                        {user.venue.name}
+                                        {page.props.auth.user.venue.name}
                                     </div>
                                 )}
                             </div>
@@ -215,15 +232,15 @@ const AuthenticatedLayout = ({
                     </div>
                 </nav>
 
-                {header && (
+                {props.header && (
                     <header className="bg-white shadow">
                         <div className="max-w-7xl mx-auto py-6 px-4 @sm:px-6 @lg:px-8">
-                            {header}
+                            {props.header}
                         </div>
                     </header>
                 )}
 
-                <main>{children}</main>
+                <main>{props.children}</main>
             </div>
         </RootLayout>
     );

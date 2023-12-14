@@ -59,8 +59,13 @@ class ArtistSeeder extends Seeder
             ],
         ];
 
-        foreach ($realArtists as $realArtist) {
-            DB::table('artists')->insert($realArtist);
+        $venues = DB::table('venues')->get();
+        foreach ($venues as $venue) {
+            foreach ($realArtists as $realArtist) {
+                DB::table('artists')->insert(array_merge($realArtist, [
+                    'venue_id' => $venue->id,
+                ]));
+            }
         }
     }
 }
