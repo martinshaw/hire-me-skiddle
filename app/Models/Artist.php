@@ -28,6 +28,7 @@ class Artist extends Model
         'description',
         'category',
         'born_at',
+
         'venue_id',
     ];
 

@@ -26,6 +26,7 @@ class EventTicketPurchase extends Model
 
         'event_ticket_id',
         'event_id',
+        'venue_id',
         'visitor_id',
     ];
 
@@ -50,6 +51,14 @@ class EventTicketPurchase extends Model
     public function event()
     {
         return $this->belongsTo(Event::class);
+    }
+
+    /**
+     * Get the venue that owns the ticket purchase.
+     */
+    public function venue()
+    {
+        return $this->belongsTo(Venue::class);
     }
 
     /**

@@ -28,6 +28,7 @@ class EventTicket extends Model
         'tickets_available',
 
         'event_id',
+        'venue_id',
     ];
 
     /**
@@ -58,6 +59,14 @@ class EventTicket extends Model
     public function event()
     {
         return $this->belongsTo(Event::class);
+    }
+
+    /**
+     * Get the venue that owns the ticket.
+     */
+    public function venue()
+    {
+        return $this->belongsTo(Venue::class);
     }
 
     /**

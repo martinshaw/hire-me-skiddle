@@ -18,6 +18,7 @@ return new class extends Migration
             $table->longText('value')->nullable();
 
             $table->foreignId('visitor_id')->nullable()->constrained('visitors')->onDelete('cascade');
+            $table->foreignId('venue_id')->nullable()->constrained('venues')->onDelete('cascade');
 
             $table->timestamps();
             $table->softDeletes();

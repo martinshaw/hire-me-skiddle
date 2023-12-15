@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('middle_name')->nullable();
             $table->string('last_name')->nullable();
 
+            $table->foreignId(('venue_id'))->nullable()->constrained('venues')->onDelete('cascade');
+
             $table->timestamps();
             $table->softDeletes();
         });

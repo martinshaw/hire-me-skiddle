@@ -60,6 +60,7 @@ class VisitorActivityLog extends Model
 
         'visitor_id',
         'event_id',
+        'venue_id',
         'user_id',
         'event_ticket_purchase_id',
         'event_ticket_id',
@@ -91,6 +92,14 @@ class VisitorActivityLog extends Model
     public function event()
     {
         return $this->belongsTo(Event::class);
+    }
+
+    /**
+     * Get the venue which the visitor belongs to.
+     */
+    public function venue()
+    {
+        return $this->belongsTo(Venue::class);
     }
 
     /**

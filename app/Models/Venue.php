@@ -53,6 +53,7 @@ class Venue extends Model
     protected $appends = [
         'events_count',
         'artists_count',
+        'ticket_purchases_count',
     ];
 
     /**
@@ -72,12 +73,52 @@ class Venue extends Model
     }
 
     /**
+     * Get all of the users for the venue.
+     */
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+
+    /**
+     * Get all of the visitors for the venue.
+     */
+    public function visitors()
+    {
+        return $this->hasMany(Visitor::class);
+    }
+
+    /**
+     * Get all of the event tickets for the venue.
+     */
+    public function eventTickets()
+    {
+        return $this->hasMany(EventTicket::class);
+    }
+
+    /**
+     * Get all of the event ticket purchases for the venue.
+     */
+    public function eventTicketPurchases()
+    {
+        return $this->hasMany(EventTicketPurchase::class);
+    }
+
+    /**
+     * Get all of the visitor activity logs for the venue.
+     */
+    public function visitorActivityLogs()
+    {
+        return $this->hasMany(VisitorActivityLog::class);
+    }
+
+    /**
      * Virtual attribute to get the venue's count of events.
      */
     public function getEventsCountAttribute()
     {
         return cache()->remember(
-            'venues:' . $this->id . ':events_count',
+            'venues:' . $this->id . ':events-count',
             60 * 60,
             fn () => $this->events()->count()
         );
@@ -89,9 +130,21 @@ class Venue extends Model
     public function getArtistsCountAttribute()
     {
         return cache()->remember(
-            'venues:' . $this->id . ':artists_count',
+            'venues:' . $this->id . ':artists-count',
             60 * 60,
             fn () => $this->artists()->count()
+        );
+    }
+
+    /**
+     * Virtual attribute to get the venue's count of ticket purchases.
+     */
+    public function getTicketPurchasesCountAttribute()
+    {
+        return cache()->remember(
+            'venues:' . $this->id . ':ticket-purchases-count',
+            60 * 60,
+            fn () => $this->eventTicketPurchases()->count()
         );
     }
 }

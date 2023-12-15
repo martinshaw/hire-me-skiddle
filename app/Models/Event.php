@@ -119,6 +119,22 @@ class Event extends Model
     }
 
     /**
+     * Get the tickets for the event.
+     */
+    public function tickets()
+    {
+        return $this->hasMany(EventTicket::class);
+    }
+
+    /**
+     * Get the ticket purchases for the event.
+     */
+    public function ticketPurchases()
+    {
+        return $this->hasMany(EventTicketPurchase::class);
+    }
+
+    /**
      * Scope a query to only include events that are not cancelled, postponed or deleted.
      */
     public function scopeActive($query)

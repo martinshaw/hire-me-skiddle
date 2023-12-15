@@ -18,6 +18,7 @@ return new class extends Migration
 
             $table->foreignId('visitor_id')->nullable()->constrained('visitors')->onDelete('cascade');
             $table->foreignId('event_id')->nullable()->constrained('events')->onDelete('cascade');
+            $table->foreignId('venue_id')->nullable()->constrained('venues')->onDelete('cascade');
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
 
             $table->timestamps();

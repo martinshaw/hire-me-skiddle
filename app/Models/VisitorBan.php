@@ -21,6 +21,7 @@ class VisitorBan extends Model
 
         'visitor_id',
         'event_id',
+        'venue_id',
         'user_id',
     ];
 
@@ -30,6 +31,14 @@ class VisitorBan extends Model
     public function event()
     {
         return $this->belongsTo(Event::class);
+    }
+
+    /**
+     * Get the venue which the visitor belongs to.
+     */
+    public function venue()
+    {
+        return $this->belongsTo(Venue::class);
     }
 
     /**

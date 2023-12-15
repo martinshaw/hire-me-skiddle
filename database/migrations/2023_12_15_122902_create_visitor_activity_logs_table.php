@@ -21,6 +21,7 @@ return new class extends Migration
 
             $table->foreignId('visitor_id')->nullable()->constrained('visitors');
             $table->foreignId('event_id')->nullable()->constrained('events');
+            $table->foreignId('venue_id')->nullable()->constrained('venues');
             $table->foreignId('user_id')->nullable()->constrained('users');
             $table->foreignId('event_ticket_purchase_id')->nullable()->constrained('event_ticket_purchases');
             $table->foreignId('event_ticket_id')->nullable()->constrained('event_tickets');

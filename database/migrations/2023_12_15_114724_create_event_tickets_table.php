@@ -25,6 +25,7 @@ return new class extends Migration
             $table->integer('tickets_available')->nullable();
 
             $table->foreignId('event_id')->nullable()->constrained('events')->onDelete('cascade');
+            $table->foreignId('venue_id')->nullable()->constrained('venues')->onDelete('cascade');
 
             $table->timestamps();
             $table->softDeletes();

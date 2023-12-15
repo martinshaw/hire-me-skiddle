@@ -13,10 +13,12 @@
         <!-- Scripts -->
         @routes
         @viteReactRefresh
-        @vite(['resources/js/app.tsx', "resources/js/Pages/{$page['component']}.tsx"])
-        @inertiaHead
+        @vite(['resources/js/app.tsx'])
     </head>
-    <body class="font-sans antialiased">
-        @inertia
+    <body class="font-sans antialiased w-screen h-screen flex flex-col justify-center items-center">
+        <div class="select-none flex flex-col justify-center items-center gap-6">
+            <div class="text-lg text-stone-400">Please wait a moment while I refresh the demonstration data...</div>
+            <div class="text-lg text-stone-400">Refresh the page in a minute</div>
+        </div>
     </body>
 </html>

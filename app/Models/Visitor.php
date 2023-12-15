@@ -20,6 +20,8 @@ class Visitor extends Model
         'first_name',
         'middle_name',
         'last_name',
+
+        'venue_id',
     ];
 
     /**
@@ -67,6 +69,14 @@ class Visitor extends Model
     public function contactDetails()
     {
         return $this->hasMany(VisitorContactDetail::class);
+    }
+
+    /**
+     * Get the venue which the visitor belongs to.
+     */
+    public function venue()
+    {
+        return $this->belongsTo(Venue::class);
     }
 
     /**
