@@ -90,4 +90,11 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
     auth: {
         user: UserModelType;
     };
+    counts: {
+        events: number;
+        artists: number;
+    };
+    navigation: {
+        ongoing_events: EventModelType[];
+    };
 };
