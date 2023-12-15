@@ -117,4 +117,30 @@ class Event extends Model
     {
         return $this->belongsTo(Venue::class);
     }
+
+    /**
+     * Scope a query to only include events that are not cancelled, postponed or deleted.
+     */
+    public function scopeActive($query)
+    {
+        return $query->whereNull('cancelled_at')
+            ->whereNull('postponed_at')
+            ->whereNull('deleted_at')
+            ->orderBy('starts_at', 'asc');
+    }
+
+    /**
+     * Scope a query to only include events that are currently ongoing.
+     */
+    public function scopeOngoing($query)
+    {
+        $now = now();
+
+        return $query->whereNull('cancelled_at')
+            ->whereNull('postponed_at')
+            ->whereNull('deleted_at')
+            ->orderBy('starts_at', 'asc')
+            ->where('starts_at', '<=', $now)
+            ->where('ends_at', '>=', $now);
+    }
 }

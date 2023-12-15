@@ -12,7 +12,7 @@ Description: description
 import { EventModelType } from "@/types";
 import { ReactNode } from "react";
 
-const ArtistShowEventCardSaleAvailabilityRow = (props: {
+const EventCardSaleAvailabilityRow = (props: {
     event: EventModelType;
 }) => {
     const ticketPurchasableAtDateIsInTheFuture: boolean =
@@ -21,7 +21,7 @@ const ArtistShowEventCardSaleAvailabilityRow = (props: {
             : new Date(props.event.tickets_purchasable_at) > new Date();
 
     const container = (children: ReactNode) => (
-        <div className="px-6 flex flex-row gap-3 justify-start items-start @md:items-center text-sm @md:text-base">
+        <div className="flex flex-row gap-3 justify-start items-start @md:items-center text-sm @md:text-base">
             <img src="/images/icons/shopping-cart.svg" className="w-4 h-4" />
             <div className="text-gray-600">{children}</div>
         </div>
@@ -55,4 +55,4 @@ const ArtistShowEventCardSaleAvailabilityRow = (props: {
     );
 };
 
-export default ArtistShowEventCardSaleAvailabilityRow;
+export default EventCardSaleAvailabilityRow;

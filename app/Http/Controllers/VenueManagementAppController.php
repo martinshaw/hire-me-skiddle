@@ -6,7 +6,7 @@
  * Author: Martin Shaw (developer@martinshaw.co)
  * File Name: VenueManagementAppController.php
  * Created:  2023-12-12T12:32:52.178Z
- * Modified: 2023-12-14T17:31:11.566Z
+ * Modified: 2023-12-14T20:49:35.503Z
  *
  * Description: description
  */
@@ -44,6 +44,8 @@ class VenueManagementAppController extends Controller
     public function eventShow(Request $request, Event $event): Response
     {
         if ($event->venue_id !== $request->user()->venue_id || $request->user()->venue === null) return abort(404);
+
+        $event = $event->load('venue');
 
         return Inertia::render('Apps/VenueManagementApp/EventShow/index', [
             'event' => $event,

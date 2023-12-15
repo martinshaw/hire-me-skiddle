@@ -15,7 +15,7 @@ import { Head, usePage } from "@inertiajs/react";
 import { ArtistModelType, PageProps } from "@/types";
 import { ReactNode } from "react";
 import ArtistCategoryTag from "../ArtistIndex/components/ArtistCategoryTag";
-import ArtistShowEventCard from "./components/ArtistShowEventCard";
+import ArtistShowEventCard from "./components/EventCard";
 
 type ArtistShowPropsType = {
     artist: ArtistModelType;
@@ -23,8 +23,6 @@ type ArtistShowPropsType = {
 
 const ArtistShow = (props: ArtistShowPropsType) => {
     const page = usePage<ArtistShowPropsType & PageProps>();
-
-    console.log('events', props.artist.events, props.artist)
 
     return (
         <>
@@ -34,11 +32,7 @@ const ArtistShow = (props: ArtistShowPropsType) => {
                 {props.artist.events != null ? (
                     <div className="max-w-7xl mx-auto px-0 @sm:px-6 @lg:px-8">
                         {(props.artist.events || []).map((event, index) => (
-                            <ArtistShowEventCard
-                                key={index}
-                                event={event}
-                                artist={props.artist}
-                            />
+                            <ArtistShowEventCard key={index} event={event} />
                         ))}
                     </div>
                 ) : (

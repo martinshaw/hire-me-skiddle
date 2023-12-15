@@ -11,25 +11,37 @@ Description: description
 import AuthenticatedLayout, {
     AuthenticatedLayoutPropsType,
 } from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
+import { Head, usePage } from "@inertiajs/react";
 import { EventModelType, PageProps } from "@/types";
 import { ReactNode } from "react";
+import EventCard from "../ArtistShow/components/EventCard";
 
 type EventIndexPropsType = {
     events: EventModelType[];
 } & AuthenticatedLayoutPropsType;
 
 const EventIndex = (props: EventIndexPropsType) => {
+    const page = usePage<EventIndexPropsType & PageProps>();
+
     return (
         <>
             <Head title="Events" />
 
             <div className="py-12">
-                <div className="max-w-7xl mx-auto @sm:px-6 @lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm @sm:rounded-lg">
-                        <div className="p-6 text-gray-900">abc</div>
+                {props.events != null ? (
+                    <div className="max-w-7xl mx-auto px-0 @sm:px-6 @lg:px-8 flex flex-col gap-6">
+                        {(props.events || []).map((event, index) => (
+                            <EventCard key={index} event={event} />
+                        ))}
                     </div>
-                </div>
+                ) : (
+                    <div className="max-w-7xl mx-auto px-0 @sm:px-6 @lg:px-8 justify-center items-center m-auto w-full h-full flex flex-col">
+                        <div className="text-stone-400">
+                            No events found at{" "}
+                            {page.props.auth.user.venue?.name}
+                        </div>
+                    </div>
+                )}
             </div>
         </>
     );
@@ -38,10 +50,15 @@ const EventIndex = (props: EventIndexPropsType) => {
 EventIndex.layout = (
     page: ReactNode & { props: EventIndexPropsType & PageProps }
 ) => {
-    const headerTitle =
+    let headerTitle =
+        page.props?.auth?.user?.venue?.events_count > 1
+            ? page.props?.auth?.user?.venue?.events_count + " Events"
+            : page.props?.auth?.user?.venue?.events_count + " Event";
+
+    headerTitle =
         page.props?.auth?.user?.venue?.name == null
-            ? "Events"
-            : "Events at " + page.props.auth.user.venue?.name;
+            ? headerTitle
+            : headerTitle + " at " + page.props.auth.user.venue?.name;
 
     return (
         <AuthenticatedLayout

@@ -12,7 +12,7 @@ Description: description
 import { EventModelType } from "@/types";
 import { ReactNode } from "react";
 
-const ArtistShowEventCardStartEndDateTimeRow = (props: {
+const EventCardStartEndDateTimeRow = (props: {
     event: EventModelType;
 }) => {
     const humanReadableStartsAtDate: string | null =
@@ -36,7 +36,7 @@ const ArtistShowEventCardStartEndDateTimeRow = (props: {
             : new Date(props.event.ends_at).toLocaleTimeString();
 
     return (
-        <div className="px-6 flex flex-col @md:flex-row gap-2 @md:gap-6 justify-start items-start @md:items-center text-sm @md:text-base text-gray-600">
+        <div className="flex flex-col @md:flex-row gap-2 @md:gap-6 justify-start items-start @md:items-center text-sm @md:text-base text-gray-600">
             <div className="hidden @md:block">
                 {humanReadableStartsAtDate} {humanReadableStartAtTime}{" "}
                 <span className="text-stone-400">-</span>{" "}
@@ -52,4 +52,4 @@ const ArtistShowEventCardStartEndDateTimeRow = (props: {
     );
 };
 
-export default ArtistShowEventCardStartEndDateTimeRow;
+export default EventCardStartEndDateTimeRow;

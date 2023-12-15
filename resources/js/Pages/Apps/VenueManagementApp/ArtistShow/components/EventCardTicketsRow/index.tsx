@@ -12,9 +12,9 @@ Description: description
 import { EventModelType } from "@/types";
 import { ReactNode } from "react";
 
-const ArtistShowEventCardTicketsRow = (props: { event: EventModelType }) => {
+const EventCardTicketsRow = (props: { event: EventModelType }) => {
     const container = (children: ReactNode) => (
-        <div className="px-6 flex flex-row gap-3 justify-start items-start @md:items-center text-sm @md:text-base">
+        <div className="flex flex-row gap-3 justify-start items-start @md:items-center text-sm @md:text-base">
             <img src="/images/icons/credit-card.svg" className="w-4 h-4" />
             <div className="text-gray-600">{children}</div>
         </div>
@@ -78,4 +78,4 @@ const ArtistShowEventCardTicketsRow = (props: { event: EventModelType }) => {
         );
 };
 
-export default ArtistShowEventCardTicketsRow;
+export default EventCardTicketsRow;

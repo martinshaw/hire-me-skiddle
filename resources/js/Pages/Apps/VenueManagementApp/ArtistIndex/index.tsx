@@ -39,10 +39,15 @@ const ArtistIndex = (props: ArtistIndexPropsType) => {
 ArtistIndex.layout = (
     page: ReactNode & { props: ArtistIndexPropsType & PageProps }
 ) => {
-    const headerTitle =
+    let headerTitle =
+        page.props?.auth?.user?.venue?.artists_count > 1
+            ? page.props?.auth?.user?.venue?.artists_count + " Artists"
+            : page.props?.auth?.user?.venue?.artists_count + " Artist";
+
+    headerTitle =
         page.props?.auth?.user?.venue?.name == null
-            ? "Artists"
-            : "Artists at " + page.props.auth.user.venue?.name;
+            ? headerTitle
+            : headerTitle + " at " + page.props.auth.user.venue?.name;
 
     return (
         <AuthenticatedLayout
