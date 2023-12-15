@@ -25,7 +25,7 @@ const AuthenticatedLayout = (props: AuthenticatedLayoutPropsType) => {
 
     return (
         <RootLayout>
-            <div className="select-none min-h-full bg-gray-100">
+            <div className="select-none min-h-full bg-gray-100 flex flex-col">
                 <nav className="bg-white border-b border-gray-100">
                     <div className="max-w-7xl mx-auto px-4 @sm:px-6 @lg:px-8">
                         <div className="flex justify-between h-16">
@@ -35,37 +35,60 @@ const AuthenticatedLayout = (props: AuthenticatedLayoutPropsType) => {
                                 </div>
 
                                 <div className="hidden space-x-8 @sm:-my-px @sm:ms-10 @sm:flex">
-                                    <NavLink
-                                        href={route(
-                                            "venue-management-app.events.show",
-                                            ["EVENTID"]
-                                        )}
-                                        active={route().current(
-                                            "venue-management-app.events.show",
-                                            ["EVENTID"]
-                                        )}
-                                    >
-                                        Ongoing Event
-                                    </NavLink>
+                                    {page.props.navigation.ongoing_events
+                                        .length > 0 && (
+                                        <NavLink
+                                            href={route(
+                                                "venue-management-app.events.show",
+                                                [
+                                                    page.props.navigation
+                                                        .ongoing_events[0].id,
+                                                ]
+                                            )}
+                                            active={route().current(
+                                                "venue-management-app.events.show",
+                                                [
+                                                    page.props.navigation
+                                                        .ongoing_events[0].id,
+                                                ]
+                                            )}
+                                        >
+                                            Ongoing Event
+                                        </NavLink>
+                                    )}
                                     <NavLink
                                         href={route(
                                             "venue-management-app.events.index"
                                         )}
-                                        active={route().current()?.startsWith(
-                                            "venue-management-app.events."
-                                        ) || false}
+                                        active={
+                                            route()
+                                                .current()
+                                                ?.startsWith(
+                                                    "venue-management-app.events."
+                                                ) || false
+                                        }
                                     >
-                                        Events
+                                        {page.props.counts.events} Event
+                                        {page.props.counts.events > 1
+                                            ? "s"
+                                            : ""}
                                     </NavLink>
                                     <NavLink
                                         href={route(
                                             "venue-management-app.artists.index"
                                         )}
-                                        active={route().current()?.startsWith(
-                                            "venue-management-app.artists."
-                                        ) || false}
+                                        active={
+                                            route()
+                                                .current()
+                                                ?.startsWith(
+                                                    "venue-management-app.artists."
+                                                ) || false
+                                        }
                                     >
-                                        Artists
+                                        {page.props.counts.artists} Artist
+                                        {page.props.counts.artists > 1
+                                            ? "s"
+                                            : ""}
                                     </NavLink>
                                 </div>
                             </div>
@@ -84,7 +107,11 @@ const AuthenticatedLayout = (props: AuthenticatedLayoutPropsType) => {
                                                         &nbsp;{remainderOfName}
                                                     </span>
                                                     <span className="hidden @2xl:block text-stone-400">
-                                                        &nbsp;at {page.props.auth.user.venue?.name}
+                                                        &nbsp;at{" "}
+                                                        {
+                                                            page.props.auth.user
+                                                                .venue?.name
+                                                        }
                                                     </span>
 
                                                     <svg
@@ -171,18 +198,27 @@ const AuthenticatedLayout = (props: AuthenticatedLayoutPropsType) => {
                         }
                     >
                         <div className="pt-2 pb-3 space-y-1">
-                            <ResponsiveNavLink
-                                href={route(
-                                    "venue-management-app.events.show",
-                                    ["EVENTID"]
-                                )}
-                                active={route().current(
-                                    "venue-management-app.events.show",
-                                    ["EVENTID"]
-                                )}
-                            >
-                                Ongoing Event
-                            </ResponsiveNavLink>
+                            {page.props.navigation.ongoing_events.length >
+                                0 && (
+                                <ResponsiveNavLink
+                                    href={route(
+                                        "venue-management-app.events.show",
+                                        [
+                                            page.props.navigation
+                                                .ongoing_events[0].id,
+                                        ]
+                                    )}
+                                    active={route().current(
+                                        "venue-management-app.events.show",
+                                        [
+                                            page.props.navigation
+                                                .ongoing_events[0].id,
+                                        ]
+                                    )}
+                                >
+                                    Ongoing Event
+                                </ResponsiveNavLink>
+                            )}
                             <ResponsiveNavLink
                                 href={route(
                                     "venue-management-app.events.index"
@@ -191,7 +227,8 @@ const AuthenticatedLayout = (props: AuthenticatedLayoutPropsType) => {
                                     "venue-management-app.events.index"
                                 )}
                             >
-                                Events
+                                {page.props.counts.events} Event
+                                {page.props.counts.events > 1 ? "s" : ""}
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
                                 href={route(
@@ -201,7 +238,8 @@ const AuthenticatedLayout = (props: AuthenticatedLayoutPropsType) => {
                                     "venue-management-app.artists.index"
                                 )}
                             >
-                                Artists
+                                {page.props.counts.artists} Artist
+                                {page.props.counts.artists > 1 ? "s" : ""}
                             </ResponsiveNavLink>
                         </div>
 
@@ -241,7 +279,28 @@ const AuthenticatedLayout = (props: AuthenticatedLayoutPropsType) => {
                     </header>
                 )}
 
-                <main>{props.children}</main>
+                <main
+                    className="flex-1"
+                    style={{
+                        /**
+                         * TODO: Need to finally decide on a background pattern.
+                         */
+                        // backgroundImage: 'url(/images/backgrounds/diamond_upholstery.png)',
+                        // backgroundImage: 'url(/images/backgrounds/ecailles.png)',
+                        backgroundImage:
+                            "url(/images/backgrounds/full-bloom.png)",
+                        // backgroundImage: 'url(/images/backgrounds/hypnotize.png)',
+                        // backgroundImage: 'url(/images/backgrounds/seigaiha.png)',
+                        // backgroundImage: 'url(/images/backgrounds/symphony.png)',
+                        // backgroundImage: 'url(/images/backgrounds/texturetastic_gray.png)',
+
+                        backgroundSize: "auto",
+                        backgroundRepeat: "repeat",
+                        backgroundPosition: "center center",
+                    }}
+                >
+                    {props.children}
+                </main>
             </div>
         </RootLayout>
     );
