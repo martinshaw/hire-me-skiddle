@@ -155,8 +155,8 @@ class EventSeeder extends Seeder
             if (!array_key_exists($event['artist'], $artistModels)) $artistModels[$event['artist']] = DB::table('artists')->where('name', $event['artist'])->first();
             $artist = $artistModels[$event['artist']];
 
-            $startAt = $endAt->addHours(rand(1, 3));
-            $endAt = $startAt->addHours(rand(1, 3))->addMinutes(rand(1, 59));
+            $startAt = $endAt->copy();
+            $endAt = $endAt->copy()->addHours(rand(1, 3))->addMinutes(rand(1, 59));
 
             DB::table('events')->insert([
                 'name' => $event['name'],

@@ -31,7 +31,7 @@ const EventIndex = (props: EventIndexPropsType) => {
                 {props.events != null ? (
                     <div className="max-w-7xl mx-auto px-0 @sm:px-6 @lg:px-8 flex flex-col gap-6">
                         {(props.events || []).map((event, index) => (
-                            <EventCard key={index} event={event} />
+                            <EventCard key={index} event={event} linkToArtist={true} />
                         ))}
                     </div>
                 ) : (

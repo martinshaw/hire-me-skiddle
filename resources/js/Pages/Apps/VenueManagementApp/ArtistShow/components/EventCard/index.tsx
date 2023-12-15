@@ -19,6 +19,7 @@ import EventCardArtistRow from "../EventCardArtistRow";
 
 type EventCardPropsType = {
     event: EventModelType;
+    showArtist?: boolean;
     linkToArtist?: boolean;
 };
 
@@ -39,7 +40,7 @@ const EventCard = (props: EventCardPropsType) => {
                 )}
 
                 <div className="flex flex-col gap-3 px-6">
-                    <EventCardArtistRow event={props.event} link={props.linkToArtist === true} />
+                    {props.showArtist !== false && <EventCardArtistRow event={props.event} link={props.linkToArtist === true} />}
 
                     <EventCardTicketsRow event={props.event} />
 
