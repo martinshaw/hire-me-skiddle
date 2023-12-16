@@ -6,7 +6,7 @@
  * Author: Martin Shaw (developer@martinshaw.co)
  * File Name: VenueManagementAppController.php
  * Created:  2023-12-12T12:32:52.178Z
- * Modified: 2023-12-15T13:37:41.581Z
+ * Modified: 2023-12-16T16:36:54.725Z
  *
  * Description: description
  */
@@ -16,6 +16,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Artist;
 use App\Models\Event;
+use App\Models\EventTicketPurchase;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -46,10 +47,6 @@ class VenueManagementAppController extends Controller
         if ($event->venue_id !== $request->user()->venue_id || $request->user()->venue === null) return abort(404);
 
         $event = $event->load('venue');
-
-
-        dd($event->tickets()->get(), $event->ticketPurchases()->first());
-
 
         return Inertia::render('Apps/VenueManagementApp/EventShow/index', [
             'event' => $event,
@@ -89,6 +86,29 @@ class VenueManagementAppController extends Controller
 
         return Inertia::render('Apps/VenueManagementApp/VenueShow/index', [
             'venue' => $user->venue,
+        ]);
+    }
+
+    public function eventTicketPurchaseIndex(Request $request): Response
+    {
+        $venue = $request?->user()?->venue;
+
+        $perPage = $request->get('perPage', 50);
+        $perPage = $perPage > 50 ? 50 : $perPage;
+
+        $paginatedEventTicketPurchases = $venue?->eventTicketPurchases()?->paginate($perPage);
+
+        return Inertia::render('Apps/VenueManagementApp/EventTicketPurchaseIndex/index', [
+            'paginatedEventTicketPurchases' => $paginatedEventTicketPurchases,
+        ]);
+    }
+
+    public function eventTicketPurchaseShow(Request $request, EventTicketPurchase $eventTicketPurchase): Response
+    {
+        if ($eventTicketPurchase->venue_id !== $request->user()->venue_id || $request->user()->venue === null) return abort(404);
+
+        return Inertia::render('Apps/VenueManagementApp/EventTicketPurchaseShow/index', [
+            'eventTicketPurchase' => $eventTicketPurchase,
         ]);
     }
 }

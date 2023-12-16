@@ -113,7 +113,7 @@ class VisitorActivityLog extends Model
     /**
      * Get the ticket purchase which the activity log is due to.
      */
-    public function ticketPurchase()
+    public function eventTicketPurchase()
     {
         return $this->belongsTo(EventTicketPurchase::class);
     }
@@ -121,7 +121,7 @@ class VisitorActivityLog extends Model
     /**
      * Get the ticket which the activity log is due to.
      */
-    public function ticket()
+    public function eventTicket()
     {
         return $this->belongsTo(EventTicket::class);
     }
@@ -129,7 +129,7 @@ class VisitorActivityLog extends Model
     /**
      * Get the ban which the activity log is due to.
      */
-    public function ban()
+    public function visitorBan()
     {
         return $this->belongsTo(VisitorBan::class);
     }

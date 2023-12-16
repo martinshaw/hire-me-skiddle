@@ -62,7 +62,7 @@ class HandleInertiaRequests extends Middleware
                     cache()->remember(
                         'venues:' . $request->user()->venue_id . ':ticket-purchases-count',
                         60,
-                        fn () => ($request->user()?->venue?->ticketPurchases()?->count() ?? 0)
+                        fn () => ($request->user()?->venue?->eventTicketPurchases()?->count() ?? 0)
                     ),
             ],
             'navigation' => [

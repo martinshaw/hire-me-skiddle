@@ -37,7 +37,7 @@ class Visitor extends Model
      * Relationships which should be eager loaded by default
      */
     protected $with = [
-        'bans',
+        'visitorBans',
     ];
 
     /**
@@ -50,7 +50,7 @@ class Visitor extends Model
     /**
      * Get the ticket purchases for the visitor.
      */
-    public function ticketPurchases()
+    public function eventTicketPurchases()
     {
         return $this->hasMany(EventTicketPurchase::class);
     }
@@ -58,7 +58,7 @@ class Visitor extends Model
     /**
      * Get the bans for the visitor.
      */
-    public function bans()
+    public function visitorBans()
     {
         return $this->hasMany(VisitorBan::class);
     }

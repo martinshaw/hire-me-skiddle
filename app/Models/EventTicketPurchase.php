@@ -46,6 +46,15 @@ class EventTicketPurchase extends Model
     ];
 
     /**
+     * Relationships which should be eager loaded by default.
+     */
+    protected $with = [
+        'event',
+        'eventTicket',
+        'visitor',
+    ];
+
+    /**
      * Get the event that owns the ticket purchase.
      */
     public function event()
@@ -64,7 +73,7 @@ class EventTicketPurchase extends Model
     /**
      * Get the ticket that owns the ticket purchase.
      */
-    public function ticket()
+    public function eventTicket()
     {
         return $this->belongsTo(EventTicket::class, 'event_ticket_id');
     }

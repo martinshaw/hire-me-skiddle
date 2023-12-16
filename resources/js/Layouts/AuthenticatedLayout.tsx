@@ -68,10 +68,10 @@ const AuthenticatedLayout = (props: AuthenticatedLayoutPropsType) => {
                                                 ) || false
                                         }
                                     >
-                                        {page.props.counts.events} Event
-                                        {page.props.counts.events > 1
-                                            ? "s"
-                                            : ""}
+                                        {page.props.counts.events.toLocaleString()} Event
+                                        {page.props.counts.events === 1
+                                            ? ""
+                                            : "s"}
                                     </NavLink>
                                     <NavLink
                                         href={route(
@@ -85,10 +85,27 @@ const AuthenticatedLayout = (props: AuthenticatedLayoutPropsType) => {
                                                 ) || false
                                         }
                                     >
-                                        {page.props.counts.artists} Artist
-                                        {page.props.counts.artists > 1
-                                            ? "s"
-                                            : ""}
+                                        {page.props.counts.artists.toLocaleString()} Artist
+                                        {page.props.counts.artists === 1
+                                            ? ""
+                                            : "s"}
+                                    </NavLink>
+                                    <NavLink
+                                        href={route(
+                                            "venue-management-app.event-ticket-purchases.index"
+                                        )}
+                                        active={
+                                            route()
+                                                .current()
+                                                ?.startsWith(
+                                                    "venue-management-app.event-ticket-purchases."
+                                                ) || false
+                                        }
+                                    >
+                                        {page.props.counts.ticket_purchases.toLocaleString()} Ticket Purchase
+                                        {page.props.counts.ticket_purchases === 1
+                                            ? ""
+                                            : "s"}
                                     </NavLink>
                                 </div>
                             </div>
@@ -227,8 +244,8 @@ const AuthenticatedLayout = (props: AuthenticatedLayoutPropsType) => {
                                     "venue-management-app.events.index"
                                 )}
                             >
-                                {page.props.counts.events} Event
-                                {page.props.counts.events > 1 ? "s" : ""}
+                                {page.props.counts.events.toLocaleString()} Event
+                                {page.props.counts.events === 1 ? "" : "s"}
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
                                 href={route(
@@ -238,8 +255,19 @@ const AuthenticatedLayout = (props: AuthenticatedLayoutPropsType) => {
                                     "venue-management-app.artists.index"
                                 )}
                             >
-                                {page.props.counts.artists} Artist
-                                {page.props.counts.artists > 1 ? "s" : ""}
+                                {page.props.counts.artists.toLocaleString()} Artist
+                                {page.props.counts.artists === 1 ? "" : "s"}
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                href={route(
+                                    "venue-management-app.event-ticket-purchases.index"
+                                )}
+                                active={route().current(
+                                    "venue-management-app.event-ticket-purchases.index"
+                                )}
+                            >
+                                {page.props.counts.ticket_purchases.toLocaleString()} Ticket Purchase
+                                {page.props.counts.ticket_purchases === 1 ? "" : "s"}
                             </ResponsiveNavLink>
                         </div>
 

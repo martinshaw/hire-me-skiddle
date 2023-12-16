@@ -29,7 +29,9 @@ class ManagerUserSeeder extends Seeder
             'email' => $email,
             'password' => Hash::make('password'),
             'role' => User::ROLE_MANAGER,
+
             'venue_id' => $venue->id,
+
             'created_at' => now(),
             'updated_at' => now(),
         ]);

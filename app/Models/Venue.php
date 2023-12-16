@@ -51,9 +51,7 @@ class Venue extends Model
      * Add virtual attributes to serialization.
      */
     protected $appends = [
-        'events_count',
-        'artists_count',
-        'ticket_purchases_count',
+        //
     ];
 
     /**
@@ -110,41 +108,5 @@ class Venue extends Model
     public function visitorActivityLogs()
     {
         return $this->hasMany(VisitorActivityLog::class);
-    }
-
-    /**
-     * Virtual attribute to get the venue's count of events.
-     */
-    public function getEventsCountAttribute()
-    {
-        return cache()->remember(
-            'venues:' . $this->id . ':events-count',
-            60 * 60,
-            fn () => $this->events()->count()
-        );
-    }
-
-    /**
-     * Virtual attribute to get the venue's count of artists.
-     */
-    public function getArtistsCountAttribute()
-    {
-        return cache()->remember(
-            'venues:' . $this->id . ':artists-count',
-            60 * 60,
-            fn () => $this->artists()->count()
-        );
-    }
-
-    /**
-     * Virtual attribute to get the venue's count of ticket purchases.
-     */
-    public function getTicketPurchasesCountAttribute()
-    {
-        return cache()->remember(
-            'venues:' . $this->id . ':ticket-purchases-count',
-            60 * 60,
-            fn () => $this->eventTicketPurchases()->count()
-        );
     }
 }

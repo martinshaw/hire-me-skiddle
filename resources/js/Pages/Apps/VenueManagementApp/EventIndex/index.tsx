@@ -51,9 +51,9 @@ EventIndex.layout = (
     page: ReactNode & { props: EventIndexPropsType & PageProps }
 ) => {
     let headerTitle =
-        page.props?.auth?.user?.venue?.events_count > 1
-            ? page.props?.auth?.user?.venue?.events_count + " Events"
-            : page.props?.auth?.user?.venue?.events_count + " Event";
+        page.props.counts.events === 1
+            ? page.props.counts.events.toLocaleString() + " Event"
+            : page.props.counts.events.toLocaleString() + " Events";
 
     headerTitle =
         page.props?.auth?.user?.venue?.name == null

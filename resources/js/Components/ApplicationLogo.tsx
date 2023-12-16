@@ -8,7 +8,7 @@ export default function ApplicationLogo(
         <Link href={route("welcome")}>
             <img
                 src="/images/Skiddle Icon Logo.png"
-                alt="Hire Me (Martin) at Skiddle"
+                alt="Hire Me (Martin Shaw) at Skiddle"
                 {...props}
                 className={"select-none w-10 mx-auto " + (props.className || "")}
             />

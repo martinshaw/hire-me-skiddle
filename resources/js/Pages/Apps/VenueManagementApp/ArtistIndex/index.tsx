@@ -40,9 +40,9 @@ ArtistIndex.layout = (
     page: ReactNode & { props: ArtistIndexPropsType & PageProps }
 ) => {
     let headerTitle =
-        page.props?.auth?.user?.venue?.artists_count > 1
-            ? page.props?.auth?.user?.venue?.artists_count + " Artists"
-            : page.props?.auth?.user?.venue?.artists_count + " Artist";
+        page.props.counts.artists === 1
+            ? page.props.counts.artists.toLocaleString() + " Artist"
+            : page.props.counts.artists.toLocaleString() + " Artists";
 
     headerTitle =
         page.props?.auth?.user?.venue?.name == null

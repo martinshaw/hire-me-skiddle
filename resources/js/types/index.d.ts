@@ -84,6 +84,91 @@ export type EventModelType = {
     created_at: string;
     updated_at: string;
     deleted_at: string;
+};
+
+export type EventTicketModelType = {
+    id: number;
+    name: string;
+    current_price: number;
+    original_price: number;
+    base_currency: number;
+
+    tickets_purchasable_at: string | null;
+    tickets_purchased: number | null;
+    tickets_available: number | null;
+
+    event_id: number;
+    venue_id: number;
+
+    event?: EventModelType | null;
+    venue?: VenueModelType | null;
+
+    created_at: string;
+    updated_at: string;
+    deleted_at: string;
+};
+
+export type VisitorModelType = {
+    id: number;
+
+    first_name: string;
+    middle_name: string | null;
+    last_name: string | null;
+
+    created_at: string;
+    updated_at: string;
+    deleted_at: string;
+};
+
+export type EventTicketPurchaseModelType = {
+    id: number;
+    purchase_price: number;
+    purchase_currency: number;
+
+    entry_barcode: string;
+    entry_code: string;
+
+    event_ticket_id: number;
+    event_id: number;
+    venue_id: number;
+    visitor_id: number;
+
+    formatted_purchase_price: string;
+    entry_barcode_qr_code: string;
+
+    event?: EventModelType | null;
+    event_ticket?: EventTicketModelType | null;
+    venue?: VenueModelType | null;
+    visitor?: VisitorModelType | null;
+
+    created_at: string;
+    updated_at: string;
+    deleted_at: string;
+};
+
+export type LengthAwarePaginatorType<TModelType> = {
+    data: TModelType[];
+    query: string[];
+    fragment: string | null;
+    page_name: string;
+    on_each_side: number;
+    total?: number;
+    from?: number;
+    to?: number;
+    current_page: number;
+    last_page?: number;
+    first_page_url?: string;
+    last_page_url?: string;
+    prev_page_url?: string | null;
+    next_page_url?: string;
+    links?: {
+        url: string | null;
+        label: string;
+        active: boolean;
+    }[];
+    length?: number;
+    path?: string;
+    per_page?: number;
 }
 
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
@@ -93,6 +178,7 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
     counts: {
         events: number;
         artists: number;
+        ticket_purchases: number;
     };
     navigation: {
         ongoing_events: EventModelType[];

@@ -33,6 +33,7 @@ class VisitorSeeder extends Seeder
                 'tickets_available' => $event->tickets_available / 3,
 
                 'event_id' => $event->id,
+                'venue_id' => $event->venue_id,
 
                 'created_at' => $event->created_at,
                 'updated_at' => $event->updated_at,
@@ -51,6 +52,7 @@ class VisitorSeeder extends Seeder
                 'tickets_available' => $event->tickets_available / 3,
 
                 'event_id' => $event->id,
+                'venue_id' => $event->venue_id,
 
                 'created_at' => $event->created_at,
                 'updated_at' => $event->updated_at,
@@ -69,13 +71,14 @@ class VisitorSeeder extends Seeder
                 'tickets_available' => $event->tickets_available / 3,
 
                 'event_id' => $event->id,
+                'venue_id' => $event->venue_id,
 
                 'created_at' => $event->created_at,
                 'updated_at' => $event->updated_at,
             ]);
 
-            // Make 100 visitors for each event
-            foreach (range(1, 100) as $i) {
+            // Make around 100 visitors for each event
+            foreach (range(1, fake()->numberBetween(99, 123)) as $i) {
                 $firstName = fake()->firstName();
                 $lastName = fake()->lastName();
 
@@ -84,6 +87,9 @@ class VisitorSeeder extends Seeder
                 $visitorId = DB::table('visitors')->insertGetId([
                     'first_name' => $firstName,
                     'last_name' => $lastName,
+
+                    'venue_id' => $event->venue_id,
+
                     'created_at' => $ticketPurchasedAt,
                     'updated_at' => $ticketPurchasedAt,
                 ]);
@@ -99,8 +105,11 @@ class VisitorSeeder extends Seeder
                         VisitorActivityLog::LOCATION_OVER_PHONE,
                         VisitorActivityLog::LOCATION_OVER_EMAIL,
                     ]),
+
                     'visitor_id' => $visitorId,
                     'event_id' => $event->id,
+                    'venue_id' => $event->venue_id,
+
                     'created_at' => $ticketPurchasedAt,
                     'updated_at' => $ticketPurchasedAt,
                 ]);
@@ -116,9 +125,12 @@ class VisitorSeeder extends Seeder
                     'purchase_currency' => $chosenTicket->base_currency,
                     'entry_barcode' => $entryBarcode,
                     'entry_code' => $entryCode,
+
                     'event_ticket_id' => $chosenTicketId,
                     'event_id' => $event->id,
+                    'venue_id' => $event->venue_id,
                     'visitor_id' => $visitorId,
+
                     'created_at' => $ticketPurchasedAt,
                     'updated_at' => $ticketPurchasedAt,
                 ]);
@@ -134,10 +146,13 @@ class VisitorSeeder extends Seeder
                         VisitorActivityLog::LOCATION_OVER_PHONE,
                         VisitorActivityLog::LOCATION_OVER_EMAIL,
                     ]),
+
                     'visitor_id' => $visitorId,
                     'event_id' => $event->id,
+                    'venue_id' => $event->venue_id,
                     'event_ticket_purchase_id' => $eventTicketPurchaseId,
                     'event_ticket_id' => $chosenTicket->id,
+
                     'created_at' => $ticketPurchasedAt,
                     'updated_at' => $ticketPurchasedAt,
                 ]);

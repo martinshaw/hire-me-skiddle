@@ -29,7 +29,6 @@
     },
     "dependencies": {
         "@tailwindcss/container-queries": "^0.1.1",
-        "react-cookie": "^6.1.1",
-        "react-progressive-bg-image": "^3.0.0"
+        "react-cookie": "^6.1.1"
     }
 }
