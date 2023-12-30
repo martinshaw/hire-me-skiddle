@@ -9,9 +9,13 @@ Modified: 2023-12-12T10:41:54.349Z
 Description: description
 */
 
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode } from "react";
+import SimpleBar from 'simplebar-react';
+import 'simplebar-react/dist/simplebar.min.css';
 import useViewportContainer from "./hooks/useViewportContainer";
 import RootLayoutHeader from "./components/RootLayoutHeader";
+
+import './index.css';
 
 const RootLayout = ({ children }: { children: ReactNode }) => {
     const {
@@ -19,6 +23,8 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
         setViewportContainerDimensionsTerm,
         viewportContainerDimensionVariants,
         additionalViewportContainerClassNames,
+        viewportContainerStyles,
+        viewportInnerStyles,
     } = useViewportContainer();
 
     return (
@@ -32,22 +38,18 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
                 }
             />
             <div className="bg-stone-700 flex-1 w-screen flex flex-col justify-center items-center m-auto">
-                <div
+                <SimpleBar
+                    autoHide={false}
                     className={
-                        "@container overflow-x-hidden " +
+                        "@container overflow-x-hidden" +
                         additionalViewportContainerClassNames
                     }
-                    style={{
-                        height: viewportContainerDimensionVariants[
-                            viewportContainerDimensionsTerm
-                        ].height,
-                        width: viewportContainerDimensionVariants[
-                            viewportContainerDimensionsTerm
-                        ].width,
-                    }}
+                    style={viewportContainerStyles}
                 >
-                    {children}
-                </div>
+                    <div className="min-h-full" style={viewportInnerStyles}>
+                        {children}
+                    </div>
+                </SimpleBar>
             </div>
         </div>
     );

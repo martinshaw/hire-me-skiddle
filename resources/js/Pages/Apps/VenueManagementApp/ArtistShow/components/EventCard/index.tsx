@@ -20,12 +20,14 @@ import EventCardArtistRow from "../EventCardArtistRow";
 type EventCardPropsType = {
     event: EventModelType;
     showArtist?: boolean;
+    showDescription?: boolean;
     linkToArtist?: boolean;
 };
 
 const EventCard = (props: EventCardPropsType) => {
     return (
         <Link
+        className="flex-1"
             href={route("venue-management-app.events.show", [props.event.id])}
         >
             <div className="bg-white overflow-hidden shadow-sm @md:rounded-lg flex flex-col gap-3 hover:shadow-xl transition-all duration-500 ease-in-out cursor-pointer pt-5 pb-5">
@@ -33,7 +35,7 @@ const EventCard = (props: EventCardPropsType) => {
                     {props.event.name}
                 </div>
 
-                {props.event.description !== null && (
+                {props.event.description !== null && props.showDescription !== false && (
                     <div className="select-text px-6 text-gray-500 hidden @2xl:block">
                         {props.event.description}
                     </div>

@@ -16,11 +16,6 @@ export type EventTicketPurchaseCardPropsType = {
 };
 
 const EventTicketPurchaseCard = (props: EventTicketPurchaseCardPropsType) => {
-    console.log(
-        "EventTicketPurchaseCard #" + props.eventTicketPurchase.id,
-        props.eventTicketPurchase
-    );
-
     const eventStartAtDate: Date | null =
         props.eventTicketPurchase.event?.starts_at == null
             ? null
@@ -35,7 +30,7 @@ const EventTicketPurchaseCard = (props: EventTicketPurchaseCardPropsType) => {
         <div className="bg-white shadow overflow-hidden sm:rounded-lg">
             <div className="px-4 py-5 sm:px-6 flex flex-row gap-3 justify-start items-start">
                 <div className="flex flex-col gap-1 justify-start items-start">
-                    <div className="text-sm font-medium text-gray-900">
+                    <div className="text-md font-medium text-gray-900">
                         {props.eventTicketPurchase.visitor?.first_name}{" "}
                         {props.eventTicketPurchase.visitor?.middle_name}{" "}
                         {props.eventTicketPurchase.visitor?.last_name}

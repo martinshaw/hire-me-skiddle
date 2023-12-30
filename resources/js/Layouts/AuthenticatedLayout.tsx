@@ -37,25 +37,25 @@ const AuthenticatedLayout = (props: AuthenticatedLayoutPropsType) => {
                                 <div className="hidden space-x-8 @sm:-my-px @sm:ms-10 @sm:flex">
                                     {page.props.navigation.ongoing_events
                                         .length > 0 && (
-                                        <NavLink
-                                            href={route(
-                                                "venue-management-app.events.show",
-                                                [
-                                                    page.props.navigation
-                                                        .ongoing_events[0].id,
-                                                ]
-                                            )}
-                                            active={route().current(
-                                                "venue-management-app.events.show",
-                                                [
-                                                    page.props.navigation
-                                                        .ongoing_events[0].id,
-                                                ]
-                                            )}
-                                        >
-                                            Ongoing Event
-                                        </NavLink>
-                                    )}
+                                            <NavLink
+                                                href={route(
+                                                    "venue-management-app.events.show",
+                                                    [
+                                                        page.props.navigation
+                                                            .ongoing_events[0].id,
+                                                    ]
+                                                )}
+                                                active={route().current(
+                                                    "venue-management-app.events.show",
+                                                    [
+                                                        page.props.navigation
+                                                            .ongoing_events[0].id,
+                                                    ]
+                                                )}
+                                            >
+                                                Ongoing Event
+                                            </NavLink>
+                                        )}
                                     <NavLink
                                         href={route(
                                             "venue-management-app.events.index"
@@ -68,7 +68,7 @@ const AuthenticatedLayout = (props: AuthenticatedLayoutPropsType) => {
                                                 ) || false
                                         }
                                     >
-                                        {page.props.counts.events.toLocaleString()} Event
+                                        <span className="hidden @lg:inline">{page.props.counts.events.toLocaleString()}&nbsp;</span> Event
                                         {page.props.counts.events === 1
                                             ? ""
                                             : "s"}
@@ -85,7 +85,7 @@ const AuthenticatedLayout = (props: AuthenticatedLayoutPropsType) => {
                                                 ) || false
                                         }
                                     >
-                                        {page.props.counts.artists.toLocaleString()} Artist
+                                        <span className="hidden @lg:inline">{page.props.counts.artists.toLocaleString()}&nbsp;</span> Artist
                                         {page.props.counts.artists === 1
                                             ? ""
                                             : "s"}
@@ -102,10 +102,15 @@ const AuthenticatedLayout = (props: AuthenticatedLayoutPropsType) => {
                                                 ) || false
                                         }
                                     >
-                                        {page.props.counts.ticket_purchases.toLocaleString()} Ticket Purchase
-                                        {page.props.counts.ticket_purchases === 1
-                                            ? ""
-                                            : "s"}
+                                        <span className="hidden @lg:inline">
+                                            {page.props.counts.ticket_purchases.toLocaleString()} Ticket Purchase
+                                            {page.props.counts.ticket_purchases === 1
+                                                ? ""
+                                                : "s"}
+                                        </span>
+                                        <span className="inline @lg:hidden">
+                                            Tickets
+                                        </span>
                                     </NavLink>
                                 </div>
                             </div>
@@ -217,25 +222,25 @@ const AuthenticatedLayout = (props: AuthenticatedLayoutPropsType) => {
                         <div className="pt-2 pb-3 space-y-1">
                             {page.props.navigation.ongoing_events.length >
                                 0 && (
-                                <ResponsiveNavLink
-                                    href={route(
-                                        "venue-management-app.events.show",
-                                        [
-                                            page.props.navigation
-                                                .ongoing_events[0].id,
-                                        ]
-                                    )}
-                                    active={route().current(
-                                        "venue-management-app.events.show",
-                                        [
-                                            page.props.navigation
-                                                .ongoing_events[0].id,
-                                        ]
-                                    )}
-                                >
-                                    Ongoing Event
-                                </ResponsiveNavLink>
-                            )}
+                                    <ResponsiveNavLink
+                                        href={route(
+                                            "venue-management-app.events.show",
+                                            [
+                                                page.props.navigation
+                                                    .ongoing_events[0].id,
+                                            ]
+                                        )}
+                                        active={route().current(
+                                            "venue-management-app.events.show",
+                                            [
+                                                page.props.navigation
+                                                    .ongoing_events[0].id,
+                                            ]
+                                        )}
+                                    >
+                                        Ongoing Event
+                                    </ResponsiveNavLink>
+                                )}
                             <ResponsiveNavLink
                                 href={route(
                                     "venue-management-app.events.index"

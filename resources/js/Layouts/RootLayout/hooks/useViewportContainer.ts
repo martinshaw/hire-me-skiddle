@@ -8,7 +8,7 @@ Modified: 2023-12-12T11:46:57.149Z
 
 Description: description
 */
-import { ReactNode, useEffect, useState } from "react";
+import { CSSProperties, ReactNode, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { rootLayoutHeaderHeight } from "../components/RootLayoutHeader";
 
@@ -21,27 +21,66 @@ const viewportContainerDimensionVariantTerms = [
 export type ViewportContainerDimensionVariantTerm =
     (typeof viewportContainerDimensionVariantTerms)[number];
 
-type ViewportContainerDimensionType = { width: number; height: number };
+type ViewportContainerDimensionType = { width: number; height: number, zoom?: number };
 
 const viewportContainerDimensionsTermCookieName =
     "viewportContainerDimensions" as const;
 
-const useViewportContainer = () => {
+const useViewportContainer: () => {
+    viewportContainerDimensionsTerm: ViewportContainerDimensionVariantTerm;
+    setViewportContainerDimensionsTerm: React.Dispatch<
+        React.SetStateAction<ViewportContainerDimensionVariantTerm>
+    >;
+    viewportContainerDimensionVariants: {
+        [viewportTerm in ViewportContainerDimensionVariantTerm]: ViewportContainerDimensionType;
+    };
+    additionalViewportContainerClassNames: string;
+    viewportContainerStyles: CSSProperties;
+    viewportInnerStyles: CSSProperties;
+} = () => {
+
+    const containerWidthByPixelRatio = (window.innerWidth * window.devicePixelRatio),
+        containerHeightByPixelRatio = (window.innerHeight * window.devicePixelRatio) - rootLayoutHeaderHeight;
+
+    // 1180 x 820 (70%) - iPad Air
+    const tabletDimensions: ViewportContainerDimensionType = {
+        width: 1180,
+        height: 820,
+        zoom: .9,
+    };
+    // TODO: There must be a better way to do this but I can't think of it right now and I have spent too much time on this already
+    while (
+        (tabletDimensions.width >= (containerWidthByPixelRatio - 50) || tabletDimensions.height >= (containerHeightByPixelRatio - 50)) &&
+        tabletDimensions.width > 0 && tabletDimensions.height > 0
+    ) {
+        tabletDimensions.width -= 1;
+        tabletDimensions.height -= 1;
+    }
+
+    // 360 x 740 (75%) - Samsung Galaxy S8+
+    const mobileDimensions: ViewportContainerDimensionType = {
+        width: 375,
+        height: 667,
+        zoom: .8,
+    };
+    // TODO: There must be a better way to do this but I can't think of it right now and I have spent too much time on this already
+    while (
+        (mobileDimensions.width >= (containerWidthByPixelRatio - 50) || mobileDimensions.height >= (containerHeightByPixelRatio - 50)) &&
+        mobileDimensions.width > 0 && mobileDimensions.height > 0
+    ) {
+        mobileDimensions.width -= 1;
+        mobileDimensions.height -= 1;
+    }
+
     const viewportContainerDimensionVariants: {
         [viewportTerm in ViewportContainerDimensionVariantTerm]: ViewportContainerDimensionType;
     } = {
         desktop: {
-            width: window.innerWidth,
-            height: window.innerHeight - rootLayoutHeaderHeight,
+            width: containerWidthByPixelRatio,
+            height: containerHeightByPixelRatio,
         },
-        tablet: {
-            width: (window.innerHeight - rootLayoutHeaderHeight - 50) * 0.75,
-            height: window.innerHeight - rootLayoutHeaderHeight - 50,
-        },
-        mobile: {
-            width: (window.innerHeight - rootLayoutHeaderHeight - 200) * 0.5,
-            height: window.innerHeight - rootLayoutHeaderHeight - 200,
-        },
+        tablet: tabletDimensions,
+        mobile: mobileDimensions,
     };
 
     const [cookies, setCookie, removeCookie] = useCookies([
@@ -79,12 +118,30 @@ const useViewportContainer = () => {
     else if (viewportContainerDimensionsTerm === "desktop")
         additionalViewportContainerClassNames = "";
 
+    let viewportContainerStyles: CSSProperties = {
+        width: viewportContainerDimensionVariants[
+            viewportContainerDimensionsTerm
+        ].width,
+        height: viewportContainerDimensionVariants[
+            viewportContainerDimensionsTerm
+        ].height,
+    };
+
+    let viewportInnerStyles: CSSProperties = {
+        zoom: viewportContainerDimensionVariants[
+            viewportContainerDimensionsTerm
+        ].zoom,
+    };
+
     return {
         viewportContainerDimensionsTerm,
         setViewportContainerDimensionsTerm,
         viewportContainerDimensionVariants,
         additionalViewportContainerClassNames,
+        viewportContainerStyles,
+        viewportInnerStyles,
     };
+
 }
 
 export default useViewportContainer;

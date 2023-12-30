@@ -5,7 +5,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "vite --host",
+        "dev": "vite dev --host",
         "build": "tsc && vite build && vite build --ssr"
     },
     "devDependencies": {
@@ -29,6 +29,7 @@
     },
     "dependencies": {
         "@tailwindcss/container-queries": "^0.1.1",
-        "react-cookie": "^6.1.1"
+        "react-cookie": "^6.1.1",
+        "simplebar-react": "^3.2.4"
     }
 }

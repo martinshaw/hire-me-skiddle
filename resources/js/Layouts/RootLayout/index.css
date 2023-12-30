@@ -1,0 +1,18 @@
+/**
+ * Simplebar-React create multiple child elements to create the scrollbar functionality, which negate the rounded corner styling
+ *   of the parent element. This CSS rule fixes that.
+ */
+
+.\@container.rounded-lg,
+.\@container.rounded-lg>.simplebar-wrapper,
+.\@container.rounded-lg>.simplebar-wrapper>.simplebar-mask,
+.\@container.rounded-lg>.simplebar-wrapper>.simplebar-placeholder {
+    border-radius: 0.5rem;
+}
+
+.\@container.rounded-2xl,
+.\@container.rounded-2xl>.simplebar-wrapper,
+.\@container.rounded-2xl>.simplebar-wrapper>.simplebar-mask,
+.\@container.rounded-2xl>.simplebar-wrapper>.simplebar-placeholder {
+    border-radius: 1rem;
+}
