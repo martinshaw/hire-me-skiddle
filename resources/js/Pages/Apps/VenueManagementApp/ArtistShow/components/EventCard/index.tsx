@@ -27,7 +27,6 @@ type EventCardPropsType = {
 const EventCard = (props: EventCardPropsType) => {
     return (
         <Link
-        className="flex-1"
             href={route("venue-management-app.events.show", [props.event.id])}
         >
             <div className="bg-white overflow-hidden shadow-sm @md:rounded-lg flex flex-col gap-3 hover:shadow-xl transition-all duration-500 ease-in-out cursor-pointer pt-5 pb-5">

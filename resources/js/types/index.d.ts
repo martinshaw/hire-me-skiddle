@@ -114,6 +114,7 @@ export type VisitorModelType = {
     first_name: string;
     middle_name: string | null;
     last_name: string | null;
+    full_name: string | null;
 
     created_at: string;
     updated_at: string;
