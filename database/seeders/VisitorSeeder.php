@@ -87,6 +87,7 @@ class VisitorSeeder extends Seeder
                 $visitorId = DB::table('visitors')->insertGetId([
                     'first_name' => $firstName,
                     'last_name' => $lastName,
+                    'full_name' => $firstName . ' ' . $lastName,
 
                     'venue_id' => $event->venue_id,
 

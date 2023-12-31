@@ -30,10 +30,21 @@ const EventTicketPurchaseCard = (props: EventTicketPurchaseCardPropsType) => {
         <div className="bg-white shadow overflow-hidden sm:rounded-lg">
             <div className="px-4 py-5 sm:px-6 flex flex-row gap-3 justify-start items-start">
                 <div className="flex flex-col gap-1 justify-start items-start">
-                    <div className="text-md font-medium text-gray-900">
-                        {props.eventTicketPurchase.visitor?.first_name}{" "}
-                        {props.eventTicketPurchase.visitor?.middle_name}{" "}
-                        {props.eventTicketPurchase.visitor?.last_name}
+                    <div className="w-full flex flex-row justify-between text-md font-medium text-gray-900">
+                        <div>
+                            {props.eventTicketPurchase.visitor?.first_name}{" "}
+                            {props.eventTicketPurchase.visitor?.middle_name}{" "}
+                            {props.eventTicketPurchase.visitor?.last_name}
+                        </div>
+                        <div className="text-gray-400 text-right flex float-right items-center align-center">
+                            {" #"}
+                            {props.eventTicketPurchase?.id}
+                        </div>
+                    </div>
+                    <div className="text-sm font-medium flex flex-row gap-2">
+                        <span className="text-gray-900">
+                            {props.eventTicketPurchase.event_ticket?.name}
+                        </span>
                     </div>
                     <div className="text-sm font-medium flex flex-row gap-2">
                         <span className="text-gray-900">

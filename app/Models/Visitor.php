@@ -20,6 +20,7 @@ class Visitor extends Model
         'first_name',
         'middle_name',
         'last_name',
+        'full_name',
 
         'venue_id',
     ];
@@ -31,6 +32,7 @@ class Visitor extends Model
         'first_name' => 'string',
         'middle_name' => 'string',
         'last_name' => 'string',
+        'full_name' => 'string',
     ];
 
     /**
@@ -38,13 +40,6 @@ class Visitor extends Model
      */
     protected $with = [
         'visitorBans',
-    ];
-
-    /**
-     * The attributes that should be appended.
-     */
-    protected $appends = [
-        'full_name',
     ];
 
     /**
@@ -77,17 +72,5 @@ class Visitor extends Model
     public function venue()
     {
         return $this->belongsTo(Venue::class);
-    }
-
-    /**
-     * Get the full name of the visitor.
-     */
-    public function getFullNameAttribute()
-    {
-        $name = $this->first_name;
-        if (empty($this->middle_name) === false) $name .= ' ' . $this->middle_name;
-        if (empty($this->last_name) === false) $name .= ' ' . $this->last_name;
-
-        return $name;
     }
 }

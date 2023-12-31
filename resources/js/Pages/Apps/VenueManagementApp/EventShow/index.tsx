@@ -57,7 +57,7 @@ EventShow.layout = (
                     </h2>
 
                     {page.props.event.description !== null && (
-                        <div className="select-text text-gray-500 hidden @2xl:block">
+                        <div className="select-text text-gray-500 hidden @5xl:block">
                             {page.props.event.description}
                         </div>
                     )}

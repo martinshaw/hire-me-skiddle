@@ -6,7 +6,7 @@
  * Author: Martin Shaw (developer@martinshaw.co)
  * File Name: VenueManagementAppController.php
  * Created:  2023-12-12T12:32:52.178Z
- * Modified: 2023-12-18T12:17:23.042Z
+ * Modified: 2023-12-31T06:41:59.966Z
  *
  * Description: description
  */
@@ -106,21 +106,23 @@ class VenueManagementAppController extends Controller
         }
 
         if ($request->has('artist')) {
-            // $eventTicketsPurchaseQuery->whereHas('event.artist', function (Builder $query) use ($request) {
-            //     $query->where('name', 'like', '%' . $request->get('artist') . '%');
-            // });
-
-
-            $eventTicketsPurchaseQuery->whereHas('event', function (Builder $query) use ($request) {
-                $query->whereHas('artist', function (Builder $query) use ($request) {
-                    $query->where('name', 'like', '%' . $request->get('artist') . '%');
-                });
+            $eventTicketsPurchaseQuery->whereHas('event.artist', function (Builder $query) use ($request) {
+                $query->where('name', 'like', '%' . $request->get('artist') . '%');
             });
+
+            // Both seem to work, and the above is more efficient, but I have left this for future reference
+            // TODO: Remove this
+
+            // $eventTicketsPurchaseQuery->whereHas('event', function (Builder $query) use ($request) {
+            //     $query->whereHas('artist', function (Builder $query) use ($request) {
+            //         $query->where('name', 'like', '%' . $request->get('artist') . '%');
+            //     });
+            // });
         }
 
         if ($request->has('visitor_name')) {
             $eventTicketsPurchaseQuery->whereHas('visitor', function (Builder $query) use ($request) {
-                $query->where('name', 'like', '%' . $request->get('visitor_name') . '%');
+                $query->where('full_name', 'like', '%' . $request->get('visitor_name') . '%');
             });
         }
 
@@ -130,24 +132,22 @@ class VenueManagementAppController extends Controller
             });
         }
 
-        if ($request->has('price')) {
-            $eventTicketsPurchaseQuery->where('purchase_price', $request->get('price'));
-        }
+        // if ($request->has('price')) {
+        //     $eventTicketsPurchaseQuery->where('purchase_price', $request->get('price'));
+        // }
 
-        if ($request->has('purchase_date')) {
-            $eventTicketsPurchaseQuery->where('created_at', $request->get('purchase_date'));
-        }
+        // if ($request->has('purchase_date')) {
+        //     $eventTicketsPurchaseQuery->where('created_at', $request->get('purchase_date'));
+        // }
 
-        if ($request->has('event_date')) {
-            $eventTicketsPurchaseQuery->whereHas('event', function (Builder $query) use ($request) {
-                $query->where('starts_at', $request->get('event_date'));
-            });
-        }
-
-        $paginatedEventTicketPurchases = $eventTicketsPurchaseQuery?->orderBy('created_at', 'desc')?->paginate($perPage);
+        // if ($request->has('event_date')) {
+        //     $eventTicketsPurchaseQuery->whereHas('event', function (Builder $query) use ($request) {
+        //         $query->where('starts_at', $request->get('event_date'));
+        //     });
+        // }
 
         return Inertia::render('Apps/VenueManagementApp/EventTicketPurchaseIndex/index', [
-            'paginatedEventTicketPurchases' => $paginatedEventTicketPurchases,
+            'paginatedEventTicketPurchases' => fn () => $eventTicketsPurchaseQuery?->orderBy('created_at', 'desc')?->paginate($perPage),
         ]);
     }
 

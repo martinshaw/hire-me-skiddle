@@ -125,10 +125,10 @@ const AuthenticatedLayout = (props: AuthenticatedLayoutPropsType) => {
                                                     className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                                 >
                                                     {firstName}
-                                                    <span className="hidden @2xl:block">
+                                                    <span className="hidden @5xl:block">
                                                         &nbsp;{remainderOfName}
                                                     </span>
-                                                    <span className="hidden @2xl:block text-stone-400">
+                                                    <span className="hidden @5xl:block text-stone-400">
                                                         &nbsp;at{" "}
                                                         {
                                                             page.props.auth.user

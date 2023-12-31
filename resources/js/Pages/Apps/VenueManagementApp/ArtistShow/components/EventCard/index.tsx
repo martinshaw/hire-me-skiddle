@@ -36,7 +36,7 @@ const EventCard = (props: EventCardPropsType) => {
                 </div>
 
                 {props.event.description !== null && props.showDescription !== false && (
-                    <div className="select-text px-6 text-gray-500 hidden @2xl:block">
+                    <div className="select-text px-6 text-gray-500 hidden @5xl:block">
                         {props.event.description}
                     </div>
                 )}
