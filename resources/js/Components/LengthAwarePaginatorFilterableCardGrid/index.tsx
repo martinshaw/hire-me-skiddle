@@ -20,7 +20,7 @@ import useIsMounting from "@/hooks/useIsMounting";
 
 type LengthAwarePaginatorFilterableCardGridPropsFilterControlType = {
     caption: string;
-    type: "text" | "date";
+    type: "text" | "date" | "number";
 };
 
 export type LengthAwarePaginatorFilterableCardGridPropsType<TModelType extends any, TFilterKeys extends string[]> = {
@@ -131,6 +131,24 @@ const LengthAwarePaginatorFilterableCardGrid = <TModelType extends any, TFilterK
         </div>
     )
 
+    const numberControl: (control: LengthAwarePaginatorFilterableCardGridPropsFilterControlType, key: TFilterKeys[number]) => ReactNode = (control, key) => (
+        <div className="flex-1 flex flex-row gap-6 justify-start items-center">
+            <div className="flex-1 flex flex-row gap-6 justify-start items-center">
+                <input
+                    type="text"
+                    name={key}
+                    id={key}
+                    value={filterQueries[key] || ''}
+                    placeholder={control.caption || ''}
+                    onFocus={event => { event.currentTarget.type = 'number'; }}
+                    onBlur={event => { if (!event.currentTarget.value) event.currentTarget.type = 'text'; }}
+                    onChange={event => { setFilterQueries((previousState) => ({ ...previousState, [key]: event.target?.value || '' })) }}
+                    className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md max-w-md"
+                />
+            </div>
+        </div>
+    )
+
     const paginationCaption: ReactNode = (() => {
         if (props.paginator?.total === 0) return null;
         if (!debouncedFilterQueries || Object.keys(debouncedFilterQueries || {}).length <= 0) return null;
@@ -176,9 +194,14 @@ const LengthAwarePaginatorFilterableCardGrid = <TModelType extends any, TFilterK
                         <div
                             key={index}
                         >
-                            {props.filterControls[key as TFilterKeys[number]].type === "text"
-                                ? textControl(props.filterControls[key as TFilterKeys[number]], key as TFilterKeys[number])
-                                : dateControl(props.filterControls[key as TFilterKeys[number]], key as TFilterKeys[number])}
+                            {(() => {
+                                switch (props.filterControls[key as TFilterKeys[number]].type) {
+                                    case 'text': return textControl(props.filterControls[key as TFilterKeys[number]], key as TFilterKeys[number]);
+                                    case 'date': return dateControl(props.filterControls[key as TFilterKeys[number]], key as TFilterKeys[number]);
+                                    case 'number': return numberControl(props.filterControls[key as TFilterKeys[number]], key as TFilterKeys[number]);
+                                    default: return null;
+                                }
+                            })()}
                         </div>
                     ))}
                 </div>

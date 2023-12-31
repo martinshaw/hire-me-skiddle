@@ -12,12 +12,13 @@ import AuthenticatedLayout, {
     AuthenticatedLayoutPropsType,
 } from "@/Layouts/AuthenticatedLayout";
 import { Head, usePage } from "@inertiajs/react";
-import { EventModelType, PageProps } from "@/types";
+import { EventModelType, LengthAwarePaginatorType, PageProps } from "@/types";
 import { ReactNode } from "react";
 import EventCard from "../ArtistShow/components/EventCard";
+import LengthAwarePaginatorFilterableCardGrid from "@/Components/LengthAwarePaginatorFilterableCardGrid";
 
 type EventIndexPropsType = {
-    events: EventModelType[];
+    paginatedEvents: LengthAwarePaginatorType<EventModelType>;
 } & AuthenticatedLayoutPropsType;
 
 const EventIndex = (props: EventIndexPropsType) => {
@@ -28,20 +29,50 @@ const EventIndex = (props: EventIndexPropsType) => {
             <Head title="Events" />
 
             <div className="py-12">
-                {props.events != null ? (
-                    <div className="max-w-7xl mx-auto px-0 @sm:px-6 @lg:px-8 flex flex-row flex-wrap grow flex-1 gap-6">
-                        {(props.events || []).map((event, index) => (
-                            <EventCard key={index} event={event} showDescription={false} linkToArtist={true} />
-                        ))}
-                    </div>
-                ) : (
-                    <div className="max-w-7xl mx-auto px-0 @sm:px-6 @lg:px-8 justify-center items-center m-auto w-full h-full flex flex-col">
-                        <div className="text-stone-400">
-                            No events found at{" "}
-                            {page.props.auth.user.venue?.name}
-                        </div>
-                    </div>
-                )}
+                <LengthAwarePaginatorFilterableCardGrid<
+                    EventModelType,
+                    ['event_name', 'artist_name', 'tickets_purchased', 'tickets_available', 'starts_at', 'ends_at'],
+                >
+                    paginator={props.paginatedEvents}
+                    cardRenderer={(model, index) => (
+                        <EventCard key={index} event={model} showDescription={false} linkToArtist={true} />
+                    )}
+                    filterControls={
+                        {
+                            event_name: {
+                                caption: "Event Name",
+                                type: "text",
+                            },
+                            artist_name: {
+                                caption: "Artist Name",
+                                type: "text",
+                            },
+                            tickets_purchased: {
+                                caption: "Tickets Purchased",
+                                type: "text",
+                            },
+                            tickets_available: {
+                                caption: "Tickets Available",
+                                type: "text",
+                            },
+                            starts_at: {
+                                caption: "Starts At",
+                                type: "date",
+                            },
+                            ends_at: {
+                                caption: "Ends At",
+                                type: "date",
+                            },
+                        }
+                    }
+                    noItemsFoundMessage={<>No events found at {page.props.auth.user.venue?.name}</>}
+                    // TODO: Needs to be fixed/improved once the issue with container query is resolved (maybe zoom related)
+                    cardGridSpan={{
+                        mobile: 1,
+                        tablet: 3,
+                        desktop: 3,
+                    }}
+                />
             </div>
         </>
     );
