@@ -132,12 +132,62 @@ class VenueManagementAppController extends Controller
 
     public function artistShow(Request $request, Artist $artist): Response
     {
-        $artist = $artist->load('events');
-
         if ($artist->venue_id !== $request->user()->venue_id || $request->user()->venue === null) return abort(404);
+
+        $eventsQuery = $artist?->events();
+
+        if (empty($request->get('event_name')) === false) {
+            $eventsQuery->where('name', 'like', '%' . $request->get('event_name') . '%');
+        }
+
+        if (empty($request->get('tickets_purchased')) === false) {
+            $countComparator = preg_replace('/[^<>=]/', '', $request->get('tickets_purchased'));
+            $countNumeric = preg_replace('/[^0-9.]/', '', $request->get('tickets_purchased'));
+
+            if (empty($countNumeric) === false) {
+                if (is_numeric($countNumeric)) {
+                    if ($countComparator === '=>') $countComparator = '>=';
+                    if ($countComparator === '=<') $countComparator = '<=';
+                    if (empty($countComparator)) $countComparator = '=';
+
+                    $eventsQuery->where('tickets_purchased', $countComparator, $countNumeric);
+                }
+            }
+        }
+
+        if (empty($request->get('tickets_available')) === false) {
+            $countComparator = preg_replace('/[^<>=]/', '', $request->get('tickets_available'));
+            $countNumeric = preg_replace('/[^0-9.]/', '', $request->get('tickets_available'));
+
+            if (empty($countNumeric) === false) {
+                if (is_numeric($countNumeric)) {
+                    if ($countComparator === '=>') $countComparator = '>=';
+                    if ($countComparator === '=<') $countComparator = '<=';
+                    if (empty($countComparator)) $countComparator = '=';
+
+                    $eventsQuery->where('tickets_available', $countComparator, $countNumeric);
+                }
+            }
+        }
+
+        if (empty($request->get('starts_at')) === false) {
+            $eventsQuery
+                ->where('starts_at', '>=', $request->get('starts_at') . ' 00:00:00')
+                ->where('starts_at', '<=', $request->get('starts_at') . ' 23:59:59');
+        }
+
+        if (empty($request->get('ends_at')) === false) {
+            $eventsQuery
+                ->where('ends_at', '>=', $request->get('ends_at') . ' 00:00:00')
+                ->where('ends_at', '<=', $request->get('ends_at') . ' 23:59:59');
+        }
+
+        $perPage = $request->get('perPage', 10);
+        $perPage = $perPage > 10 ? 10 : $perPage;
 
         return Inertia::render('Apps/VenueManagementApp/ArtistShow/index', [
             'artist' => $artist,
+            'paginatedEvents' => fn () => $eventsQuery?->orderBy('created_at', 'desc')?->paginate($perPage),
         ]);
     }
 

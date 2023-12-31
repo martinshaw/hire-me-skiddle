@@ -31,7 +31,7 @@ const EventIndex = (props: EventIndexPropsType) => {
             <div className="py-12">
                 <LengthAwarePaginatorFilterableCardGrid<
                     EventModelType,
-                    ['event_name', 'artist_name', 'tickets_purchased', 'tickets_available', 'starts_at', 'ends_at'],
+                    ['event_name', 'artist_name', 'tickets_purchased', 'tickets_available', 'starts_at', 'ends_at']
                 >
                     paginator={props.paginatedEvents}
                     cardRenderer={(model, index) => (

@@ -12,13 +12,15 @@ import AuthenticatedLayout, {
     AuthenticatedLayoutPropsType,
 } from "@/Layouts/AuthenticatedLayout";
 import { Head, usePage } from "@inertiajs/react";
-import { ArtistModelType, PageProps } from "@/types";
+import { ArtistModelType, EventModelType, LengthAwarePaginatorType, PageProps } from "@/types";
 import { ReactNode } from "react";
 import ArtistCategoryTag from "../ArtistIndex/components/ArtistCategoryTag";
 import ArtistShowEventCard from "./components/EventCard";
+import LengthAwarePaginatorFilterableCardGrid from "@/Components/LengthAwarePaginatorFilterableCardGrid";
 
 type ArtistShowPropsType = {
     artist: ArtistModelType;
+    paginatedEvents: LengthAwarePaginatorType<EventModelType>;
 } & AuthenticatedLayoutPropsType;
 
 const ArtistShow = (props: ArtistShowPropsType) => {
@@ -26,23 +28,53 @@ const ArtistShow = (props: ArtistShowPropsType) => {
 
     return (
         <>
-            <Head title="Artist" />
+            <Head title={props.artist.name + " - Artist"} />
 
             <div className="py-12">
-                {props.artist.events != null ? (
-                    <div className="max-w-7xl mx-auto px-0 @sm:px-6 @lg:px-8 flex flex-col gap-6">
-                        {(props.artist.events || []).map((event, index) => (
-                            <ArtistShowEventCard key={index} event={event} showArtist={false} />
-                        ))}
-                    </div>
-                ) : (
-                    <div className="max-w-7xl mx-auto px-0 @sm:px-6 @lg:px-8 justify-center items-center m-auto w-full h-full flex flex-col">
-                        <div className="text-stone-400">
-                            No events found for {props.artist.name} at{" "}
-                            {page.props.auth.user.venue?.name}
-                        </div>
-                    </div>
-                )}
+                <LengthAwarePaginatorFilterableCardGrid<
+                    EventModelType,
+                    ['event_name', 'tickets_purchased', 'tickets_available', 'starts_at', 'ends_at']
+                >
+                    paginator={props.paginatedEvents}
+                    cardRenderer={(model, index) => (
+                        <ArtistShowEventCard
+                            key={index}
+                            event={model}
+                            showArtist={false}
+                        />
+                    )}
+                    filterControls={
+                        {
+                            event_name: {
+                                caption: "Event Name",
+                                type: "text",
+                            },
+                            tickets_purchased: {
+                                caption: "Tickets Purchased",
+                                type: "text",
+                            },
+                            tickets_available: {
+                                caption: "Tickets Available",
+                                type: "text",
+                            },
+                            starts_at: {
+                                caption: "Starts At",
+                                type: "date",
+                            },
+                            ends_at: {
+                                caption: "Ends At",
+                                type: "date",
+                            },
+                        }
+                    }
+                    noItemsFoundMessage={<>No events found for {props.artist.name} at {page.props.auth.user.venue?.name}</>}
+                    // TODO: Needs to be fixed/improved once the issue with container query is resolved (maybe zoom related)
+                    cardGridSpan={{
+                        mobile: 1,
+                        tablet: 3,
+                        desktop: 3,
+                    }}
+                />
             </div>
         </>
     );
