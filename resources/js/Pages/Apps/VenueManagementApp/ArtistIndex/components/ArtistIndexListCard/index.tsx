@@ -70,14 +70,14 @@ const ArtistIndexListCard = (props: ArtistIndexListCardPropsType) => {
                         <div className="flex flex-row gap-3 px-6 justify-between items-center text-gray-500 text-sm">
                             <div>
                                 <span className="hidden @5xl:inline-block">
-                                    Click to see more details about the&nbsp;
+                                    Click to see more details about the{" "}
                                 </span>
                                 <span className="inline-block @5xl:hidden">
-                                    More about their&nbsp;
-                                </span>
+                                    More about their{" "}
+                                </span>{" "}
                                 {props.artist.events_count} event{props.artist.events_count > 1 ? "s" : ""}
                                 <span className="hidden @5xl:inline-block">
-                                    &nbsp;which {props.artist.name} has at{" "}
+                                    {" "}which {props.artist.name} has at{" "}
                                     {page.props?.auth?.user?.venue?.name == null
                                         ? "our venue"
                                         : page.props.auth.user.venue?.name}

@@ -6,7 +6,7 @@
  * Author: Martin Shaw (developer@martinshaw.co)
  * File Name: VenueManagementAppController.php
  * Created:  2023-12-12T12:32:52.178Z
- * Modified: 2023-12-31T08:24:12.949Z
+ * Modified: 2023-12-31T08:56:01.810Z
  *
  * Description: description
  */
@@ -57,10 +57,21 @@ class VenueManagementAppController extends Controller
     public function artistIndex(Request $request): Response
     {
         $venue = $request?->user()?->venue;
-        $artists = $venue?->artists()?->get() ?? [];
+        $artistsQuery = $venue?->artists();
+
+        if (empty($request->get('artist_name')) === false) {
+            $artistsQuery->where('name', 'like', '%' . $request->get('artist_name') . '%');
+        }
+
+        if (empty($request->get('artist_type')) === false) {
+            $artistsQuery->where('category', 'like', '%' . $request->get('artist_type') . '%');
+        }
+
+        $perPage = $request->get('perPage', 10);
+        $perPage = $perPage > 10 ? 10 : $perPage;
 
         return Inertia::render('Apps/VenueManagementApp/ArtistIndex/index', [
-            'artists' => $artists,
+            'paginatedArtists' => fn () => $artistsQuery?->orderBy('created_at', 'desc')?->paginate($perPage),
         ]);
     }
 
@@ -93,10 +104,6 @@ class VenueManagementAppController extends Controller
     public function eventTicketPurchaseIndex(Request $request): Response
     {
         $venue = $request?->user()?->venue;
-
-        $perPage = $request->get('perPage', 10);
-        $perPage = $perPage > 10 ? 10 : $perPage;
-
         $eventTicketsPurchaseQuery = $venue?->eventTicketPurchases();
 
         if (empty($request->get('purchase_id')) === false) {
@@ -177,6 +184,9 @@ class VenueManagementAppController extends Controller
                     ->where('starts_at', '<=', $request->get('event_date') . ' 23:59:59');
             });
         }
+
+        $perPage = $request->get('perPage', 10);
+        $perPage = $perPage > 10 ? 10 : $perPage;
 
         return Inertia::render('Apps/VenueManagementApp/EventTicketPurchaseIndex/index', [
             'paginatedEventTicketPurchases' => fn () => $eventTicketsPurchaseQuery?->orderBy('created_at', 'desc')?->paginate($perPage),

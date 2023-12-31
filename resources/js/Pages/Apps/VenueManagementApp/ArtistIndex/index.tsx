@@ -11,26 +11,51 @@ Description: description
 import AuthenticatedLayout, {
     AuthenticatedLayoutPropsType,
 } from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
-import { ArtistModelType, PageProps } from "@/types";
+import { Head, usePage } from "@inertiajs/react";
+import { ArtistModelType, LengthAwarePaginatorType, PageProps } from "@/types";
 import { ReactNode } from "react";
 import ArtistIndexListCard from "./components/ArtistIndexListCard";
+import LengthAwarePaginatorFilterableCardGrid from "@/Components/LengthAwarePaginatorFilterableCardGrid";
 
 export type ArtistIndexPropsType = {
-    artists: ArtistModelType[];
+    paginatedArtists: LengthAwarePaginatorType<ArtistModelType>;
 } & AuthenticatedLayoutPropsType;
 
 const ArtistIndex = (props: ArtistIndexPropsType) => {
+    const page = usePage<ArtistIndexPropsType & PageProps>();
+
     return (
         <>
             <Head title="Artists" />
 
             <div className="py-12">
-                <div className="max-w-7xl mx-auto @sm:px-6 @lg:px-8 flex flex-col gap-6">
-                    {props.artists.map((artist, index) => (
-                        <ArtistIndexListCard artist={artist} key={index} />
-                    ))}
-                </div>
+                <LengthAwarePaginatorFilterableCardGrid<
+                    ArtistModelType,
+                    ['artist_name', 'artist_type']
+                >
+                    paginator={props.paginatedArtists}
+                    cardRenderer={(model, index) => (
+                        <ArtistIndexListCard artist={model} key={index} />
+                    )}
+                    filterControls={
+                        {
+                            artist_name: {
+                                caption: "Artist Name",
+                                type: "text",
+                            },
+                            artist_type: {
+                                caption: "Artist Type",
+                                type: "text",
+                            },
+                        }
+                    }
+                    noItemsFoundMessage={<>No artists found at {page.props.auth.user.venue?.name}</>}
+                    cardGridSpan={{
+                        mobile: 1,
+                        tablet: 3,
+                        desktop: 3,
+                    }}
+                />
             </div>
         </>
     );

@@ -31,10 +31,21 @@ export type LengthAwarePaginatorFilterableCardGridPropsType<TModelType extends a
         TFilterKeys[number],
         LengthAwarePaginatorFilterableCardGridPropsFilterControlType
     >
+    cardGridSpan?: {
+        mobile: number;  // 1
+        tablet: number;  // 3
+        desktop: number; // 4
+    }
 };
 
 const LengthAwarePaginatorFilterableCardGrid = <TModelType extends any, TFilterKeys extends string[]>(props: LengthAwarePaginatorFilterableCardGridPropsType<TModelType, TFilterKeys>) => {
     const isMounting = useIsMounting();
+
+    const cardGridSpan = props.cardGridSpan == null ? {
+        mobile: 1,
+        tablet: 3,
+        desktop: 4,
+    } : props.cardGridSpan;
 
     const [filterQueries, setFilterQueries] = useState<Record<TFilterKeys[number], string>>(
         ([...(new URLSearchParams(location.search)).entries()]).reduce(
@@ -160,7 +171,7 @@ const LengthAwarePaginatorFilterableCardGrid = <TModelType extends any, TFilterK
             <div className="px-4 @sm:px-6 @lg:px-8 flex flex-col gap-3">
                 {paginationCaption}
 
-                <div className={"duration-300 flex flex-col @2xl:flex-row gap-3 @2xl:gap-3 @2xl:overflow-hidden @2xl:pt-1 " + (filterBarVisible ? '@2xl:h-11 h-auto' : 'overflow-hidden @2xl:h-0 h-0')}>
+                <div className={"duration-300 flex flex-col @2xl:flex-row gap-3 px-px @2xl:gap-3 @2xl:overflow-hidden @2xl:pt-1 " + (filterBarVisible ? '@2xl:h-11 h-auto' : 'overflow-hidden @2xl:h-0 h-0')}>
                     {Object.keys(props.filterControls).map((key, index) => (
                         <div
                             key={index}
@@ -174,7 +185,7 @@ const LengthAwarePaginatorFilterableCardGrid = <TModelType extends any, TFilterK
             </div>
 
             {(props.paginator?.data || []).length > 0 ? (
-                <div className="px-0 @sm:px-6 @lg:px-8 grid grid-cols-1 @2xl:grid-cols-3 @5xl:grid-cols-4 gap-6">
+                <div className={"px-0 @sm:px-6 @lg:px-8 grid grid-cols-" + cardGridSpan.mobile + " @2xl:grid-cols-" + cardGridSpan.tablet + " @5xl:grid-cols-" + cardGridSpan.desktop + " gap-6"}>
                     {(props.paginator.data || []).map(props.cardRenderer)}
                 </div>
             ) : (
