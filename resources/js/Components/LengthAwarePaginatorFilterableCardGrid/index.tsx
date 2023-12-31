@@ -122,7 +122,7 @@ const LengthAwarePaginatorFilterableCardGrid = <TModelType extends any, TFilterK
 
     const paginationCaption: ReactNode = (() => {
         if (props.paginator?.total === 0) return null;
-        if (!filterQueries || Object.keys(filterQueries || {}).length <= 0) return null;
+        if (!debouncedFilterQueries || Object.keys(debouncedFilterQueries || {}).length <= 0) return null;
 
         // let fromOrdinal = 'th';
         // if (props.paginator.from === 1) fromOrdinal = 'st';
@@ -136,7 +136,7 @@ const LengthAwarePaginatorFilterableCardGrid = <TModelType extends any, TFilterK
 
         return <div className="flex-1 gap-6 text-center text-sm text-stone-600 pb-2">
             {/*Showing {props.paginator.from}<sup className="inline">{fromOrdinal}</sup> to {props.paginator.to}<sup className="inline">{toOrdinal}</sup> of {props.paginator.total} results with filters applied.*/}
-            Showing {props.paginator.total} results with filters applied.
+            Showing {props.paginator.total} result{props.paginator.total === 1 ? '' : 's'} with filters applied.
         </div>
     })()
 

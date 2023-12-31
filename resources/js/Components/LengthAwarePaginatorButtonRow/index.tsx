@@ -71,7 +71,7 @@ const LengthAwarePaginatorButtonRow = (
                     if (['&laquo;', '&laquo; Previous', 'Next &raquo;'].includes(link.label) === false && link.active !== true) return null;
 
                     if (link.label === "&laquo; Previous") link.label = "&laquo;";
-                    if (link.label === "1" && props.paginator.current_page === 1) link.label = "Page 1";
+                    // if (link.label === "1" && props.paginator.current_page === 1) link.label = "Page 1";
 
                     const buttonProps = {
                         dangerouslySetInnerHTML: { __html: link.label },

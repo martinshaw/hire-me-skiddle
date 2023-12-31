@@ -13,6 +13,12 @@ class EventTicket extends Model
     SoftDeletes,
     HasTimestamps;
 
+    const PURCHASE_CURRENCY_SYMBOLS = [
+        'USD' => '$',
+        'GBP' => '£',
+        'EUR' => '€',
+    ];
+
     /**
      * The attributes that are mass assignable.
      */

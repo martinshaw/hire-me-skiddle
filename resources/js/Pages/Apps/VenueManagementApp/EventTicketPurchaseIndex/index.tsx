@@ -38,7 +38,7 @@ const EventTicketPurchaseIndex = (props: EventTicketPurchaseIndexPropsType) => {
             <div className="py-12">
                 <LengthAwarePaginatorFilterableCardGrid<
                     EventTicketPurchaseModelType,
-                    ['event', 'artist', 'visitor_name', 'ticket_type', 'price', 'purchase_date', 'event_date']
+                    ['purchase_id', 'event', 'artist', 'visitor_name', 'ticket_type', 'price', 'purchase_date', 'event_date']
                 >
                     paginator={props.paginatedEventTicketPurchases}
                     cardRenderer={(model, index) => (
@@ -49,6 +49,10 @@ const EventTicketPurchaseIndex = (props: EventTicketPurchaseIndexPropsType) => {
                     )}
                     filterControls={
                         {
+                            purchase_id: {
+                                caption: "Purchase ID",
+                                type: "text",
+                            },
                             visitor_name: {
                                 caption: "Visitor Name",
                                 type: "text",

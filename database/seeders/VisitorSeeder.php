@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\EventTicket;
 use App\Models\VisitorActivityLog;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -27,7 +28,7 @@ class VisitorSeeder extends Seeder
                 'name' => 'General Admission',
                 'current_price' => $price * (fake()->numberBetween(100, 300) / 100),
                 'original_price' => $price,
-                'base_currency' => 'USD',
+                'base_currency' => fake()->randomElement(array_keys(EventTicket::PURCHASE_CURRENCY_SYMBOLS)),
                 'tickets_purchasable_at' => (new Carbon($event->starts_at))->subDays(rand(30, 120))->addHours(rand(1, 24))->addMinutes(rand(1, 60)),
                 'tickets_purchased' => fake()->numberBetween(0, $event->tickets_purchased / 3),
                 'tickets_available' => $event->tickets_available / 3,
@@ -45,7 +46,7 @@ class VisitorSeeder extends Seeder
                 'name' => 'Second Section',
                 'current_price' => $price * (fake()->numberBetween(100, 300) / 100),
                 'original_price' => $price,
-                'base_currency' => 'USD',
+                'base_currency' => fake()->randomElement(array_keys(EventTicket::PURCHASE_CURRENCY_SYMBOLS)),
 
                 'tickets_purchasable_at' => (new Carbon($event->starts_at))->subDays(rand(30, 120))->addHours(rand(1, 24))->addMinutes(rand(1, 60)),
                 'tickets_purchased' => fake()->numberBetween(0, $event->tickets_purchased / 3),
@@ -64,7 +65,7 @@ class VisitorSeeder extends Seeder
                 'name' => 'Front Section',
                 'current_price' => $price * (fake()->numberBetween(100, 300) / 100),
                 'original_price' => $price,
-                'base_currency' => 'USD',
+                'base_currency' => fake()->randomElement(array_keys(EventTicket::PURCHASE_CURRENCY_SYMBOLS)),
 
                 'tickets_purchasable_at' => (new Carbon($event->starts_at))->subDays(rand(30, 120))->addHours(rand(1, 24))->addMinutes(rand(1, 60)),
                 'tickets_purchased' => fake()->numberBetween(0, $event->tickets_purchased / 3),
