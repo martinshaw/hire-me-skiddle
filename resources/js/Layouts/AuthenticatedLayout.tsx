@@ -225,51 +225,37 @@ const AuthenticatedLayout = (props: AuthenticatedLayoutPropsType) => {
                                     <ResponsiveNavLink
                                         href={route(
                                             "venue-management-app.events.show",
-                                            [
-                                                page.props.navigation
-                                                    .ongoing_events[0].id,
-                                            ]
+                                            [page.props.navigation.ongoing_events[0].id],
                                         )}
                                         active={route().current(
                                             "venue-management-app.events.show",
-                                            [
-                                                page.props.navigation
-                                                    .ongoing_events[0].id,
-                                            ]
+                                            [page.props.navigation.ongoing_events[0].id],
                                         )}
+                                        onClick={() => { setShowingNavigationDropdown(false); }}
                                     >
                                         Ongoing Event
                                     </ResponsiveNavLink>
                                 )}
                             <ResponsiveNavLink
-                                href={route(
-                                    "venue-management-app.events.index"
-                                )}
-                                active={route().current(
-                                    "venue-management-app.events.index"
-                                )}
+                                href={route("venue-management-app.events.index")}
+                                active={route().current("venue-management-app.events.index")}
+                                onClick={() => { setShowingNavigationDropdown(false); }}
                             >
                                 {page.props.counts.events.toLocaleString()} Event
                                 {page.props.counts.events === 1 ? "" : "s"}
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
-                                href={route(
-                                    "venue-management-app.artists.index"
-                                )}
-                                active={route().current(
-                                    "venue-management-app.artists.index"
-                                )}
+                                href={route("venue-management-app.artists.index")}
+                                active={route().current("venue-management-app.artists.index")}
+                                onClick={() => { setShowingNavigationDropdown(false); }}
                             >
                                 {page.props.counts.artists.toLocaleString()} Artist
                                 {page.props.counts.artists === 1 ? "" : "s"}
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
-                                href={route(
-                                    "venue-management-app.event-ticket-purchases.index"
-                                )}
-                                active={route().current(
-                                    "venue-management-app.event-ticket-purchases.index"
-                                )}
+                                href={route("venue-management-app.event-ticket-purchases.index")}
+                                active={route().current("venue-management-app.event-ticket-purchases.index")}
+                                onClick={() => { setShowingNavigationDropdown(false); }}
                             >
                                 {page.props.counts.ticket_purchases.toLocaleString()} Ticket Purchase
                                 {page.props.counts.ticket_purchases === 1 ? "" : "s"}

@@ -17,6 +17,7 @@ import {
     PageProps,
 } from "@/types";
 import { ReactNode, useState } from "react";
+import PageSectionsGrid from "@/Components/PageSectionsGrid";
 
 type EventTicketPurchaseShowPropsType = {
     eventTicketPurchase: EventTicketPurchaseModelType;
@@ -30,7 +31,9 @@ const EventTicketPurchaseShow = (props: EventTicketPurchaseShowPropsType) => {
             <Head title="Event Ticket Purchase" />
 
             <div className="py-12">
-
+                <PageSectionsGrid>
+                    asdoniasd
+                </PageSectionsGrid>
             </div>
         </>
     );

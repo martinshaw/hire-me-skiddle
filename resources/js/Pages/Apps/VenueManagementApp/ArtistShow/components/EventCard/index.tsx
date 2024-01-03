@@ -9,7 +9,7 @@ Modified: 2023-12-14T17:24:33.375Z
 Description: description
 */
 
-import { ArtistModelType, EventModelType } from "@/types";
+import { EventModelType } from "@/types";
 import { Link } from "@inertiajs/react";
 import EventCardTicketsRow from "../EventCardTicketsRow";
 import EventCardSaleAvailabilityRow from "../EventCardSaleAvailabilityRow";

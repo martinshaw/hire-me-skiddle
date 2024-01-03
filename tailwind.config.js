@@ -24,4 +24,16 @@ export default {
         forms,
         containerQueries,
     ],
+
+
+    safelist: [
+        {
+            pattern: /px-([^-\n]*)/,
+            variants: ['@sm', '@md', '@lg', '@xl', '@2xl', '@3xl', '@4xl', '@5xl', '@6xl', '@7xl'],
+        },
+        {
+            pattern: /grid-cols-([^-\n]*)/,
+            variants: ['@sm', '@md', '@lg', '@xl', '@2xl', '@3xl', '@4xl', '@5xl', '@6xl', '@7xl'],
+        },
+    ],
 };

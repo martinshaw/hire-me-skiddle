@@ -11,12 +11,12 @@ Description: description
 
 import { LengthAwarePaginatorType } from "@/types";
 import SecondaryButton from "../SecondaryButton";
-import { ReactNode, useCallback, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import LengthAwarePaginatorButtonRow from "../LengthAwarePaginatorButtonRow";
 import { router } from "@inertiajs/react";
-import TextInput from "../TextInput";
 import { useDebounce } from "use-debounce";
 import useIsMounting from "@/hooks/useIsMounting";
+import { VIEWPORT_DESKTOP, VIEWPORT_TABLET } from "@/utilities";
 
 type LengthAwarePaginatorFilterableCardGridPropsFilterControlType = {
     caption: string;
@@ -208,9 +208,12 @@ const LengthAwarePaginatorFilterableCardGrid = <TModelType extends any, TFilterK
             </div>
 
             {(props.paginator?.data || []).length > 0 ? (
-                <div className={"px-0 @sm:px-6 @lg:px-8 grid grid-cols-" + cardGridSpan.mobile + " @2xl:grid-cols-" + cardGridSpan.tablet + " @5xl:grid-cols-" + cardGridSpan.desktop + " gap-6"}>
-                    {(props.paginator.data || []).map(props.cardRenderer)}
-                </div>
+                <>
+                    {/* Dynamically using Tailwind classes relies on a rule in the `safelist` key of the tailwind.config.js file */}
+                    <div className={"px-0 " + VIEWPORT_TABLET + ":px-6 " + VIEWPORT_DESKTOP + ":px-8 grid grid-cols-" + cardGridSpan.mobile + " " + VIEWPORT_TABLET + ":grid-cols-" + cardGridSpan.tablet + " " + VIEWPORT_DESKTOP + ":grid-cols-" + cardGridSpan.desktop + " gap-6"}>
+                        {(props.paginator.data || []).map(props.cardRenderer)}
+                    </div>
+                </>
             ) : (
                 <div className="max-w-7xl mx-auto px-4 text-center @sm:px-6 @lg:px-8 justify-center items-center m-auto w-full h-full flex flex-col">
                     <div className="text-stone-400">
