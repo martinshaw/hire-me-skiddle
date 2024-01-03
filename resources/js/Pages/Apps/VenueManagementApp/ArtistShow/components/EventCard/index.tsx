@@ -16,6 +16,7 @@ import EventCardSaleAvailabilityRow from "../EventCardSaleAvailabilityRow";
 import EventCardStartEndDateTimeRow from "../EventCardStartEndDateTimeRow";
 import EventCardStatusRow from "../EventCardStatusRow";
 import EventCardArtistRow from "../EventCardArtistRow";
+import { VIEWPORT_DESKTOP } from "@/utilities";
 
 type EventCardPropsType = {
     event: EventModelType;
@@ -35,7 +36,7 @@ const EventCard = (props: EventCardPropsType) => {
                 </div>
 
                 {props.event.description !== null && props.showDescription !== false && (
-                    <div className="select-text px-6 text-gray-500 hidden @5xl:block">
+                    <div className={"select-text px-6 text-gray-500 hidden " + VIEWPORT_DESKTOP + ":block"}>
                         {props.event.description}
                     </div>
                 )}

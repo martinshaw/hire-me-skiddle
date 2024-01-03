@@ -13,6 +13,7 @@ import { LengthAwarePaginatorType } from "@/types";
 import { Link } from "@inertiajs/react";
 import PrimaryButton from "../PrimaryButton";
 import SecondaryButton from "../SecondaryButton";
+import { VIEWPORT_DESKTOP } from "@/utilities";
 
 export type LengthAwarePaginatorButtonRowPropsType = {
     paginator: LengthAwarePaginatorType<any>;
@@ -25,7 +26,7 @@ const LengthAwarePaginatorButtonRow = (
         if (props?.paginator?.links == null) return null;
 
         return <div>
-            <div className="flex-row gap-3 hidden @5xl:flex">
+            <div className={"flex-row gap-3 hidden " + VIEWPORT_DESKTOP + ":flex"}>
                 {props.paginator.links.map((link, index) => {
                     if (link.label === "&laquo; Previous" && props.paginator.current_page === 1) return null;
                     if (link.label === "Next &raquo;" && props.paginator.current_page === props.paginator.last_page) return null;
@@ -63,7 +64,7 @@ const LengthAwarePaginatorButtonRow = (
                     );
                 })}
             </div>
-            <div className="flex-row gap-3 flex @5xl:hidden">
+            <div className={"flex-row gap-3 flex " + VIEWPORT_DESKTOP + ":hidden"}>
                 {props.paginator.links.map((link, index) => {
                     if (link.label === "&laquo; Previous" && props.paginator.current_page === 1) return null;
                     if (link.label === "Next &raquo;" && props.paginator.current_page === props.paginator.last_page) return null;

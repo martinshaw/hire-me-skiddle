@@ -6,6 +6,7 @@ import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link, usePage } from "@inertiajs/react";
 import { PageProps, UserModelType } from "@/types";
 import RootLayout from "./RootLayout";
+import { VIEWPORT_DESKTOP } from "@/utilities";
 
 export type AuthenticatedLayoutPropsType = PropsWithChildren<{
     header?: ReactNode;
@@ -125,10 +126,10 @@ const AuthenticatedLayout = (props: AuthenticatedLayoutPropsType) => {
                                                     className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                                 >
                                                     {firstName}
-                                                    <span className="hidden @5xl:block">
+                                                    <span className={"hidden " + VIEWPORT_DESKTOP + ":block"}>
                                                         &nbsp;{remainderOfName}
                                                     </span>
-                                                    <span className="hidden @5xl:block text-stone-400">
+                                                    <span className={"hidden " + VIEWPORT_DESKTOP + ":block text-stone-400"}>
                                                         &nbsp;at{" "}
                                                         {
                                                             page.props.auth.user

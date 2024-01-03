@@ -19,6 +19,7 @@ import EventCardSaleAvailabilityRow from "../ArtistShow/components/EventCardSale
 import EventCardStartEndDateTimeRow from "../ArtistShow/components/EventCardStartEndDateTimeRow";
 import EventCardStatusRow from "../ArtistShow/components/EventCardStatusRow";
 import EventCardArtistRow from "../ArtistShow/components/EventCardArtistRow";
+import { VIEWPORT_DESKTOP } from "@/utilities";
 
 type EventShowPropsType = {
     event: EventModelType;
@@ -57,7 +58,7 @@ EventShow.layout = (
                     </h2>
 
                     {page.props.event.description !== null && (
-                        <div className="select-text text-gray-500 hidden @5xl:block">
+                        <div className={"select-text text-gray-500 hidden " + VIEWPORT_DESKTOP + ":block"}>
                             {page.props.event.description}
                         </div>
                     )}
