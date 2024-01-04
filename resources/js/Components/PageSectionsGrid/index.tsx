@@ -20,7 +20,7 @@ const PageSectionsGrid = (props: PageSectionsGridPropsType) => {
     return (
         <div className="max-w-7xl mx-auto flex flex-col gap-6">
             {/* Dynamically using Tailwind classes relies on a rule in the `safelist` key of the tailwind.config.js file */}
-            <div className={"px-0 " + VIEWPORT_TABLET + ":px-6 " + VIEWPORT_DESKTOP + ":px-8 grid grid-cols-1 " + VIEWPORT_TABLET + ":grid-cols-1 " + VIEWPORT_DESKTOP + ":grid-cols-2 gap-6"}>
+            <div className={"px-0 " + VIEWPORT_TABLET + ":px-8 " + VIEWPORT_DESKTOP + ":px-8 grid grid-cols-1 " + VIEWPORT_TABLET + ":grid-cols-2 " + VIEWPORT_DESKTOP + ":grid-cols-2 gap-6"}>
                 {props.children}
             </div>
         </div>

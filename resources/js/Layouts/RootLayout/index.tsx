@@ -41,7 +41,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
                 <SimpleBar
                     autoHide={false}
                     className={
-                        "@container overflow-x-hidden" +
+                        "@container transition-duration-300 transition-all overflow-x-hidden" +
                         additionalViewportContainerClassNames
                     }
                     style={viewportContainerStyles}

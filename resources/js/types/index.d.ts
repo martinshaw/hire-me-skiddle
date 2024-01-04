@@ -93,6 +93,9 @@ export type EventTicketModelType = {
     original_price: number;
     base_currency: number;
 
+    formatted_original_price?: string | null;
+    formatted_current_price?: string | null;
+
     tickets_purchasable_at: string | null;
     tickets_purchased: number | null;
     tickets_available: number | null;
@@ -116,10 +119,50 @@ export type VisitorModelType = {
     last_name: string | null;
     full_name: string | null;
 
+    contact_details?: VisitorContactDetailsModelType[] | null;
+
     created_at: string;
     updated_at: string;
     deleted_at: string;
 };
+
+export type VisitorContactDetailsModelType = {
+    id: number;
+
+    type:
+        | 'note'
+        | 'email'
+        | 'phone'
+        | 'address'
+        | 'website'
+        | 'passport'
+        | 'drivers_license'
+        | 'national_id'
+        | 'loyalty_card'
+        | 'student_id'
+        | 'employee_id'
+        | 'enrolled_group'
+        | 'whatsapp'
+        | 'facebook'
+        | 'twitter'
+        | 'instagram'
+        | 'linkedin'
+        | 'youtube'
+        | 'tiktok'
+        | 'snapchat'
+        | 'telegram'
+        | 'viber'
+        | 'discord';
+    value: string;
+
+    venue_id: number;
+    visitor_id: number;
+
+    created_at: string;
+    updated_at: string;
+    deleted_at: string | null;
+};
+}
 
 export type EventTicketPurchaseModelType = {
     id: number;

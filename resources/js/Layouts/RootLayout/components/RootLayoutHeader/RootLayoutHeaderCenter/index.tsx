@@ -15,19 +15,22 @@ const navigableApplications: {
     name: string;
     href: string;
     icon: string;
-    routePrefix: string;
+    isActive: (currentRoute: string) => boolean;
 }[] = [
     {
         name: "Why Hire Me?",
         href: route("why-hire-me.index"),
         icon: "/images/icons/user.svg",
-        routePrefix: "why-hire-me",
+        isActive: (currentRoute: string) =>
+            currentRoute.indexOf('why-hire-me') > -1
     },
     {
         name: "Venue Management App",
         href: route("login", { to: route("venue-management-app.index") }),
         icon: "/images/icons/music.svg",
-        routePrefix: "venue-management-app",
+        isActive: (currentRoute: string) =>
+            currentRoute.indexOf('venue-management-app') > -1 ||
+            currentRoute.indexOf('login') > -1
     },
     // {
     //     name: "Social Media Video Maker",
@@ -49,9 +52,7 @@ const RootLayoutHeaderCenter = (props: RootLayoutHeaderCenterPropsType) => {
                 items={
                     navigableApplications.map((app) => ({
                         ...app,
-                        isActive: (route().current() || "").startsWith(
-                            app.routePrefix
-                        ),
+                        isActive: app.isActive(route().current() as (string | null) || ""),
                     })) as BreadcrumbItemType[]
                 }
             />

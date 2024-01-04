@@ -292,7 +292,7 @@ const AuthenticatedLayout = (props: AuthenticatedLayoutPropsType) => {
                 </nav>
 
                 {props.header && (
-                    <header className="bg-white shadow">
+                    <header className="bg-white border-b border-stone-200">
                         <div className="max-w-7xl mx-auto py-6 px-4 @sm:px-6 @lg:px-8">
                             {props.header}
                         </div>

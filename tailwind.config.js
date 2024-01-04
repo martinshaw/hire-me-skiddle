@@ -29,45 +29,22 @@ export default {
 
 
     safelist: [
-        {
-            pattern: /flex-row/,
-            variants: allViewportVariants,
-        },
-        {
-            pattern: /gap-([^-\n]*)/,
-            variants: allViewportVariants,
-        },
-        {
-            pattern: /pt-([^-\n]*)/,
-            variants: allViewportVariants,
-        },
-        {
-            pattern: /overflow-hidden/,
-            variants: allViewportVariants,
-        },
-        {
-            pattern: /flex/,
-            variants: allViewportVariants,
-        },
-        {
-            pattern: /block/,
-            variants: allViewportVariants,
-        },
-        {
-            pattern: /inline-block/,
-            variants: allViewportVariants,
-        },
-        {
-            pattern: /hidden/,
-            variants: allViewportVariants,
-        },
-        {
-            pattern: /px-([^-\n]*)/,
-            variants: allViewportVariants,
-        },
-        {
-            pattern: /grid-cols-([^-\n]*)/,
-            variants: allViewportVariants,
-        },
-    ],
+        // While I am using the VIEWPORT_ constants in utilities.ts to generate the container query Tailwind classes, these safelist entries are needed.
+        { pattern: /flex-row/ },
+        { pattern: /gap-([^-\n]*)/ },
+        { pattern: /overflow-hidden/ },
+        { pattern: /flex/ },
+        { pattern: /block/ },
+        { pattern: /inline-block/ },
+        { pattern: /hidden/ },
+        { pattern: /rounded-lg/ },
+        { pattern: /w-(28|32)/ },
+        { pattern: /p-([^-\n]*)/ },
+        { pattern: /pt-([^-\n]*)/ },
+        { pattern: /px-([^-\n]*)/ },
+        { pattern: /grid-cols-([^-\n]*)/ },
+    ].map(item => ({
+        ...item,
+        variants: allViewportVariants,
+    })),
 };

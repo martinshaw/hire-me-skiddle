@@ -19,7 +19,7 @@ import EventCardSaleAvailabilityRow from "../ArtistShow/components/EventCardSale
 import EventCardStartEndDateTimeRow from "../ArtistShow/components/EventCardStartEndDateTimeRow";
 import EventCardStatusRow from "../ArtistShow/components/EventCardStatusRow";
 import EventCardArtistRow from "../ArtistShow/components/EventCardArtistRow";
-import { VIEWPORT_DESKTOP } from "@/utilities";
+import { VIEWPORT_DESKTOP, VIEWPORT_TABLET } from "@/utilities";
 
 type EventShowPropsType = {
     event: EventModelType;
@@ -31,10 +31,8 @@ const EventShow = (props: EventShowPropsType) => {
             <Head title="Event" />
 
             <div className="py-12">
-                <div className="max-w-7xl mx-auto @sm:px-6 @lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm @sm:rounded-lg">
-                        <div className="p-6 text-gray-900">def</div>
-                    </div>
+                <div className="max-w-7xl mx-auto px-4 @sm:px-6 @lg:px-8">
+                    abc
                 </div>
             </div>
         </>

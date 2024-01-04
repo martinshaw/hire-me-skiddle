@@ -6,7 +6,7 @@
  * Author: Martin Shaw (developer@martinshaw.co)
  * File Name: VenueManagementAppController.php
  * Created:  2023-12-12T12:32:52.178Z
- * Modified: 2023-12-31T09:22:09.113Z
+ * Modified: 2024-01-03T22:18:04.133Z
  *
  * Description: description
  */
@@ -301,6 +301,8 @@ class VenueManagementAppController extends Controller
     public function eventTicketPurchaseShow(Request $request, EventTicketPurchase $eventTicketPurchase): Response
     {
         if ($eventTicketPurchase->venue_id !== $request->user()->venue_id || $request->user()->venue === null) return abort(404);
+
+        $eventTicketPurchase = $eventTicketPurchase->load('visitor.contactDetails');
 
         return Inertia::render('Apps/VenueManagementApp/EventTicketPurchaseShow/index', [
             'eventTicketPurchase' => $eventTicketPurchase,

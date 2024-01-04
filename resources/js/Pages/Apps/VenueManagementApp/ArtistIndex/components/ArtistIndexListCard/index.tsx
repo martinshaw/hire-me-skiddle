@@ -13,7 +13,7 @@ import { ArtistModelType, PageProps } from "@/types";
 import ArtistCategoryTag from "../ArtistCategoryTag";
 import { ArtistIndexPropsType } from "../..";
 import { Link, usePage } from "@inertiajs/react";
-import { VIEWPORT_DESKTOP } from "@/utilities";
+import { VIEWPORT_DESKTOP, VIEWPORT_TABLET } from "@/utilities";
 
 type ArtistIndexListCardPropsType = {
     artist: ArtistModelType;
@@ -36,7 +36,8 @@ const ArtistIndexListCard = (props: ArtistIndexListCardPropsType) => {
         >
             <div
                 className={
-                    "bg-white overflow-hidden shadow-sm @sm:rounded-lg flex flex-col gap-3 hover:shadow-xl transition-all duration-500 ease-in-out cursor-pointer " +
+                    "bg-white overflow-hidden cursor-pointer transition-all transition-duration-300 ease-in-out shadow-sm hover:shadow-md border border-gray-200 " + VIEWPORT_TABLET + ":rounded-lg " +
+                    "flex flex-col gap-3 " +
                     additionalClassNames
                 }
             >

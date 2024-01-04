@@ -16,7 +16,7 @@ import EventCardSaleAvailabilityRow from "../EventCardSaleAvailabilityRow";
 import EventCardStartEndDateTimeRow from "../EventCardStartEndDateTimeRow";
 import EventCardStatusRow from "../EventCardStatusRow";
 import EventCardArtistRow from "../EventCardArtistRow";
-import { VIEWPORT_DESKTOP } from "@/utilities";
+import { VIEWPORT_DESKTOP, VIEWPORT_TABLET } from "@/utilities";
 
 type EventCardPropsType = {
     event: EventModelType;
@@ -30,7 +30,10 @@ const EventCard = (props: EventCardPropsType) => {
         <Link
             href={route("venue-management-app.events.show", [props.event.id])}
         >
-            <div className="bg-white overflow-hidden shadow-sm @md:rounded-lg flex flex-col gap-3 hover:shadow-xl transition-all duration-500 ease-in-out cursor-pointer pt-5 pb-5">
+            <div className={
+                "bg-white overflow-hidden cursor-pointer transition-all transition-duration-300 ease-in-out shadow-sm hover:shadow-md border border-gray-200 " + VIEWPORT_TABLET + ":rounded-lg " +
+                "flex flex-col gap-3 py-5"
+            }>
                 <div className="select-text px-6 text-gray-800 font-semibold">
                     {props.event.name}
                 </div>

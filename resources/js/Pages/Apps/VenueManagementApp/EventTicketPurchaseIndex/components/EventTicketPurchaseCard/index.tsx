@@ -10,6 +10,7 @@ Description: description
 */
 
 import { EventTicketPurchaseModelType } from "@/types";
+import { VIEWPORT_TABLET } from "@/utilities";
 import { Link } from "@inertiajs/react";
 
 export type EventTicketPurchaseCardPropsType = {
@@ -31,7 +32,7 @@ const EventTicketPurchaseCard = (props: EventTicketPurchaseCardPropsType) => {
         <Link
             href={route("venue-management-app.event-ticket-purchases.show", [props.eventTicketPurchase.id])}
         >
-            <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+            <div className={"bg-white overflow-hidden cursor-pointer transition-all transition-duration-300 ease-in-out shadow-sm hover:shadow-md border border-gray-200 " + VIEWPORT_TABLET + ":rounded-lg "}>
                 <div className="px-4 py-5 sm:px-6 flex flex-row gap-3 justify-start items-start">
                     <div className="flex flex-col gap-1 justify-start items-start">
                         <div className="w-full flex flex-row justify-between text-md font-medium text-gray-900">
@@ -45,12 +46,12 @@ const EventTicketPurchaseCard = (props: EventTicketPurchaseCardPropsType) => {
                                 {props.eventTicketPurchase?.id}
                             </div>
                         </div>
-                        <div className="text-sm font-medium flex flex-row gap-2">
+                        <div className="text-sm font-medium flex flex-col gap-1">
                             <span className="text-gray-900">
                                 {props.eventTicketPurchase.event_ticket?.name}
                             </span>
                         </div>
-                        <div className="text-sm font-medium flex flex-row gap-2">
+                        <div className="text-sm font-medium flex flex-col gap-1">
                             <span className="text-gray-900">
                                 {props.eventTicketPurchase.event?.name}
                             </span>

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\EventTicket;
 use App\Models\VisitorActivityLog;
+use App\Models\VisitorContactDetail;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -95,6 +96,171 @@ class VisitorSeeder extends Seeder
                     'created_at' => $ticketPurchasedAt,
                     'updated_at' => $ticketPurchasedAt,
                 ]);
+
+                $contactDetailIds = [
+                    VisitorContactDetail::TYPE_NOTE => [],
+                    VisitorContactDetail::TYPE_EMAIL => [],
+                    VisitorContactDetail::TYPE_PHONE => [],
+                    VisitorContactDetail::TYPE_ADDRESS => [],
+                    VisitorContactDetail::TYPE_WEBSITE => [],
+                    VisitorContactDetail::TYPE_PASSPORT => [],
+                    VisitorContactDetail::TYPE_DRIVERS_LICENSE => [],
+                    VisitorContactDetail::TYPE_NATIONAL_ID => [],
+                    VisitorContactDetail::TYPE_LOYALTY_CARD => [],
+                    VisitorContactDetail::TYPE_STUDENT_ID => [],
+                    VisitorContactDetail::TYPE_EMPLOYEE_ID => [],
+                    VisitorContactDetail::TYPE_ENROLLED_GROUP => [],
+                    VisitorContactDetail::TYPE_WHATSAPP => [],
+                    VisitorContactDetail::TYPE_FACEBOOK => [],
+                    VisitorContactDetail::TYPE_TWITTER => [],
+                    VisitorContactDetail::TYPE_INSTAGRAM => [],
+                    VisitorContactDetail::TYPE_LINKEDIN => [],
+                    VisitorContactDetail::TYPE_YOUTUBE => [],
+                    VisitorContactDetail::TYPE_TIKTOK => [],
+                    VisitorContactDetail::TYPE_SNAPCHAT => [],
+                    VisitorContactDetail::TYPE_TELEGRAM => [],
+                    VisitorContactDetail::TYPE_VIBER => [],
+                    VisitorContactDetail::TYPE_DISCORD => [],
+                ];
+
+                $contactDetailIds[VisitorContactDetail::TYPE_EMAIL][] = DB::table('visitor_contact_details')->insertGetId([
+                    'type' => VisitorContactDetail::TYPE_EMAIL,
+                    'value' => fake()->email(),
+
+                    'visitor_id' => $visitorId,
+                    'venue_id' => $event->venue_id,
+
+                    'created_at' => $ticketPurchasedAt,
+                    'updated_at' => $ticketPurchasedAt,
+                ]);
+
+                $visitorTelephoneNumber = fake()->phoneNumber();
+
+                $contactDetailIds[VisitorContactDetail::TYPE_PHONE][] = DB::table('visitor_contact_details')->insertGetId([
+                    'type' => VisitorContactDetail::TYPE_PHONE,
+                    'value' => $visitorTelephoneNumber,
+
+                    'visitor_id' => $visitorId,
+                    'venue_id' => $event->venue_id,
+
+                    'created_at' => $ticketPurchasedAt,
+                    'updated_at' => $ticketPurchasedAt,
+                ]);
+
+                $contactDetailIds[VisitorContactDetail::TYPE_ADDRESS][] = DB::table('visitor_contact_details')->insertGetId([
+                    'type' => VisitorContactDetail::TYPE_ADDRESS,
+                    'value' => fake()->address(),
+
+                    'visitor_id' => $visitorId,
+                    'venue_id' => $event->venue_id,
+
+                    'created_at' => $ticketPurchasedAt,
+                    'updated_at' => $ticketPurchasedAt,
+                ]);
+
+                if (fake()->boolean(15)) {
+                    $contactDetailIds[VisitorContactDetail::TYPE_WEBSITE][] = DB::table('visitor_contact_details')->insertGetId([
+                        'type' => VisitorContactDetail::TYPE_WEBSITE,
+                        'value' => fake()->url(),
+
+                        'visitor_id' => $visitorId,
+                        'venue_id' => $event->venue_id,
+
+                        'created_at' => $ticketPurchasedAt,
+                        'updated_at' => $ticketPurchasedAt,
+                    ]);
+                }
+
+                if (fake()->boolean(15)) {
+                    $contactDetailIds[VisitorContactDetail::TYPE_PASSPORT][] = DB::table('visitor_contact_details')->insertGetId([
+                        'type' => VisitorContactDetail::TYPE_PASSPORT,
+                        'value' => fake()->regexify('[A-Z]{2}[0-9]{7}'),
+
+                        'visitor_id' => $visitorId,
+                        'venue_id' => $event->venue_id,
+
+                        'created_at' => $ticketPurchasedAt,
+                        'updated_at' => $ticketPurchasedAt,
+                    ]);
+                }
+
+                if (fake()->boolean(15)) {
+                    $contactDetailIds[VisitorContactDetail::TYPE_DRIVERS_LICENSE][] = DB::table('visitor_contact_details')->insertGetId([
+                        'type' => VisitorContactDetail::TYPE_DRIVERS_LICENSE,
+                        'value' => fake()->regexify('[A-Z]{2}[0-9]{7}'),
+
+                        'visitor_id' => $visitorId,
+                        'venue_id' => $event->venue_id,
+
+                        'created_at' => $ticketPurchasedAt,
+                        'updated_at' => $ticketPurchasedAt,
+                    ]);
+                }
+
+                if (fake()->boolean(15)) {
+                    $contactDetailIds[VisitorContactDetail::TYPE_NATIONAL_ID][] = DB::table('visitor_contact_details')->insertGetId([
+                        'type' => VisitorContactDetail::TYPE_NATIONAL_ID,
+                        'value' => fake()->regexify('[0-9]{7}[A-Z]{1}[0-9]{7}'),
+
+                        'visitor_id' => $visitorId,
+                        'venue_id' => $event->venue_id,
+
+                        'created_at' => $ticketPurchasedAt,
+                        'updated_at' => $ticketPurchasedAt,
+                    ]);
+                }
+
+                if (fake()->boolean(30)) {
+                    $contactDetailIds[VisitorContactDetail::TYPE_LOYALTY_CARD][] = DB::table('visitor_contact_details')->insertGetId([
+                        'type' => VisitorContactDetail::TYPE_LOYALTY_CARD,
+                        'value' => fake()->regexify('[0-9]{16}'),
+
+                        'visitor_id' => $visitorId,
+                        'venue_id' => $event->venue_id,
+
+                        'created_at' => $ticketPurchasedAt,
+                        'updated_at' => $ticketPurchasedAt,
+                    ]);
+                }
+
+                if (fake()->boolean(30)) {
+                    $contactDetailIds[VisitorContactDetail::TYPE_STUDENT_ID][] = DB::table('visitor_contact_details')->insertGetId([
+                        'type' => VisitorContactDetail::TYPE_STUDENT_ID,
+                        'value' => fake()->regexify('[0-9]{16}'),
+
+                        'visitor_id' => $visitorId,
+                        'venue_id' => $event->venue_id,
+
+                        'created_at' => $ticketPurchasedAt,
+                        'updated_at' => $ticketPurchasedAt,
+                    ]);
+                }
+
+                if (fake()->boolean(10)) {
+                    $contactDetailIds[VisitorContactDetail::TYPE_EMPLOYEE_ID][] = DB::table('visitor_contact_details')->insertGetId([
+                        'type' => VisitorContactDetail::TYPE_EMPLOYEE_ID,
+                        'value' => fake()->regexify('[0-9]{16}'),
+
+                        'visitor_id' => $visitorId,
+                        'venue_id' => $event->venue_id,
+
+                        'created_at' => $ticketPurchasedAt,
+                        'updated_at' => $ticketPurchasedAt,
+                    ]);
+                }
+
+                if (fake()->boolean(80)) {
+                    $contactDetailIds[VisitorContactDetail::TYPE_WHATSAPP][] = DB::table('visitor_contact_details')->insertGetId([
+                        'type' => VisitorContactDetail::TYPE_WHATSAPP,
+                        'value' => 'tel:' . $visitorTelephoneNumber,
+
+                        'visitor_id' => $visitorId,
+                        'venue_id' => $event->venue_id,
+
+                        'created_at' => $ticketPurchasedAt,
+                        'updated_at' => $ticketPurchasedAt,
+                    ]);
+                }
 
                 DB::table('visitor_activity_logs')->insert([
                     'type' => VisitorActivityLog::TYPE_VISITOR_CREATED,
