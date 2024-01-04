@@ -27,6 +27,7 @@ import EventCardStartEndDateTimeRow from "../ArtistShow/components/EventCardStar
 import EventCardStatusRow from "../ArtistShow/components/EventCardStatusRow";
 import SecondaryButton from "@/Components/SecondaryButton";
 import VisitorContactDetailRow from "./VisitorContactDetailRow";
+import toast from "react-hot-toast";
 
 type EventTicketPurchaseShowPropsType = {
     eventTicketPurchase: EventTicketPurchaseModelType;
@@ -185,7 +186,9 @@ const EventTicketPurchaseShow = (props: EventTicketPurchaseShowPropsType) => {
                             </div>
 
                             <div className="flex-row gap-3 pt-2">
-                                <SecondaryButton>Refund</SecondaryButton>
+                                <SecondaryButton onClick={() => {
+                                    toast("This feature .")
+                                }}>Refund</SecondaryButton>
                             </div>
                         </div>
                     </PageSectionsGridSection>

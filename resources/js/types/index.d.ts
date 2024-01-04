@@ -172,6 +172,14 @@ export type EventTicketPurchaseModelType = {
     entry_barcode: string;
     entry_code: string;
 
+    resold_at: string | null;
+    resold_by_id: string | null;
+    resold_as_id: string | null;
+
+    refunded_at: string | null;
+    refunded_by_id: string | null;
+    refunded_reason: string | null;
+
     event_ticket_id: number;
     event_id: number;
     venue_id: number;

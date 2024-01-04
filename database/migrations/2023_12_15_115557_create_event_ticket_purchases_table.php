@@ -20,6 +20,14 @@ return new class extends Migration
             $table->string('entry_barcode')->nullable();
             $table->string('entry_code')->nullable();
 
+            $table->dateTime('resold_at')->nullable();
+            $table->foreignId('resold_by_id')->nullable()->constrained('users');
+            $table->foreignId('resold_as_id')->nullable()->constrained('event_ticket_purchases');
+
+            $table->dateTime('refunded_at')->nullable();
+            $table->foreignId('refunded_by_id')->nullable()->constrained('users');
+            $table->string('refunded_reason')->nullable();
+
             $table->foreignId('event_ticket_id')->nullable()->constrained('event_tickets')->onDelete('cascade');
             $table->foreignId('event_id')->nullable()->constrained('events')->onDelete('cascade');
             $table->foreignId('venue_id')->nullable()->constrained('venues')->onDelete('cascade');

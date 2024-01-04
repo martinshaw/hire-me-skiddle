@@ -30,6 +30,14 @@ class EventTicketPurchase extends Model
         'entry_barcode',
         'entry_code',
 
+        'resold_at',
+        'resold_by_id',
+        'resold_as_id',
+
+        'refunded_at',
+        'refunded_by_id',
+        'refunded_reason',
+
         'event_ticket_id',
         'event_id',
         'venue_id',
@@ -59,6 +67,30 @@ class EventTicketPurchase extends Model
         'eventTicket',
         'visitor',
     ];
+
+    /**
+     * Get the user that resold the ticket purchase.
+     */
+    public function resoldBy()
+    {
+        return $this->belongsTo(User::class, 'resold_by_id');
+    }
+
+    /**
+     * Get the ticket purchase that the ticket purchase was resold as.
+     */
+    public function resoldAs()
+    {
+        return $this->belongsTo(EventTicketPurchase::class, 'resold_as_id');
+    }
+
+    /**
+     * Get the user that refunded the ticket purchase.
+     */
+    public function refundedBy()
+    {
+        return $this->belongsTo(User::class, 'refunded_by_id');
+    }
 
     /**
      * Get the event that owns the ticket purchase.
