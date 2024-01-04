@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/apps/venue-management-app/artists/{artist}', [VenueManagementAppArtistController::class, 'show'])->name('venue-management-app.artists.show');
 
     Route::get('/apps/venue-management-app/event-ticket-purchases', [VenueManagementAppEventTicketPurchaseController::class, 'index'])->name('venue-management-app.event-ticket-purchases.index');
+    Route::post('/apps/venue-management-app/event-ticket-purchases/{eventTicketPurchase}/refund', [VenueManagementAppEventTicketPurchaseController::class, 'refund'])->name('venue-management-app.event-ticket-purchases.refund');
     Route::get('/apps/venue-management-app/event-ticket-purchases/{eventTicketPurchase}', [VenueManagementAppEventTicketPurchaseController::class, 'show'])->name('venue-management-app.event-ticket-purchases.show');
 });
 

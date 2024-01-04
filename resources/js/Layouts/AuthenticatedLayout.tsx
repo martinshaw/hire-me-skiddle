@@ -3,11 +3,10 @@ import ApplicationLogo from "@/Components/ApplicationLogo";
 import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
-import { Link, usePage } from "@inertiajs/react";
-import { PageProps, UserModelType } from "@/types";
+import { usePage } from "@inertiajs/react";
+import { PageProps } from "@/types";
 import RootLayout from "./RootLayout";
 import { VIEWPORT_DESKTOP } from "@/utilities";
-import { Toaster } from "react-hot-toast";
 
 export type AuthenticatedLayoutPropsType = PropsWithChildren<{
     header?: ReactNode;
@@ -27,10 +26,6 @@ const AuthenticatedLayout = (props: AuthenticatedLayoutPropsType) => {
 
     return (
         <RootLayout>
-            <Toaster
-                position="bottom-center"
-            />
-
             <div className="select-none min-h-full bg-gray-100 flex flex-col">
                 <nav className="bg-white border-b border-gray-100">
                     <div className="max-w-7xl mx-auto px-4 @sm:px-6 @lg:px-8">

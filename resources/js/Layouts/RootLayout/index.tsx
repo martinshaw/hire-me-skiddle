@@ -14,6 +14,7 @@ import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
 import useViewportContainer from "./hooks/useViewportContainer";
 import RootLayoutHeader from "./components/RootLayoutHeader";
+import { Toaster } from "react-hot-toast";
 
 import './index.css';
 
@@ -49,6 +50,8 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
                     <div className="min-h-full" style={viewportInnerStyles}>
                         {children}
                     </div>
+
+                    <Toaster position="bottom-center"  />
                 </SimpleBar>
             </div>
         </div>

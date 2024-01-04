@@ -6,7 +6,7 @@
  * Author: Martin Shaw (developer@martinshaw.co)
  * File Name: VenueManagementAppEventTicketPurchaseController.php
  * Created:  2023-12-12T12:32:52.178Z
- * Modified: 2024-01-04T02:36:45.852Z
+ * Modified: 2024-01-04T03:11:32.890Z
  *
  * Description: description
  */
@@ -16,6 +16,7 @@ namespace App\Http\Controllers\VenueManagementApp;
 use App\Http\Controllers\Controller;
 use App\Models\EventTicketPurchase;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -123,5 +124,15 @@ class VenueManagementAppEventTicketPurchaseController extends Controller
         return Inertia::render('Apps/VenueManagementApp/EventTicketPurchaseShow/index', [
             'eventTicketPurchase' => $eventTicketPurchase,
         ]);
+    }
+
+    public function refund(EventTicketPurchase $eventTicketPurchase): RedirectResponse
+    {
+        $eventTicketPurchase->update([
+            'refunded_at' => now(),
+            'refunded_by_id' => auth()->id(),
+        ]);
+
+        return redirect()->back();
     }
 }

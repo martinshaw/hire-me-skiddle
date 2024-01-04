@@ -252,7 +252,7 @@ class VisitorSeeder extends Seeder
                 if (fake()->boolean(80)) {
                     $contactDetailIds[VisitorContactDetail::TYPE_WHATSAPP][] = DB::table('visitor_contact_details')->insertGetId([
                         'type' => VisitorContactDetail::TYPE_WHATSAPP,
-                        'value' => 'tel:' . $visitorTelephoneNumber,
+                        'value' => $visitorTelephoneNumber,
 
                         'visitor_id' => $visitorId,
                         'venue_id' => $event->venue_id,

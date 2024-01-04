@@ -16,7 +16,7 @@ import {
     EventTicketPurchaseModelType,
     PageProps,
 } from "@/types";
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import PageSectionsGrid from "@/Components/PageSectionsGrid";
 import PageSectionsGridSection from "@/Components/PageSectionsGrid/PageSectionsGridSection";
 import { VIEWPORT_DESKTOP, VIEWPORT_TABLET } from "@/utilities";
@@ -183,12 +183,45 @@ const EventTicketPurchaseShow = (props: EventTicketPurchaseShowPropsType) => {
                                         {props.eventTicketPurchase.event_ticket?.formatted_current_price}
                                     </div>
                                 </div>
+
+                                {props.eventTicketPurchase.refunded_at != null &&
+                                    <div className="flex flex-col gap-1.5">
+                                        <div className="text-gray-500">
+                                            Refunded At:
+                                        </div>
+                                        <div className="select-text text-gray-800">
+                                            {new Date(props.eventTicketPurchase.refunded_at).toLocaleDateString()}
+                                            {" "}
+                                            {new Date(props.eventTicketPurchase.refunded_at).toLocaleTimeString()}
+                                        </div>
+                                    </div>
+                                }
                             </div>
 
-                            <div className="flex-row gap-3 pt-2">
-                                <SecondaryButton onClick={() => {
-                                    toast("This feature .")
-                                }}>Refund</SecondaryButton>
+                            <div className="flex flex-row gap-3 pt-2">
+                                <Link
+                                    href={route(
+                                        "venue-management-app.event-ticket-purchases.refund",
+                                        [props.eventTicketPurchase.id]
+                                    )}
+                                    method="post"
+                                    as="button"
+                                    disabled={props.eventTicketPurchase.refunded_at != null}
+                                >
+                                    <SecondaryButton
+                                        disabled={props.eventTicketPurchase.refunded_at != null}
+                                    >
+                                        Refund
+                                    </SecondaryButton>
+                                </Link>
+
+                                <SecondaryButton
+                                    onClick={() => {
+                                        toast("This feature would be implemented in a real-world application.")
+                                    }}
+                                >
+                                    Resell
+                                </SecondaryButton>
                             </div>
                         </div>
                     </PageSectionsGridSection>
