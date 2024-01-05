@@ -135,4 +135,14 @@ class VenueManagementAppEventTicketPurchaseController extends Controller
 
         return redirect()->back();
     }
+
+    public function regenerateEntryCode(EventTicketPurchase $eventTicketPurchase): RedirectResponse
+    {
+        $eventTicketPurchase->update([
+            'entry_barcode' => EventTicketPurchase::generateEntryBarcode(),
+            'entry_code' => EventTicketPurchase::generateEntryCode(),
+        ]);
+
+        return redirect()->back();
+    }
 }

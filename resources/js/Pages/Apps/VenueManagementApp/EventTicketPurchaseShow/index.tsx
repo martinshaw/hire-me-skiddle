@@ -8,15 +8,10 @@ Modified: 2023-12-13T07:32:24.912Z
 
 Description: description
 */
-import AuthenticatedLayout, {
-    AuthenticatedLayoutPropsType,
-} from "@/Layouts/AuthenticatedLayout";
-import { Head, Link, router, usePage } from "@inertiajs/react";
-import {
-    EventTicketPurchaseModelType,
-    PageProps,
-} from "@/types";
-import { ReactNode } from "react";
+import AuthenticatedLayout, { AuthenticatedLayoutPropsType } from "@/Layouts/AuthenticatedLayout";
+import { Head, Link, usePage } from "@inertiajs/react";
+import { EventTicketPurchaseModelType, PageProps } from "@/types";
+import { ReactNode, useState } from "react";
 import PageSectionsGrid from "@/Components/PageSectionsGrid";
 import PageSectionsGridSection from "@/Components/PageSectionsGrid/PageSectionsGridSection";
 import { VIEWPORT_DESKTOP, VIEWPORT_TABLET } from "@/utilities";
@@ -28,6 +23,7 @@ import EventCardStatusRow from "../ArtistShow/components/EventCardStatusRow";
 import SecondaryButton from "@/Components/SecondaryButton";
 import VisitorContactDetailRow from "./VisitorContactDetailRow";
 import toast from "react-hot-toast";
+import FloatingUiSelect, { FloatingUiSelectOption } from "@/Components/FloatingUiSelect";
 
 type EventTicketPurchaseShowPropsType = {
     eventTicketPurchase: EventTicketPurchaseModelType;
@@ -35,6 +31,8 @@ type EventTicketPurchaseShowPropsType = {
 
 const EventTicketPurchaseShow = (props: EventTicketPurchaseShowPropsType) => {
     const page = usePage<EventTicketPurchaseShowPropsType & PageProps>();
+
+    const [isEditingVisitorContactDetails, setIsEditingVisitorContactDetails] = useState<boolean>(false);
 
     return (
         <>
@@ -77,7 +75,7 @@ const EventTicketPurchaseShow = (props: EventTicketPurchaseShowPropsType) => {
                                 }
                             </div>
 
-                            <div className="flex-row gap-3 pt-2">
+                            <div className="flex flex-row gap-3 pt-2">
                                 <Link
                                     href={route("venue-management-app.events.show", [props.eventTicketPurchase.event?.id])}
                                 >
@@ -115,7 +113,18 @@ const EventTicketPurchaseShow = (props: EventTicketPurchaseShowPropsType) => {
                                 </div>
                             )}
 
-                            <div className="flex-row gap-3 pt-2">
+                            <div className="flex flex-row gap-3 pt-2">
+                                <Link
+                                    href={route(
+                                        "venue-management-app.event-ticket-purchases.regenerate-entry-code",
+                                        [props.eventTicketPurchase.id]
+                                    )}
+                                    method="post"
+                                >
+                                    <SecondaryButton>
+                                        Regenerate
+                                    </SecondaryButton>
+                                </Link>
                                 <SecondaryButton>Add Ban</SecondaryButton>
                             </div>
                         </div>
@@ -132,13 +141,83 @@ const EventTicketPurchaseShow = (props: EventTicketPurchaseShowPropsType) => {
                             <div className="flex flex-col gap-3">
                                 {
                                     (props.eventTicketPurchase.visitor?.contact_details || []).map((contactDetail, index) =>
-                                        <VisitorContactDetailRow visitorContactDetail={contactDetail} key={index} />
+                                        <VisitorContactDetailRow
+                                            key={contactDetail.id}
+                                            visitorContactDetail={contactDetail}
+                                            isEditing={isEditingVisitorContactDetails}
+                                        />
                                     )
                                 }
                             </div>
 
-                            <div className="flex-row gap-3 pt-2">
-                                <SecondaryButton>Change Details</SecondaryButton>
+                            {/* value="note" */}
+                            {/* value="email" */}
+                            {/* value="phone" */}
+                            {/* value="address" */}
+                            {/* value="website" */}
+                            {/* value="passport" */}
+                            {/* value="drivers_license" */}
+                            {/* value="national_id" */}
+                            {/* value="loyalty_card" */}
+                            {/* value="student_id" */}
+                            {/* value="employee_id" */}
+                            {/* value="enrolled_group" */}
+                            {/* value="whatsapp" */}
+                            {/* value="facebook" */}
+                            {/* value="twitter" */}
+                            {/* value="instagram" */}
+                            {/* value="linkedin" */}
+                            {/* value="youtube" */}
+                            {/* value="tiktok" */}
+                            {/* value="snapchat" */}
+                            {/* value="telegram" */}
+                            {/* value="viber" */}
+                            {/* value="discord" */}
+
+                            <div className="flex flex-row gap-3 pt-2">
+                                <FloatingUiSelect
+                                    arrow
+                                    position="top-start"
+                                    label={() => "Add"}
+                                    onSelect={(index, label) => {
+                                        console.log(index, label)
+
+                                        return false;
+                                    }}
+                                >
+                                    <FloatingUiSelectOption label="Note" />
+                                    <FloatingUiSelectOption label="Email" />
+                                    <FloatingUiSelectOption label="Phone" />
+                                    <FloatingUiSelectOption label="Address" />
+                                    <FloatingUiSelectOption label="Website" />
+                                    <FloatingUiSelectOption label="Passport" />
+                                    <FloatingUiSelectOption label="Driver's License" />
+                                    <FloatingUiSelectOption label="National ID" />
+                                    <FloatingUiSelectOption label="Loyalty Card" />
+                                    <FloatingUiSelectOption label="Student ID" />
+                                    <FloatingUiSelectOption label="Employee ID" />
+                                    <FloatingUiSelectOption label="Enrolled Group" />
+                                    <FloatingUiSelectOption label="WhatsApp" />
+                                    <FloatingUiSelectOption label="Facebook" />
+                                    <FloatingUiSelectOption label="Twitter" />
+                                    <FloatingUiSelectOption label="Instagram" />
+                                    <FloatingUiSelectOption label="LinkedIn" />
+                                    <FloatingUiSelectOption label="YouTube" />
+                                    <FloatingUiSelectOption label="TikTok" />
+                                    <FloatingUiSelectOption label="Snapchat" />
+                                    <FloatingUiSelectOption label="Telegram" />
+                                    <FloatingUiSelectOption label="Viber" />
+                                    <FloatingUiSelectOption label="Discord" />
+                                </FloatingUiSelect>
+
+                                <SecondaryButton onClick={() => {
+                                    setIsEditingVisitorContactDetails(previousState => !previousState);
+                                }}>{
+                                        isEditingVisitorContactDetails ?
+                                            "Finished Editing" :
+                                            "Edit Contact Details"
+                                    }</SecondaryButton>
+
                             </div>
                         </div>
                     </PageSectionsGridSection>
@@ -205,7 +284,6 @@ const EventTicketPurchaseShow = (props: EventTicketPurchaseShowPropsType) => {
                                         [props.eventTicketPurchase.id]
                                     )}
                                     method="post"
-                                    as="button"
                                     disabled={props.eventTicketPurchase.refunded_at != null}
                                 >
                                     <SecondaryButton

@@ -28,6 +28,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@floating-ui/react": "^0.26.4",
         "@tailwindcss/container-queries": "^0.1.1",
         "react-cookie": "^6.1.1",
         "react-hot-toast": "^2.4.1",

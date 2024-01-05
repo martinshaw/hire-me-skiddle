@@ -7,6 +7,7 @@ use App\Http\Controllers\VenueManagementApp\VenueManagementAppEventController;
 use App\Http\Controllers\VenueManagementApp\VenueManagementAppArtistController;
 use App\Http\Controllers\VenueManagementApp\VenueManagementAppEventTicketPurchaseController;
 use App\Http\Controllers\SocialMediaVideoMakerAppController;
+use App\Http\Controllers\VenueManagementApp\VenueManagementAppVisitorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +35,12 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/apps/venue-management-app/event-ticket-purchases', [VenueManagementAppEventTicketPurchaseController::class, 'index'])->name('venue-management-app.event-ticket-purchases.index');
     Route::post('/apps/venue-management-app/event-ticket-purchases/{eventTicketPurchase}/refund', [VenueManagementAppEventTicketPurchaseController::class, 'refund'])->name('venue-management-app.event-ticket-purchases.refund');
+    Route::post('/apps/venue-management-app/event-ticket-purchases/{eventTicketPurchase}/regenerate-entry-code', [VenueManagementAppEventTicketPurchaseController::class, 'regenerateEntryCode'])->name('venue-management-app.event-ticket-purchases.regenerate-entry-code');
     Route::get('/apps/venue-management-app/event-ticket-purchases/{eventTicketPurchase}', [VenueManagementAppEventTicketPurchaseController::class, 'show'])->name('venue-management-app.event-ticket-purchases.show');
+
+    Route::post('/apps/venue-management-app/visitors/{visitor}/contact-details', [VenueManagementAppVisitorController::class, 'createContactDetail'])->name('venue-management-app.visitors.contact-details.create');
+    Route::patch('/apps/venue-management-app/visitors/{visitor}/contact-details/{contactDetail}', [VenueManagementAppVisitorController::class, 'updateContactDetail'])->name('venue-management-app.visitors.contact-details.update');
+    Route::delete('/apps/venue-management-app/visitors/{visitor}/contact-details/{contactDetail}', [VenueManagementAppVisitorController::class, 'deleteContactDetail'])->name('venue-management-app.visitors.contact-details.delete');
 });
 
 Route::get('/apps/social-media-video-maker', [SocialMediaVideoMakerAppController::class, 'index'])->name('social-media-video-maker.index');

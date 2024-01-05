@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\EventTicket;
+use App\Models\EventTicketPurchase;
 use App\Models\VisitorActivityLog;
 use App\Models\VisitorContactDetail;
 use Carbon\Carbon;
@@ -285,14 +286,11 @@ class VisitorSeeder extends Seeder
                 $chosenTicketId = fake()->randomElement($ticketIds);
                 $chosenTicket = DB::table('event_tickets')->where('id', $chosenTicketId)->first();
 
-                $entryBarcode = fake()->regexify('[0-9a-f]{30}');
-                $entryCode = fake()->randomNumber(6, true);
-
                 $eventTicketPurchaseId = DB::table('event_ticket_purchases')->insertGetId([
                     'purchase_price' => $chosenTicket->current_price,
                     'purchase_currency' => $chosenTicket->base_currency,
-                    'entry_barcode' => $entryBarcode,
-                    'entry_code' => $entryCode,
+                    'entry_barcode' => EventTicketPurchase::generateEntryBarcode(),
+                    'entry_code' => EventTicketPurchase::generateEntryCode(),
 
                     'event_ticket_id' => $chosenTicketId,
                     'event_id' => $event->id,

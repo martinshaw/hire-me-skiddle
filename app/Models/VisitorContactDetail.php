@@ -37,6 +37,32 @@ class VisitorContactDetail extends Model
     const TYPE_VIBER = 'viber';
     const TYPE_DISCORD = 'discord';
 
+    const TYPES = [
+        self::TYPE_NOTE,
+        self::TYPE_EMAIL,
+        self::TYPE_PHONE,
+        self::TYPE_ADDRESS,
+        self::TYPE_WEBSITE,
+        self::TYPE_PASSPORT,
+        self::TYPE_DRIVERS_LICENSE,
+        self::TYPE_NATIONAL_ID,
+        self::TYPE_LOYALTY_CARD,
+        self::TYPE_STUDENT_ID,
+        self::TYPE_EMPLOYEE_ID,
+        self::TYPE_ENROLLED_GROUP,
+        self::TYPE_WHATSAPP,
+        self::TYPE_FACEBOOK,
+        self::TYPE_TWITTER,
+        self::TYPE_INSTAGRAM,
+        self::TYPE_LINKEDIN,
+        self::TYPE_YOUTUBE,
+        self::TYPE_TIKTOK,
+        self::TYPE_SNAPCHAT,
+        self::TYPE_TELEGRAM,
+        self::TYPE_VIBER,
+        self::TYPE_DISCORD,
+    ];
+
     /**
      * The attributes that are mass assignable.
      */

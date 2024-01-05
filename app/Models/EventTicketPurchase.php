@@ -143,4 +143,12 @@ class EventTicketPurchase extends Model
     {
         return (new QRCode)->render($this->entry_barcode . '|' . $this->entry_code);
     }
+
+    public static function generateEntryBarcode() {
+        return fake()->regexify('[0-9a-f]{30}');
+    }
+
+    public static function generateEntryCode() {
+        return fake()->randomNumber(6, true);
+    }
 }
