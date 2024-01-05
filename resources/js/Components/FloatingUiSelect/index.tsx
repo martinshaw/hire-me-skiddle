@@ -28,6 +28,7 @@ import {
     FloatingArrow,
 } from "@floating-ui/react";
 import SimpleBar from "simplebar-react";
+import SecondaryButton from "../SecondaryButton";
 
 interface FloatingUiSelectContextValue {
     activeIndex: number | null;
@@ -44,6 +45,8 @@ type FloatingUiSelectPropsType = {
     position?: Placement;
     arrow?: boolean;
     label?: (currentLabel?: string | null) => ReactNode;
+    grid?: number;
+
     onSelect?: (index: number | null, label: string | null) => boolean;
     children: ReactNode;
 };
@@ -53,6 +56,8 @@ const FloatingUiSelect = (props: FloatingUiSelectPropsType) => {
         position: "bottom",
         arrow: true,
         label: (currentLabel) => currentLabel == null || currentLabel === "" ? "Select" : currentLabel,
+        grid: 1,
+
         ...props,
     };
 
@@ -131,7 +136,9 @@ const FloatingUiSelect = (props: FloatingUiSelectPropsType) => {
     return (
         <>
             <div ref={refs.setReference} tabIndex={0} {...getReferenceProps()}>
-                {props.label == null ? "Select" : props.label(selectedLabel)}
+                <SecondaryButton>
+                    {props.label == null ? "Select" : props.label(selectedLabel)}
+                </SecondaryButton>
             </div>
             <FloatingUiSelectContext.Provider value={floatingUiSelectContextValue}>
                 {isOpen && (
@@ -156,7 +163,7 @@ const FloatingUiSelect = (props: FloatingUiSelectPropsType) => {
                         >
                             <div
                                 className={
-                                    "flex flex-col gap-1 " +
+                                    "grid grid-cols-" + props.grid + " gap-1 " +
                                     "bg-white p-1.5 m-1.5 rounded-lg border border-gray-300 shadow shadow-md "// +
                                     // "max-h-80"
                                 }

@@ -101,7 +101,7 @@ const VisitorContactDetailRow = (props: VisitorContactDetailRowPropsType) => {
             {props.isEditing ?
                 <TextInput
                     className="w-full"
-                    value={visitorContactDetailFormData.value}
+                    value={visitorContactDetailFormData.value || ''}
                     onChange={(e) => {
                         setVisitorContactDetailFormData(
                             "value",
