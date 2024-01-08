@@ -47,7 +47,7 @@ const EventCard = (props: EventCardPropsType) => {
                 <div className="flex flex-col gap-3 px-6">
                     {props.showArtist !== false && <EventCardArtistRow event={props.event} link={props.linkToArtist === true} />}
 
-                    <EventCardTicketsRow event={props.event} />
+                    <EventCardTicketsRow eventOrEventTicket={props.event} />
 
                     <EventCardSaleAvailabilityRow
                         event={props.event}

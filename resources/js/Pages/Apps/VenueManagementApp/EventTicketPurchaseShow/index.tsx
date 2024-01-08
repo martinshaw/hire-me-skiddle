@@ -43,9 +43,7 @@ const EventTicketPurchaseShow = (props: EventTicketPurchaseShowPropsType) => {
 
                     <VisitorActivityLogPageSection scopes={{
                         venue: page.props.auth.user.venue_id,
-                        // event: props.eventTicketPurchase.event,
                         eventTicketPurchase: props.eventTicketPurchase,
-                        // eventTicket: props.eventTicketPurchase.event_ticket,
                         visitor: props.eventTicketPurchase.visitor,
                     }} />
 

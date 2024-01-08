@@ -14,12 +14,18 @@ import { ReactNode } from "react";
 
 export type PageSectionsGridSectionPropsType = {
     title: ReactNode;
+    spanTwo?: boolean;
     children: ReactNode;
 }
 
 const PageSectionsGridSection = (props: PageSectionsGridSectionPropsType) => {
+    props = {
+        spanTwo: false,
+        ...props,
+    }
+
     return (
-        <div className="flex flex-col gap-3">
+        <div className={"flex flex-col gap-3 " + (props.spanTwo ? 'col-span-2' : '')}>
 
             <h3 className={"font-semibold uppercase text-gray-800 text-sm leading-tight px-4 " + VIEWPORT_TABLET + ":px-0 " + VIEWPORT_DESKTOP + ":px-0"}>
                 {props.title}

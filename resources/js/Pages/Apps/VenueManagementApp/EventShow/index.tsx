@@ -11,8 +11,8 @@ Description: description
 import AuthenticatedLayout, {
     AuthenticatedLayoutPropsType,
 } from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
-import { EventModelType, PageProps } from "@/types";
+import { Head, usePage } from "@inertiajs/react";
+import { EventModelType, EventTicketModelType, PageProps } from "@/types";
 import { ReactNode } from "react";
 import EventCardTicketsRow from "../ArtistShow/components/EventCardTicketsRow";
 import EventCardSaleAvailabilityRow from "../ArtistShow/components/EventCardSaleAvailabilityRow";
@@ -20,20 +20,43 @@ import EventCardStartEndDateTimeRow from "../ArtistShow/components/EventCardStar
 import EventCardStatusRow from "../ArtistShow/components/EventCardStatusRow";
 import EventCardArtistRow from "../ArtistShow/components/EventCardArtistRow";
 import { VIEWPORT_DESKTOP, VIEWPORT_TABLET } from "@/utilities";
+import PageSectionsGrid from "@/Components/PageSectionsGrid";
+import ArtistPageSection from "./ArtistPageSection";
+import EventTicketPageSection from "./EventTicketPageSection";
+import VisitorActivityLogPageSection from "../EventTicketPurchaseShow/VisitorActivityLogPageSection";
 
 type EventShowPropsType = {
     event: EventModelType;
+    eventTickets: EventTicketModelType[];
 } & AuthenticatedLayoutPropsType;
 
 const EventShow = (props: EventShowPropsType) => {
+
+    const page = usePage<EventShowPropsType & PageProps>();
+
     return (
         <>
             <Head title="Event" />
 
             <div className="py-12">
-                <div className="max-w-7xl mx-auto px-4 @sm:px-6 @lg:px-8">
-                    abc
-                </div>
+                <PageSectionsGrid>
+
+                    {props.eventTickets.map((eventTicket, index) => (
+                        <EventTicketPageSection
+                            key={index}
+                            eventTicket={eventTicket}
+                            event={props.event}
+                        />
+                    ))}
+
+                    {props.event.artist != null && <ArtistPageSection artist={props.event.artist} />}
+
+                    <VisitorActivityLogPageSection scopes={{
+                        venue: page.props.auth.user.venue_id,
+                        event: props.event,
+                    }} />
+
+                </PageSectionsGrid>
             </div>
         </>
     );
@@ -63,7 +86,7 @@ EventShow.layout = (
 
                     <EventCardArtistRow event={page.props.event} link={true} />
 
-                    <EventCardTicketsRow event={page.props.event} />
+                    <EventCardTicketsRow eventOrEventTicket={page.props.event} />
 
                     <EventCardSaleAvailabilityRow
                         event={page.props.event}

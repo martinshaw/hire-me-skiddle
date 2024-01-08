@@ -10,6 +10,7 @@ Description: description
 */
 
 import PageSectionsGridSection from "@/Components/PageSectionsGrid/PageSectionsGridSection";
+import useIsMounting from "@/hooks/useIsMounting";
 import { EventModelType, EventTicketModelType, EventTicketPurchaseModelType, LengthAwarePaginatorType, VenueModelType, VisitorActivityLogModelType, VisitorContactDetailsModelType, VisitorModelType } from "@/types";
 import { router } from "@inertiajs/react";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -74,15 +75,20 @@ const LengthAwarePaginatorInfiniteScrollList = <TItemType extends unknown>(props
         });
     }, [currentPage, isLoading]);
 
-    // useEffect(() => {
-    //     reset();
-    //     fetchMoreItems();
-    // }, [containerRef]);
+    useEffect(() => {
+        const cancelEvent = router.on('finish', (event) => {
+            reset();
+            fetchMoreItems();
+        })
 
-    router.on('navigate', (event) => {
         reset();
         fetchMoreItems();
-    })
+
+        return () => {
+            cancelEvent();
+        }
+    }, []);
+
 
     const handleScroll = useCallback(async () => {
         if (isLoading) return;
@@ -93,7 +99,7 @@ const LengthAwarePaginatorInfiniteScrollList = <TItemType extends unknown>(props
     }, [isLoading, containerRef, currentPage]);
 
     return (
-        <div className="flex flex-col gap-3 h-96 overflow-y-scroll" ref={containerRef} onScroll={handleScroll}>
+        <div className="flex flex-col gap-3 h-fill max-h-96 overflow-y-scroll" ref={containerRef} onScroll={handleScroll}>
             {depaginatedItems.map(props.itemRenderer)}
 
             {isLoading && <div className="text-gray-500 w-full text-sm text-center">{props.loadingMessage == null ? 'Loading...' : props.loadingMessage()}</div>}

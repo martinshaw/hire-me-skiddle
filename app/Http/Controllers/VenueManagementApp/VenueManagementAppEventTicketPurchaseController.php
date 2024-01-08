@@ -6,7 +6,7 @@
  * Author: Martin Shaw (developer@martinshaw.co)
  * File Name: VenueManagementAppEventTicketPurchaseController.php
  * Created:  2023-12-12T12:32:52.178Z
- * Modified: 2024-01-08T14:25:39.347Z
+ * Modified: 2024-01-08T14:53:46.348Z
  *
  * Description: description
  */
@@ -153,6 +153,8 @@ class VenueManagementAppEventTicketPurchaseController extends Controller
 
     public function regenerateEntryCode(EventTicketPurchase $eventTicketPurchase): RedirectResponse
     {
+        $currentEntryCode = $eventTicketPurchase->entry_code;
+
         $eventTicketPurchase->update([
             'entry_barcode' => EventTicketPurchase::generateEntryBarcode(),
             'entry_code' => EventTicketPurchase::generateEntryCode(),
@@ -161,7 +163,7 @@ class VenueManagementAppEventTicketPurchaseController extends Controller
         VisitorActivityLog::create([
             'type' => VisitorActivityLog::TYPE_EVENT_TICKET_PURCHASE_REGENERATED_ENTRY_CODE,
             'importance' => VisitorActivityLog::IMPORTANCE_INFO,
-            'message' => 'Regenerated Entry Code from ' . $eventTicketPurchase->getOriginal('entry_code') . ' to ' . $eventTicketPurchase->entry_code . '.',
+            'message' => 'Regenerated Entry Code from ' . $currentEntryCode . ' to ' . $eventTicketPurchase->entry_code . '.',
             'location' => VisitorActivityLog::LOCATION_WEBSITE,
 
             'visitor_id' => $eventTicketPurchase->visitor_id,

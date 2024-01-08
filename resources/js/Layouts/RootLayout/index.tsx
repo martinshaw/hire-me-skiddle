@@ -46,6 +46,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
                         additionalViewportContainerClassNames
                     }
                     style={viewportContainerStyles}
+                    scroll-region="true"
                 >
                     <div className="min-h-full" style={viewportInnerStyles}>
                         {children}

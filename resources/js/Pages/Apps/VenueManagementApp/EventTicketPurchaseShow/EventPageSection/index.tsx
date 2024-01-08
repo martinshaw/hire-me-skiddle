@@ -39,7 +39,7 @@ const EventPageSection = (props: EventPageSectionPropsType) => {
                     }
 
                     {props.event &&
-                        <EventCardTicketsRow event={props.event} />
+                        <EventCardTicketsRow eventOrEventTicket={props.event} />
                     }
 
                     {props.event &&

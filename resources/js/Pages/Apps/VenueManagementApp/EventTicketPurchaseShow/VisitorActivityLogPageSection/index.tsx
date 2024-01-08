@@ -36,7 +36,7 @@ const VisitorActivityLogPageSection = (props: VisitorActivityLogPageSectionProps
     };
 
     return (
-        <PageSectionsGridSection title="Activity Log">
+        <PageSectionsGridSection title="Activity Log" spanTwo>
             <LengthAwarePaginatorInfiniteScrollList<VisitorActivityLogModelType>
                 url={(pageNumber) => route(
                     "venue-management-app.visitor-activity-logs.index",

@@ -6,7 +6,7 @@
  * Author: Martin Shaw (developer@martinshaw.co)
  * File Name: VenueManagementAppEventController.php
  * Created:  2024-01-04T02:25:35.147Z
- * Modified: 2024-01-04T02:25:35.147Z
+ * Modified: 2024-01-08T16:05:28.547Z
  *
  * Description: description
  */
@@ -95,6 +95,7 @@ class VenueManagementAppEventController extends Controller
 
         return Inertia::render('Apps/VenueManagementApp/EventShow/index', [
             'event' => $event,
+            'eventTickets' => fn () => $event->tickets()->get(),
         ]);
     }
 
