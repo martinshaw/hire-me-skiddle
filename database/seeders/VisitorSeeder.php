@@ -6,7 +6,7 @@ use App\Models\EventTicketPurchase;
 use App\Models\VisitorActivityLog;
 use App\Models\VisitorContactDetail;
 use Carbon\Carbon;
-use Faker\Factory;
+use \Faker\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
