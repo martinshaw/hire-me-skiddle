@@ -2,12 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\EventTicket;
 use App\Models\EventTicketPurchase;
 use App\Models\VisitorActivityLog;
 use App\Models\VisitorContactDetail;
 use Carbon\Carbon;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Faker\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -18,6 +17,8 @@ class VisitorSeeder extends Seeder
      */
     public function run(): void
     {
+        $faker = Factory::create();
+
         $events = DB::table('events')->get();
 
         foreach ($events as $event) {
@@ -28,11 +29,11 @@ class VisitorSeeder extends Seeder
 
             $ticketIds[] = DB::table('event_tickets')->insertGetId([
                 'name' => 'General Admission',
-                'current_price' => $price * (fake()->numberBetween(100, 300) / 100),
+                'current_price' => $price * ($faker->numberBetween(100, 300) / 100),
                 'original_price' => $price,
                 'base_currency' => 'GBP',
                 'tickets_purchasable_at' => (new Carbon($event->starts_at))->subDays(rand(30, 120))->addHours(rand(1, 24))->addMinutes(rand(1, 60)),
-                'tickets_purchased' => fake()->numberBetween(0, $event->tickets_purchased / 3),
+                'tickets_purchased' => $faker->numberBetween(0, $event->tickets_purchased / 3),
                 'tickets_available' => $event->tickets_available / 3,
 
                 'event_id' => $event->id,
@@ -46,12 +47,12 @@ class VisitorSeeder extends Seeder
 
             $ticketIds[] = DB::table('event_tickets')->insertGetId([
                 'name' => 'Second Section',
-                'current_price' => $price * (fake()->numberBetween(100, 300) / 100),
+                'current_price' => $price * ($faker->numberBetween(100, 300) / 100),
                 'original_price' => $price,
                 'base_currency' => 'GBP',
 
                 'tickets_purchasable_at' => (new Carbon($event->starts_at))->subDays(rand(30, 120))->addHours(rand(1, 24))->addMinutes(rand(1, 60)),
-                'tickets_purchased' => fake()->numberBetween(0, $event->tickets_purchased / 3),
+                'tickets_purchased' => $faker->numberBetween(0, $event->tickets_purchased / 3),
                 'tickets_available' => $event->tickets_available / 3,
 
                 'event_id' => $event->id,
@@ -65,12 +66,12 @@ class VisitorSeeder extends Seeder
 
             $ticketIds[] = DB::table('event_tickets')->insertGetId([
                 'name' => 'Front Section',
-                'current_price' => $price * (fake()->numberBetween(100, 300) / 100),
+                'current_price' => $price * ($faker->numberBetween(100, 300) / 100),
                 'original_price' => $price,
                 'base_currency' => 'GBP',
 
                 'tickets_purchasable_at' => (new Carbon($event->starts_at))->subDays(rand(30, 120))->addHours(rand(1, 24))->addMinutes(rand(1, 60)),
-                'tickets_purchased' => fake()->numberBetween(0, $event->tickets_purchased / 3),
+                'tickets_purchased' => $faker->numberBetween(0, $event->tickets_purchased / 3),
                 'tickets_available' => $event->tickets_available / 3,
 
                 'event_id' => $event->id,
@@ -81,9 +82,9 @@ class VisitorSeeder extends Seeder
             ]);
 
             // Make around 100 visitors for each event
-            foreach (range(1, fake()->numberBetween(99, 123)) as $i) {
-                $firstName = fake()->firstName();
-                $lastName = fake()->lastName();
+            foreach (range(1, $faker->numberBetween(99, 123)) as $i) {
+                $firstName = $faker->firstName();
+                $lastName = $faker->lastName();
 
                 $ticketPurchasedAt = (new Carbon($event->starts_at))->subDays(rand(1, 30))->addHours(rand(1, 24))->addMinutes(rand(1, 60));
 
@@ -126,7 +127,7 @@ class VisitorSeeder extends Seeder
 
                 $contactDetailIds[VisitorContactDetail::TYPE_EMAIL][] = DB::table('visitor_contact_details')->insertGetId([
                     'type' => VisitorContactDetail::TYPE_EMAIL,
-                    'value' => fake()->email(),
+                    'value' => $faker->email(),
 
                     'visitor_id' => $visitorId,
                     'venue_id' => $event->venue_id,
@@ -135,7 +136,7 @@ class VisitorSeeder extends Seeder
                     'updated_at' => $ticketPurchasedAt,
                 ]);
 
-                $visitorTelephoneNumber = fake()->phoneNumber();
+                $visitorTelephoneNumber = $faker->phoneNumber();
 
                 $contactDetailIds[VisitorContactDetail::TYPE_PHONE][] = DB::table('visitor_contact_details')->insertGetId([
                     'type' => VisitorContactDetail::TYPE_PHONE,
@@ -150,7 +151,7 @@ class VisitorSeeder extends Seeder
 
                 $contactDetailIds[VisitorContactDetail::TYPE_ADDRESS][] = DB::table('visitor_contact_details')->insertGetId([
                     'type' => VisitorContactDetail::TYPE_ADDRESS,
-                    'value' => fake()->address(),
+                    'value' => $faker->address(),
 
                     'visitor_id' => $visitorId,
                     'venue_id' => $event->venue_id,
@@ -159,10 +160,10 @@ class VisitorSeeder extends Seeder
                     'updated_at' => $ticketPurchasedAt,
                 ]);
 
-                if (fake()->boolean(15)) {
+                if ($faker->boolean(15)) {
                     $contactDetailIds[VisitorContactDetail::TYPE_WEBSITE][] = DB::table('visitor_contact_details')->insertGetId([
                         'type' => VisitorContactDetail::TYPE_WEBSITE,
-                        'value' => fake()->url(),
+                        'value' => $faker->url(),
 
                         'visitor_id' => $visitorId,
                         'venue_id' => $event->venue_id,
@@ -172,10 +173,10 @@ class VisitorSeeder extends Seeder
                     ]);
                 }
 
-                if (fake()->boolean(15)) {
+                if ($faker->boolean(15)) {
                     $contactDetailIds[VisitorContactDetail::TYPE_PASSPORT][] = DB::table('visitor_contact_details')->insertGetId([
                         'type' => VisitorContactDetail::TYPE_PASSPORT,
-                        'value' => fake()->regexify('[A-Z]{2}[0-9]{7}'),
+                        'value' => $faker->regexify('[A-Z]{2}[0-9]{7}'),
 
                         'visitor_id' => $visitorId,
                         'venue_id' => $event->venue_id,
@@ -185,10 +186,10 @@ class VisitorSeeder extends Seeder
                     ]);
                 }
 
-                if (fake()->boolean(15)) {
+                if ($faker->boolean(15)) {
                     $contactDetailIds[VisitorContactDetail::TYPE_DRIVERS_LICENSE][] = DB::table('visitor_contact_details')->insertGetId([
                         'type' => VisitorContactDetail::TYPE_DRIVERS_LICENSE,
-                        'value' => fake()->regexify('[A-Z]{2}[0-9]{7}'),
+                        'value' => $faker->regexify('[A-Z]{2}[0-9]{7}'),
 
                         'visitor_id' => $visitorId,
                         'venue_id' => $event->venue_id,
@@ -198,10 +199,10 @@ class VisitorSeeder extends Seeder
                     ]);
                 }
 
-                if (fake()->boolean(15)) {
+                if ($faker->boolean(15)) {
                     $contactDetailIds[VisitorContactDetail::TYPE_NATIONAL_ID][] = DB::table('visitor_contact_details')->insertGetId([
                         'type' => VisitorContactDetail::TYPE_NATIONAL_ID,
-                        'value' => fake()->regexify('[0-9]{7}[A-Z]{1}[0-9]{7}'),
+                        'value' => $faker->regexify('[0-9]{7}[A-Z]{1}[0-9]{7}'),
 
                         'visitor_id' => $visitorId,
                         'venue_id' => $event->venue_id,
@@ -211,10 +212,10 @@ class VisitorSeeder extends Seeder
                     ]);
                 }
 
-                if (fake()->boolean(30)) {
+                if ($faker->boolean(30)) {
                     $contactDetailIds[VisitorContactDetail::TYPE_LOYALTY_CARD][] = DB::table('visitor_contact_details')->insertGetId([
                         'type' => VisitorContactDetail::TYPE_LOYALTY_CARD,
-                        'value' => fake()->regexify('[0-9]{16}'),
+                        'value' => $faker->regexify('[0-9]{16}'),
 
                         'visitor_id' => $visitorId,
                         'venue_id' => $event->venue_id,
@@ -224,10 +225,10 @@ class VisitorSeeder extends Seeder
                     ]);
                 }
 
-                if (fake()->boolean(30)) {
+                if ($faker->boolean(30)) {
                     $contactDetailIds[VisitorContactDetail::TYPE_STUDENT_ID][] = DB::table('visitor_contact_details')->insertGetId([
                         'type' => VisitorContactDetail::TYPE_STUDENT_ID,
-                        'value' => fake()->regexify('[0-9]{16}'),
+                        'value' => $faker->regexify('[0-9]{16}'),
 
                         'visitor_id' => $visitorId,
                         'venue_id' => $event->venue_id,
@@ -237,10 +238,10 @@ class VisitorSeeder extends Seeder
                     ]);
                 }
 
-                if (fake()->boolean(10)) {
+                if ($faker->boolean(10)) {
                     $contactDetailIds[VisitorContactDetail::TYPE_EMPLOYEE_ID][] = DB::table('visitor_contact_details')->insertGetId([
                         'type' => VisitorContactDetail::TYPE_EMPLOYEE_ID,
-                        'value' => fake()->regexify('[0-9]{16}'),
+                        'value' => $faker->regexify('[0-9]{16}'),
 
                         'visitor_id' => $visitorId,
                         'venue_id' => $event->venue_id,
@@ -250,7 +251,7 @@ class VisitorSeeder extends Seeder
                     ]);
                 }
 
-                if (fake()->boolean(80)) {
+                if ($faker->boolean(80)) {
                     $contactDetailIds[VisitorContactDetail::TYPE_WHATSAPP][] = DB::table('visitor_contact_details')->insertGetId([
                         'type' => VisitorContactDetail::TYPE_WHATSAPP,
                         'value' => $visitorTelephoneNumber,
@@ -267,7 +268,7 @@ class VisitorSeeder extends Seeder
                     'type' => VisitorActivityLog::TYPE_VISITOR_CREATED,
                     'importance' => VisitorActivityLog::IMPORTANCE_INFO,
                     'message' => 'New Customer Created: ' . $firstName . ' ' . $lastName . '.',
-                    'location' => fake()->randomElement([
+                    'location' => $faker->randomElement([
                         VisitorActivityLog::LOCATION_WEBSITE,
                         VisitorActivityLog::LOCATION_MOBILE_APP,
                         VisitorActivityLog::LOCATION_IN_PERSON,
@@ -283,7 +284,7 @@ class VisitorSeeder extends Seeder
                     'updated_at' => $ticketPurchasedAt,
                 ]);
 
-                $chosenTicketId = fake()->randomElement($ticketIds);
+                $chosenTicketId = $faker->randomElement($ticketIds);
                 $chosenTicket = DB::table('event_tickets')->where('id', $chosenTicketId)->first();
 
                 $eventTicketPurchaseId = DB::table('event_ticket_purchases')->insertGetId([
@@ -305,7 +306,7 @@ class VisitorSeeder extends Seeder
                     'type' => VisitorActivityLog::TYPE_EVENT_TICKET_PURCHASE_CREATED,
                     'importance' => VisitorActivityLog::IMPORTANCE_INFO,
                     'message' => 'New Ticket Purchased: ' . $chosenTicket->name . ' by ' . $firstName . ' ' . $lastName . ' for ' . $event->name,
-                    'location' => fake()->randomElement([
+                    'location' => $faker->randomElement([
                         VisitorActivityLog::LOCATION_WEBSITE,
                         VisitorActivityLog::LOCATION_MOBILE_APP,
                         VisitorActivityLog::LOCATION_IN_PERSON,

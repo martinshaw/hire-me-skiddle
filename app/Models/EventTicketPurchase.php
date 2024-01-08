@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use chillerlan\QRCode\QRCode;
+use Faker\Factory;
 use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -145,10 +146,10 @@ class EventTicketPurchase extends Model
     }
 
     public static function generateEntryBarcode() {
-        return fake()->regexify('[0-9a-f]{30}');
+        return Factory::create()->regexify('[0-9a-f]{30}');
     }
 
     public static function generateEntryCode() {
-        return fake()->randomNumber(6, true);
+        return Factory::create()->randomNumber(6, true);
     }
 }
