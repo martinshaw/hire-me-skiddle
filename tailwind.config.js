@@ -27,22 +27,22 @@ export default {
         containerQueries,
     ],
 
-
     safelist: [
         // While I am using the VIEWPORT_ constants in utilities.ts to generate the container query Tailwind classes, these safelist entries are needed.
-        { pattern: /flex-row/ },
-        { pattern: /gap-([^-\n]*)/ },
         { pattern: /overflow-hidden/ },
         { pattern: /flex/ },
+        { pattern: /flex-row/ },
         { pattern: /block/ },
         { pattern: /inline-block/ },
         { pattern: /hidden/ },
         { pattern: /rounded-lg/ },
         { pattern: /w-(28|32)/ },
+        { pattern: /gap-([^-\n]*)/ },
         { pattern: /p-([^-\n]*)/ },
         { pattern: /pt-([^-\n]*)/ },
         { pattern: /px-([^-\n]*)/ },
         { pattern: /grid-cols-([^-\n]*)/ },
+        { pattern: /col-span-([^-\n]*)/ },
     ].map(item => ({
         ...item,
         variants: allViewportVariants,

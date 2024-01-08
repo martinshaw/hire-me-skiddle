@@ -12,6 +12,7 @@ Description: description
 import LengthAwarePaginatorInfiniteScrollList from "@/Components/LengthAwarePaginatorInfiniteScrollList";
 import PageSectionsGridSection from "@/Components/PageSectionsGrid/PageSectionsGridSection";
 import { EventModelType, EventTicketModelType, EventTicketPurchaseModelType, LengthAwarePaginatorType, VenueModelType, VisitorActivityLogModelType, VisitorContactDetailsModelType, VisitorModelType } from "@/types";
+import { VIEWPORT_TABLET } from "@/utilities";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 export type VisitorActivityLogPageSectionPropsType = {
@@ -46,9 +47,9 @@ const VisitorActivityLogPageSection = (props: VisitorActivityLogPageSectionProps
                     },
                 )}
                 itemRenderer={(activityLog: VisitorActivityLogModelType, index: number) => (
-                    <div key={index} className="flex flex-row gap-3 p-2 mr-1 hover:bg-gray-100 cursor-pointer rounded-md transition-all duration-300">
+                    <div key={index} className={"flex flex-col " + VIEWPORT_TABLET + ":flex-row gap-3 p-2 mr-1 hover:bg-gray-100 cursor-pointer rounded-md transition-all duration-300"}>
                         <div className="flex flex-col gap-1.5 flex-1 justify-center">
-                            <div className="select-text text-gray-800">
+                            <div className="select-text text-gray-800 text-sm">
                                 {activityLog.message}
                             </div>
                         </div>

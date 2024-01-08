@@ -34,7 +34,7 @@ const EventTicketPurchaseCard = (props: EventTicketPurchaseCardPropsType) => {
         >
             <div className={"bg-white overflow-hidden cursor-pointer transition-all transition-duration-300 ease-in-out shadow-sm hover:shadow-md border border-gray-200 " + VIEWPORT_TABLET + ":rounded-lg "}>
                 <div className="px-4 py-5 sm:px-6 flex flex-row gap-3 justify-start items-start">
-                    <div className="flex flex-col gap-1 justify-start items-start">
+                    <div className="flex flex-col gap-1 justify-start items-start w-full">
                         <div className="w-full flex flex-row justify-between text-md font-medium text-gray-900">
                             <div>
                                 {props.eventTicketPurchase.visitor?.first_name}{" "}

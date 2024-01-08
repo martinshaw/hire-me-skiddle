@@ -11,4 +11,4 @@ Description: description
 
 // export const VIEWPORT_MOBILE = ''
 export const VIEWPORT_TABLET = '@2xl';
-export const VIEWPORT_DESKTOP = '@5xl';
+export const VIEWPORT_DESKTOP = '@7xl';

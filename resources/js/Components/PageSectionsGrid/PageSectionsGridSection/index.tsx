@@ -25,7 +25,7 @@ const PageSectionsGridSection = (props: PageSectionsGridSectionPropsType) => {
     }
 
     return (
-        <div className={"flex flex-col gap-3 " + (props.spanTwo ? 'col-span-2' : '')}>
+        <div className={"flex flex-col gap-3 " + (props.spanTwo ? ('col-span-1 ' + VIEWPORT_DESKTOP + ':col-span-2') : '')}>
 
             <h3 className={"font-semibold uppercase text-gray-800 text-sm leading-tight px-4 " + VIEWPORT_TABLET + ":px-0 " + VIEWPORT_DESKTOP + ":px-0"}>
                 {props.title}
