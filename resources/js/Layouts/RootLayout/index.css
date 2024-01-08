@@ -16,3 +16,7 @@
 .\@container.rounded-2xl>.simplebar-wrapper>.simplebar-placeholder {
     border-radius: 1rem;
 }
+
+.simplebar-content {
+    height: inherit !important;
+}

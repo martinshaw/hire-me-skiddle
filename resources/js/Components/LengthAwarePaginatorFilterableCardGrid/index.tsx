@@ -170,7 +170,7 @@ const LengthAwarePaginatorFilterableCardGrid = <TModelType extends any, TFilterK
     })()
 
     return (
-        <div className="max-w-7xl mx-auto flex flex-col gap-6">
+        <div className="max-w-7xl mx-auto flex flex-col gap-6 h-full">
             <div className="px-4 @sm:px-6 @lg:px-8 flex flex-row gap-6">
                 <div className="">
                     <SecondaryButton
@@ -189,7 +189,7 @@ const LengthAwarePaginatorFilterableCardGrid = <TModelType extends any, TFilterK
             <div className="px-4 @sm:px-6 @lg:px-8 flex flex-col gap-3">
                 {paginationCaption}
 
-                <div className={"duration-300 flex flex-col " + VIEWPORT_DESKTOP + ":flex-row gap-3 px-px " + VIEWPORT_DESKTOP + ":gap-3 " + VIEWPORT_DESKTOP + ":overflow-hidden " + VIEWPORT_DESKTOP + ":pt-1 " + (filterBarVisible ? (VIEWPORT_DESKTOP + ':h-11 h-auto') : ('overflow-hidden ' + VIEWPORT_DESKTOP + ':h-0 h-0'))}>
+                <div className={"flex flex-col " + VIEWPORT_TABLET + ":flex-row gap-3 px-px " + VIEWPORT_TABLET + ":gap-3 " + VIEWPORT_TABLET + ":overflow-hidden " + VIEWPORT_TABLET + ":pt-1 " + (filterBarVisible ? (VIEWPORT_TABLET + ':h-11 h-auto') : ('overflow-hidden ' + VIEWPORT_TABLET + ':h-0 h-0'))}>
                     {Object.keys(props.filterControls).map((key, index) => (
                         <div
                             key={index}
@@ -215,7 +215,7 @@ const LengthAwarePaginatorFilterableCardGrid = <TModelType extends any, TFilterK
                     </div>
                 </>
             ) : (
-                <div className="max-w-7xl mx-auto px-4 text-center @sm:px-6 @lg:px-8 justify-center items-center m-auto w-full h-full flex flex-col">
+                <div className="max-w-7xl mx-auto px-4 text-center @sm:px-6 @lg:px-8 justify-center items-center m-auto w-full h-48 flex flex-col">
                     <div className="text-stone-400">
                         {props.noItemsFoundMessage}
                     </div>
