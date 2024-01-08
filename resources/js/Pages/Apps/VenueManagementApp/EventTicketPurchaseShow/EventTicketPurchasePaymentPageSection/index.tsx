@@ -13,6 +13,7 @@ import PageSectionsGridSection from "@/Components/PageSectionsGrid/PageSectionsG
 import SecondaryButton from "@/Components/SecondaryButton";
 import { EventTicketPurchaseModelType } from "@/types";
 import { Link } from "@inertiajs/react";
+import toast from "react-hot-toast";
 
 export type EventTicketPurchasePaymentPageSectionPropsType = {
     eventTicketPurchase: EventTicketPurchaseModelType;
