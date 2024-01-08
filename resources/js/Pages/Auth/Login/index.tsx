@@ -1,13 +1,19 @@
-import { useEffect, FormEventHandler, ReactNode, createRef } from "react";
+import {
+    useEffect,
+    FormEventHandler,
+    ReactNode,
+    createRef,
+    FormEvent,
+    useCallback,
+} from "react";
 import Checkbox from "@/Components/Checkbox";
 import GuestLayout from "@/Layouts/GuestLayout";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
-import TextInput, { TextInputForwardRefType } from "@/Components/TextInput";
+import TextInput from "@/Components/TextInput";
 import { Head, Link, useForm } from "@inertiajs/react";
 import SecondaryButton from "@/Components/SecondaryButton";
-import useSimulateFormInput from "./hooks/useSimulateFormInput";
 
 type LoginPropsType = {
     status?: string;
@@ -19,13 +25,21 @@ type LoginPropsType = {
     };
 };
 
+export type LoginFormDataType = {
+    email: string;
+    password: string;
+    remember: boolean;
+    to: string | null;
+};
+
 const Login = (props: LoginPropsType) => {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        email: "",
-        password: "",
-        remember: false,
-        to: props.to || "",
-    });
+    const { data, setData, post, processing, errors, reset } =
+        useForm<LoginFormDataType>({
+            email: props.simulateFormInput?.email || "",
+            password: props.simulateFormInput?.password || "",
+            remember: true,
+            to: props.to || "",
+        });
 
     useEffect(() => {
         return () => {
@@ -33,22 +47,11 @@ const Login = (props: LoginPropsType) => {
         };
     }, []);
 
-    const submit: FormEventHandler = (e) => {
-        e.preventDefault();
+    const submit = (event: FormEvent | null = null) => {
+        if (event != null) event.preventDefault();
 
         post(route("login"));
     };
-
-    const emailInputRef = createRef<TextInputForwardRefType>();
-    const passwordInputRef = createRef<TextInputForwardRefType>();
-    const submitButtonRef = createRef<HTMLButtonElement>();
-
-    useSimulateFormInput({
-        emailInputRef,
-        passwordInputRef,
-        submitButtonRef,
-        simulateFormInput: props.simulateFormInput,
-    });
 
     return (
         <>
@@ -65,7 +68,6 @@ const Login = (props: LoginPropsType) => {
                     <InputLabel htmlFor="email" value="Email" />
 
                     <TextInput
-                        ref={emailInputRef}
                         id="email"
                         type="email"
                         name="email"
@@ -82,7 +84,6 @@ const Login = (props: LoginPropsType) => {
                     <InputLabel htmlFor="password" value="Password" />
 
                     <TextInput
-                        ref={passwordInputRef}
                         id="password"
                         type="password"
                         name="password"
@@ -122,7 +123,6 @@ const Login = (props: LoginPropsType) => {
 
                     <Link href={route("welcome")}>
                         <SecondaryButton
-
                             className="ms-4 float-left"
                             disabled={processing}
                         >
@@ -130,11 +130,7 @@ const Login = (props: LoginPropsType) => {
                         </SecondaryButton>
                     </Link>
 
-                    <PrimaryButton
-                        className="ms-4"
-                        disabled={processing}
-                        ref={submitButtonRef}
-                    >
+                    <PrimaryButton className="ms-4" disabled={processing}>
                         Log in
                     </PrimaryButton>
                 </div>

@@ -15,7 +15,7 @@ const RootLayoutHeaderLeft = () => {
     return (
         <div className="flex flex-row gap-4 justify-center items-center text-stone-800">
             <Link href={route("why-hire-me.index")}>
-                <div className="">Hire me (Martin) at Skiddle</div>
+                <div className="">Hire me (Martin Shaw) at Skiddle</div>
             </Link>
         </div>
     );

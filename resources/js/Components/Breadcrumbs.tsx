@@ -36,7 +36,7 @@ const Breadcrumbs = (props: BreadcrumbsPropsType) => {
 
                 const inner = (
                     <>
-                        <img src={item.icon} className="h-5 w-5" />
+                        <img src={item.icon} className={"h-5 w-5 " + (item.isActive ? 'invert' : '')} />
                         <div>{item.name}</div>
                     </>
                 );

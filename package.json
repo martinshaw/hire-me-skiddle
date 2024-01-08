@@ -5,7 +5,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "vite",
+        "dev": "vite dev --host",
         "build": "tsc && vite build && vite build --ssr"
     },
     "devDependencies": {
@@ -28,8 +28,11 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@floating-ui/react": "^0.26.4",
         "@tailwindcss/container-queries": "^0.1.1",
         "react-cookie": "^6.1.1",
-        "react-progressive-bg-image": "^3.0.0"
+        "react-hot-toast": "^2.4.1",
+        "simplebar-react": "^3.2.4",
+        "use-debounce": "^10.0.0"
     }
 }

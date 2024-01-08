@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Event;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
@@ -30,6 +31,8 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $ongoingEvents = Event::ongoing()->get();
+
         return [
             ...parent::share($request),
             'auth' => [
@@ -38,6 +41,32 @@ class HandleInertiaRequests extends Middleware
             'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
+            ],
+            'counts' => [
+                'events' => empty($request->user()?->venue) ?
+                    0 :
+                    cache()->remember(
+                        'venues:' . $request->user()->venue_id . ':events-count',
+                        60,
+                        fn () => ($request->user()?->venue?->events()?->count() ?? 0)
+                    ),
+                'artists' => empty($request->user()?->venue) ?
+                    0 :
+                    cache()->remember(
+                        'venues:' . $request->user()->venue_id . ':artists-count',
+                        60,
+                        fn () => ($request->user()?->venue?->artists()?->count() ?? 0)
+                    ),
+                'ticket_purchases' => empty($request->user()?->venue) ?
+                    0 :
+                    cache()->remember(
+                        'venues:' . $request->user()->venue_id . ':ticket-purchases-count',
+                        60,
+                        fn () => ($request->user()?->venue?->eventTicketPurchases()?->count() ?? 0)
+                    ),
+            ],
+            'navigation' => [
+                'ongoing_events' => $ongoingEvents,
             ],
         ];
     }

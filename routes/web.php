@@ -1,12 +1,15 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SocialMediaVideoMakerAppController;
-use App\Http\Controllers\VenueManagementAppAppController;
-use App\Http\Controllers\WhyHireMeController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+use App\Http\Controllers\WhyHireMeController;
+use App\Http\Controllers\VenueManagementApp\VenueManagementAppController;
+use App\Http\Controllers\VenueManagementApp\VenueManagementAppEventController;
+use App\Http\Controllers\VenueManagementApp\VenueManagementAppArtistController;
+use App\Http\Controllers\VenueManagementApp\VenueManagementAppEventTicketPurchaseController;
+use App\Http\Controllers\SocialMediaVideoMakerAppController;
+use App\Http\Controllers\VenueManagementApp\VenueManagementAppActivityLogController;
+use App\Http\Controllers\VenueManagementApp\VenueManagementAppVisitorActivityLogController;
+use App\Http\Controllers\VenueManagementApp\VenueManagementAppVisitorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,15 +22,31 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return redirect()->route('login');
-})->name('welcome');
+Route::get('/', fn() => redirect()->route('why-hire-me.index'))->name('welcome');
+
+Route::get('/why-hire-me', [WhyHireMeController::class, 'index'])->name('why-hire-me.index');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/apps/venue-management-app', [VenueManagementAppAppController::class, 'index'])->name('venue-management-app.index');
+    Route::get('/apps/venue-management-app', [VenueManagementAppController::class, 'index'])->name('venue-management-app.index');
+
+    Route::get('/apps/venue-management-app/events', [VenueManagementAppEventController::class, 'index'])->name('venue-management-app.events.index');
+    Route::get('/apps/venue-management-app/events/{event}', [VenueManagementAppEventController::class, 'show'])->name('venue-management-app.events.show');
+
+    Route::get('/apps/venue-management-app/artists', [VenueManagementAppArtistController::class, 'index'])->name('venue-management-app.artists.index');
+    Route::get('/apps/venue-management-app/artists/{artist}', [VenueManagementAppArtistController::class, 'show'])->name('venue-management-app.artists.show');
+
+    Route::get('/apps/venue-management-app/event-ticket-purchases', [VenueManagementAppEventTicketPurchaseController::class, 'index'])->name('venue-management-app.event-ticket-purchases.index');
+    Route::post('/apps/venue-management-app/event-ticket-purchases/{eventTicketPurchase}/refund', [VenueManagementAppEventTicketPurchaseController::class, 'refund'])->name('venue-management-app.event-ticket-purchases.refund');
+    Route::post('/apps/venue-management-app/event-ticket-purchases/{eventTicketPurchase}/regenerate-entry-code', [VenueManagementAppEventTicketPurchaseController::class, 'regenerateEntryCode'])->name('venue-management-app.event-ticket-purchases.regenerate-entry-code');
+    Route::get('/apps/venue-management-app/event-ticket-purchases/{eventTicketPurchase}', [VenueManagementAppEventTicketPurchaseController::class, 'show'])->name('venue-management-app.event-ticket-purchases.show');
+
+    Route::post('/apps/venue-management-app/visitors/{visitor}/contact-details', [VenueManagementAppVisitorController::class, 'createContactDetail'])->name('venue-management-app.visitors.contact-details.create');
+    Route::patch('/apps/venue-management-app/visitors/{visitor}/contact-details/{contactDetail}', [VenueManagementAppVisitorController::class, 'updateContactDetail'])->name('venue-management-app.visitors.contact-details.update');
+    Route::delete('/apps/venue-management-app/visitors/{visitor}/contact-details/{contactDetail}', [VenueManagementAppVisitorController::class, 'deleteContactDetail'])->name('venue-management-app.visitors.contact-details.delete');
+
+    Route::get('/apps/venue-management-app/visitor-activity-logs', [VenueManagementAppVisitorActivityLogController::class, 'index'])->name('venue-management-app.visitor-activity-logs.index');
 });
 
 Route::get('/apps/social-media-video-maker', [SocialMediaVideoMakerAppController::class, 'index'])->name('social-media-video-maker.index');
-Route::get('/why-hire-me', [WhyHireMeController::class, 'index'])->name('why-hire-me.index');
 
 require __DIR__ . '/auth.php';
