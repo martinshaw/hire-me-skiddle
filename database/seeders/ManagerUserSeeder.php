@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Faker\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -19,8 +20,10 @@ class ManagerUserSeeder extends Seeder
 
         $emailServer = Str::slug($venue->name, '-') . '.co.uk';
 
-        $firstName = fake()->firstName();
-        $lastName = fake()->lastName();
+        $faker = Factory::create();
+
+        $firstName = $faker->firstName();
+        $lastName = $faker->lastName();
 
         $email = Str::lower($firstName) . '.' . Str::lower($lastName) . '@' . $emailServer;
 
