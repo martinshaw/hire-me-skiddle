@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use chillerlan\QRCode\QRCode;
-use Faker\Factory;
+use \Faker\Factory;
 use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
