@@ -7,6 +7,8 @@ use App\Http\Controllers\VenueManagementApp\VenueManagementAppEventController;
 use App\Http\Controllers\VenueManagementApp\VenueManagementAppArtistController;
 use App\Http\Controllers\VenueManagementApp\VenueManagementAppEventTicketPurchaseController;
 use App\Http\Controllers\SocialMediaVideoMakerAppController;
+use App\Http\Controllers\VenueManagementApp\VenueManagementAppActivityLogController;
+use App\Http\Controllers\VenueManagementApp\VenueManagementAppVisitorActivityLogController;
 use App\Http\Controllers\VenueManagementApp\VenueManagementAppVisitorController;
 
 /*
@@ -41,6 +43,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/apps/venue-management-app/visitors/{visitor}/contact-details', [VenueManagementAppVisitorController::class, 'createContactDetail'])->name('venue-management-app.visitors.contact-details.create');
     Route::patch('/apps/venue-management-app/visitors/{visitor}/contact-details/{contactDetail}', [VenueManagementAppVisitorController::class, 'updateContactDetail'])->name('venue-management-app.visitors.contact-details.update');
     Route::delete('/apps/venue-management-app/visitors/{visitor}/contact-details/{contactDetail}', [VenueManagementAppVisitorController::class, 'deleteContactDetail'])->name('venue-management-app.visitors.contact-details.delete');
+
+    Route::get('/apps/venue-management-app/visitor-activity-logs', [VenueManagementAppVisitorActivityLogController::class, 'index'])->name('venue-management-app.visitor-activity-logs.index');
 });
 
 Route::get('/apps/social-media-video-maker', [SocialMediaVideoMakerAppController::class, 'index'])->name('social-media-video-maker.index');

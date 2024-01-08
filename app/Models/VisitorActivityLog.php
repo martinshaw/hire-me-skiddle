@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class VisitorActivityLog extends Model
 {
     use HasFactory,
-    SoftDeletes,
-    HasTimestamps;
+        SoftDeletes,
+        HasTimestamps;
 
     const TYPE_OTHER = 'other';
     const TYPE_VISITOR_CREATED = 'visitor_created';
@@ -36,6 +36,7 @@ class VisitorActivityLog extends Model
     const TYPE_EVENT_TICKET_PURCHASE_REFUNDED = 'event_ticket_purchase_refunded';
     const TYPE_EVENT_TICKET_PURCHASE_CANCELLED = 'event_ticket_purchase_cancelled';
     const TYPE_EVENT_TICKET_PURCHASE_UNCANCELLED = 'event_ticket_purchase_uncancelled';
+    const TYPE_EVENT_TICKET_PURCHASE_REGENERATED_ENTRY_CODE = 'event_ticket_purchase_regenerated_entry_code';
 
     const IMPORTANCE_INFO = 'info';
     const IMPORTANCE_NEEDS_MANAGER_ATTENTION = 'needs_manager_attention';
@@ -76,6 +77,20 @@ class VisitorActivityLog extends Model
         'importance' => 'string',
         'message' => 'string',
         'location' => 'string',
+    ];
+
+    /**
+     * The relationships that should always be loaded by default.
+     */
+    protected $with = [
+        'visitor',
+        'event',
+        'venue',
+        'user',
+        'eventTicketPurchase',
+        'eventTicket',
+        'visitorBan',
+        'contactDetail',
     ];
 
     /**

@@ -54,7 +54,7 @@ type FloatingUiSelectPropsType = {
 const FloatingUiSelect = (props: FloatingUiSelectPropsType) => {
     props = {
         position: "bottom",
-        arrow: true,
+        arrow: false,
         label: (currentLabel) => currentLabel == null || currentLabel === "" ? "Select" : currentLabel,
         grid: 1,
 
@@ -73,7 +73,7 @@ const FloatingUiSelect = (props: FloatingUiSelectPropsType) => {
         open: isOpen,
         onOpenChange: setIsOpen,
         whileElementsMounted: autoUpdate,
-        middleware: [flip(), arrow({ element: arrowRef })],
+        middleware: [flip(), ...(props.arrow ? [arrow({ element: arrowRef })] : [])],
     });
 
     const elementsRef = useRef<Array<HTMLElement | null>>([]);
@@ -148,15 +148,15 @@ const FloatingUiSelect = (props: FloatingUiSelectPropsType) => {
                         style={floatingStyles}
                         {...getFloatingProps()}
                     >
-                        {/* <FloatingArrow
-                                ref={arrowRef}
-                                context={context}
-                                className="
-                                    fill-white
-                                    [&>path:first-of-type]:stroke-pink-500
-                                    [&>path:last-of-type]:stroke-gray-400
-                                "
-                            /> */}
+                        {props.arrow === true && <FloatingArrow
+                            ref={arrowRef}
+                            context={context}
+                            className="
+                                fill-white
+                                [&>path:first-of-type]:stroke-gray-500
+                                [&>path:last-of-type]:stroke-gray-400
+                            "
+                        /> }
                         <FloatingList
                             elementsRef={elementsRef}
                             labelsRef={labelsRef}

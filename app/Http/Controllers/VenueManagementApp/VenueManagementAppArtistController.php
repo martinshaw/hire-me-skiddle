@@ -6,7 +6,7 @@
  * Author: Martin Shaw (developer@martinshaw.co)
  * File Name: VenueManagementAppArtistController.php
  * Created:  2023-12-12T12:32:52.178Z
- * Modified: 2024-01-04T02:37:14.414Z
+ * Modified: 2024-01-08T14:30:58.960Z
  *
  * Description: description
  */

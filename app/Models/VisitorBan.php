@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class VisitorBan extends Model
 {
     use HasFactory,
-    SoftDeletes,
-    HasTimestamps;
+        SoftDeletes,
+        HasTimestamps;
 
     /**
      * The attributes that are mass assignable.

@@ -6,7 +6,7 @@
  * Author: Martin Shaw (developer@martinshaw.co)
  * File Name: VenueManagementAppEventTicketPurchaseController.php
  * Created:  2023-12-12T12:32:52.178Z
- * Modified: 2024-01-04T03:11:32.890Z
+ * Modified: 2024-01-08T14:25:39.347Z
  *
  * Description: description
  */
@@ -15,6 +15,7 @@ namespace App\Http\Controllers\VenueManagementApp;
 
 use App\Http\Controllers\Controller;
 use App\Models\EventTicketPurchase;
+use App\Models\VisitorActivityLog;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -133,6 +134,20 @@ class VenueManagementAppEventTicketPurchaseController extends Controller
             'refunded_by_id' => auth()->id(),
         ]);
 
+        VisitorActivityLog::create([
+            'type' => VisitorActivityLog::TYPE_EVENT_TICKET_PURCHASE_REFUNDED,
+            'importance' => VisitorActivityLog::IMPORTANCE_INFO,
+            'message' => 'Ticket Refunded.',
+            'location' => VisitorActivityLog::LOCATION_WEBSITE,
+
+            'visitor_id' => $eventTicketPurchase->visitor_id,
+            'event_id' => $eventTicketPurchase->event_id,
+            'venue_id' => $eventTicketPurchase->venue_id,
+            'user_id' => Auth()->id(),
+            'event_ticket_purchase_id' => $eventTicketPurchase->id,
+            'event_ticket_id' => $eventTicketPurchase->event_ticket_id,
+        ]);
+
         return redirect()->back();
     }
 
@@ -141,6 +156,20 @@ class VenueManagementAppEventTicketPurchaseController extends Controller
         $eventTicketPurchase->update([
             'entry_barcode' => EventTicketPurchase::generateEntryBarcode(),
             'entry_code' => EventTicketPurchase::generateEntryCode(),
+        ]);
+
+        VisitorActivityLog::create([
+            'type' => VisitorActivityLog::TYPE_EVENT_TICKET_PURCHASE_REGENERATED_ENTRY_CODE,
+            'importance' => VisitorActivityLog::IMPORTANCE_INFO,
+            'message' => 'Regenerated Entry Code from ' . $eventTicketPurchase->getOriginal('entry_code') . ' to ' . $eventTicketPurchase->entry_code . '.',
+            'location' => VisitorActivityLog::LOCATION_WEBSITE,
+
+            'visitor_id' => $eventTicketPurchase->visitor_id,
+            'event_id' => $eventTicketPurchase->event_id,
+            'venue_id' => $eventTicketPurchase->venue_id,
+            'user_id' => Auth()->id(),
+            'event_ticket_purchase_id' => $eventTicketPurchase->id,
+            'event_ticket_id' => $eventTicketPurchase->event_ticket_id,
         ]);
 
         return redirect()->back();

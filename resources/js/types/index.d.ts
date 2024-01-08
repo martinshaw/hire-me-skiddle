@@ -162,7 +162,26 @@ export type VisitorContactDetailsModelType = {
     updated_at: string;
     deleted_at: string | null;
 };
-}
+
+export type VisitorBanModelType = {
+    id: number;
+
+    reason: string | null;
+
+    visitor_id: number | null;
+    event_id: number | null;
+    venue_id: number | null;
+    user_id: number | null;
+
+    visitor?: VisitorModelType | null;
+    event?: EventModelType | null;
+    venue?: VenueModelType | null;
+    user?: UserModelType | null;
+
+    created_at: string;
+    updated_at: string;
+    deleted_at: string | null;
+};
 
 export type EventTicketPurchaseModelType = {
     id: number;
@@ -196,6 +215,70 @@ export type EventTicketPurchaseModelType = {
     created_at: string;
     updated_at: string;
     deleted_at: string;
+};
+
+export type VisitorActivityLogModelType = {
+    id: number;
+
+    type:
+        | 'other'
+        | 'visitor_created'
+        | 'visitor_updated'
+        | 'visitor_deleted'
+        | 'visitor_banned'
+        | 'visitor_unbanned'
+        | 'visitor_contact_detail_created'
+        | 'visitor_contact_detail_updated'
+        | 'visitor_contact_detail_deleted'
+        | 'event_created'
+        | 'event_updated'
+        | 'event_deleted'
+        | 'event_ticket_created'
+        | 'event_ticket_updated'
+        | 'event_ticket_deleted'
+        | 'event_ticket_purchase_created'
+        | 'event_ticket_purchase_updated'
+        | 'event_ticket_purchase_deleted'
+        | 'event_ticket_purchase_checked_in'
+        | 'event_ticket_purchase_checked_out'
+        | 'event_ticket_purchase_refunded'
+        | 'event_ticket_purchase_cancelled'
+        | 'event_ticket_purchase_uncancelled';
+    importance:
+        | 'info'
+        | 'needs_manager_attention'
+        | 'needs_employee_attention'
+        | 'needs_auditor_attention'
+        | 'needs_safety_officer_attention';
+    message: string;
+    location:
+        | 'website'
+        | 'mobile_app'
+        | 'in_person'
+        | 'over_phone'
+        | 'over_email';
+
+    visitor_id: string | null;
+    event_id: string | null;
+    venue_id: string | null;
+    user_id: string | null;
+    event_ticket_purchase_id: string | null;
+    event_ticket_id: string | null;
+    visitor_ban_id: string | null;
+    visitor_contact_detail_id: string | null;
+
+    visitor?: VisitorModelType | null;
+    event?: EventModelType | null;
+    venue?: VenueModelType | null;
+    user?: UserModelType | null;
+    eventTicketPurchase?: EventTicketPurchaseModelType | null;
+    eventTicket?: EventTicketModelType | null;
+    visitorBan?: VisitorBanModelType | null;
+    contactDetail?: VisitorContactDetailsModelType | null;
+
+    created_at: string,
+    updated_at: string;
+    deleted_at: string | null;
 };
 
 export type LengthAwarePaginatorType<TModelType> = {

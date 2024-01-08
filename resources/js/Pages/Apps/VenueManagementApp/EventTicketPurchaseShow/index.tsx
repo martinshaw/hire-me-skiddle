@@ -9,23 +9,15 @@ Modified: 2023-12-13T07:32:24.912Z
 Description: description
 */
 import AuthenticatedLayout, { AuthenticatedLayoutPropsType } from "@/Layouts/AuthenticatedLayout";
-import { Head, Link, usePage } from "@inertiajs/react";
+import { Head, usePage } from "@inertiajs/react";
 import { EventTicketPurchaseModelType, PageProps } from "@/types";
 import { ReactNode } from "react";
 import PageSectionsGrid from "@/Components/PageSectionsGrid";
-import PageSectionsGridSection from "@/Components/PageSectionsGrid/PageSectionsGridSection";
-import { VIEWPORT_DESKTOP, VIEWPORT_TABLET } from "@/utilities";
-import EventCardArtistRow from "../ArtistShow/components/EventCardArtistRow";
-import EventCardTicketsRow from "../ArtistShow/components/EventCardTicketsRow";
-import EventCardSaleAvailabilityRow from "../ArtistShow/components/EventCardSaleAvailabilityRow";
-import EventCardStartEndDateTimeRow from "../ArtistShow/components/EventCardStartEndDateTimeRow";
-import EventCardStatusRow from "../ArtistShow/components/EventCardStatusRow";
-import SecondaryButton from "@/Components/SecondaryButton";
-import toast from "react-hot-toast";
 import VisitorContactDetailsPageSection from "./VisitorContactDetailsPageSection";
 import EventTicketPurchaseVenueAccessPageSection from "./EventTicketPurchaseVenueAccessPageSection";
 import EventTicketPurchasePaymentPageSection from "./EventTicketPurchasePaymentPageSection";
 import EventPageSection from "./EventPageSection";
+import VisitorActivityLogPageSection from "./VisitorActivityLogPageSection";
 
 type EventTicketPurchaseShowPropsType = {
     eventTicketPurchase: EventTicketPurchaseModelType;
@@ -45,9 +37,17 @@ const EventTicketPurchaseShow = (props: EventTicketPurchaseShowPropsType) => {
 
                     {props.eventTicketPurchase.entry_barcode != null && <EventTicketPurchaseVenueAccessPageSection eventTicketPurchase={props.eventTicketPurchase} />}
 
+                    {props.eventTicketPurchase.event_ticket != null && <EventTicketPurchasePaymentPageSection eventTicketPurchase={props.eventTicketPurchase} />}
+
                     {props.eventTicketPurchase.visitor != null && <VisitorContactDetailsPageSection visitor={props.eventTicketPurchase.visitor} />}
 
-                    {props.eventTicketPurchase.event_ticket != null && <EventTicketPurchasePaymentPageSection eventTicketPurchase={props.eventTicketPurchase} />}
+                    <VisitorActivityLogPageSection scopes={{
+                        venue: page.props.auth.user.venue_id,
+                        // event: props.eventTicketPurchase.event,
+                        eventTicketPurchase: props.eventTicketPurchase,
+                        // eventTicket: props.eventTicketPurchase.event_ticket,
+                        visitor: props.eventTicketPurchase.visitor,
+                    }} />
 
                 </PageSectionsGrid>
             </div>

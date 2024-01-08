@@ -74,8 +74,7 @@ const VisitorContactDetailsPageSection = (props: VisitorContactDetailsPageSectio
 
                 <div className="flex flex-row gap-3 pt-2">
                     <FloatingUiSelect
-                        arrow
-                        position="top-start"
+                        position="top-end"
                         label={() => "Add"}
                         grid={3}
                         onSelect={(index, label) => {
