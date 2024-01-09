@@ -1,13 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\WhyHireMeController;
 use App\Http\Controllers\VenueManagementApp\VenueManagementAppController;
 use App\Http\Controllers\VenueManagementApp\VenueManagementAppEventController;
 use App\Http\Controllers\VenueManagementApp\VenueManagementAppArtistController;
 use App\Http\Controllers\VenueManagementApp\VenueManagementAppEventTicketPurchaseController;
-use App\Http\Controllers\SocialMediaVideoMakerAppController;
-use App\Http\Controllers\VenueManagementApp\VenueManagementAppActivityLogController;
 use App\Http\Controllers\VenueManagementApp\VenueManagementAppVisitorActivityLogController;
 use App\Http\Controllers\VenueManagementApp\VenueManagementAppVisitorController;
 
@@ -22,9 +19,7 @@ use App\Http\Controllers\VenueManagementApp\VenueManagementAppVisitorController;
 |
 */
 
-Route::get('/', fn() => redirect()->route('why-hire-me.index'))->name('welcome');
-
-Route::get('/why-hire-me', [WhyHireMeController::class, 'index'])->name('why-hire-me.index');
+Route::get('/', fn() => redirect()->route('venue-management-app.index'))->name('welcome');
 
 Route::middleware('auth')->group(function () {
     Route::get('/apps/venue-management-app', [VenueManagementAppController::class, 'index'])->name('venue-management-app.index');
@@ -47,6 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/apps/venue-management-app/visitor-activity-logs', [VenueManagementAppVisitorActivityLogController::class, 'index'])->name('venue-management-app.visitor-activity-logs.index');
 });
 
-Route::get('/apps/social-media-video-maker', [SocialMediaVideoMakerAppController::class, 'index'])->name('social-media-video-maker.index');
+// TODO: Might build a Remotion-based social media video maker app in the future
+// Route::get('/apps/social-media-video-maker', [SocialMediaVideoMakerAppController::class, 'index'])->name('social-media-video-maker.index');
 
 require __DIR__ . '/auth.php';

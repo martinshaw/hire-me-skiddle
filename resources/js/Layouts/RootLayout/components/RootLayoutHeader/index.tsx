@@ -31,9 +31,7 @@ const RootLayoutHeader = (props: RootLayoutHeaderPropsType) => {
         >
             <RootLayoutHeaderLeft />
 
-            <RootLayoutHeaderCenter />
-
-            <RootLayoutHeaderRight
+            <RootLayoutHeaderCenter
                 viewportContainerDimensionsTerm={
                     props.viewportContainerDimensionsTerm
                 }
@@ -41,6 +39,9 @@ const RootLayoutHeader = (props: RootLayoutHeaderPropsType) => {
                     props.setViewportContainerDimensionsTerm
                 }
             />
+
+            <RootLayoutHeaderRight />
+
         </div>
     );
 };

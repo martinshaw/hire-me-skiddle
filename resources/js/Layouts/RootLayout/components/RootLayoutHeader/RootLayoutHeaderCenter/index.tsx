@@ -9,53 +9,47 @@ Modified: 2023-12-12T12:09:52.094Z
 Description: description
 */
 
-import Breadcrumbs, { BreadcrumbItemType } from "@/Components/Breadcrumbs";
-
-const navigableApplications: {
-    name: string;
-    href: string;
-    icon: string;
-    isActive: (currentRoute: string) => boolean;
-}[] = [
-    {
-        name: "Why Hire Me?",
-        href: route("why-hire-me.index"),
-        icon: "/images/icons/user.svg",
-        isActive: (currentRoute: string) =>
-            currentRoute.indexOf('why-hire-me') > -1
-    },
-    {
-        name: "Venue Management App",
-        href: route("login", { to: route("venue-management-app.index") }),
-        icon: "/images/icons/music.svg",
-        isActive: (currentRoute: string) =>
-            currentRoute.indexOf('venue-management-app') > -1 ||
-            currentRoute.indexOf('login') > -1
-    },
-    // {
-    //     name: "Social Media Video Maker",
-    //     href: route("social-media-video-maker.index"),
-    //     icon: "/images/icons/video.svg",
-    //     routePrefix: "social-media-video-maker",
-    // },
-];
+import PrimaryButton from "@/Components/PrimaryButton";
+import SecondaryButton from "@/Components/SecondaryButton";
+import { ViewportContainerDimensionVariantTerm } from "../../../hooks/useViewportContainer";
 
 type RootLayoutHeaderCenterPropsType = {
-    //
+    viewportContainerDimensionsTerm: ViewportContainerDimensionVariantTerm;
+    setViewportContainerDimensionsTerm: (term: ViewportContainerDimensionVariantTerm) => void;
 };
 
 const RootLayoutHeaderCenter = (props: RootLayoutHeaderCenterPropsType) => {
+    const mobileButtonText = (
+        <div className="flex flex-row gap-2 justify-center items-center">
+            <div>Mobile</div>
+            {/* <img src="/images/icons/smartphone.svg" className={"h-5 w-5 " + (props.viewportContainerDimensionsTerm === "mobile" ? 'invert' : '')} /> */}
+        </div>
+    )
+
+    const tabletButtonText = (
+        <div className="flex flex-row gap-2 justify-center items-center">
+            <div>Tablet</div>
+            {/* <img src="/images/icons/tablet.svg" className={"h-5 w-5 " + (props.viewportContainerDimensionsTerm === "tablet" ? 'invert' : '')} /> */}
+        </div>
+    )
+
+    const desktopButtonText = (
+        <div className="flex flex-row gap-2 justify-center items-center">
+            <div>Desktop</div>
+            {/* <img src="/images/icons/monitor.svg" className={"h-5 w-5 " + (props.viewportContainerDimensionsTerm === "desktop" ? 'invert' : '')} /> */}
+        </div>
+    )
+
     return (
-        <div className="flex flex-row gap-4 justify-center items-center">
-            <Breadcrumbs
-                transparentButtons={true}
-                items={
-                    navigableApplications.map((app) => ({
-                        ...app,
-                        isActive: app.isActive(route().current() as (string | null) || ""),
-                    })) as BreadcrumbItemType[]
-                }
-            />
+        <div className="flex flex-row gap-2 justify-center items-center">
+            {props.viewportContainerDimensionsTerm === "mobile" && <PrimaryButton onClick={() => props.setViewportContainerDimensionsTerm("mobile")}>{mobileButtonText}</PrimaryButton>}
+            {props.viewportContainerDimensionsTerm !== "mobile" && <SecondaryButton transparent={true} onClick={() => props.setViewportContainerDimensionsTerm("mobile")}>{mobileButtonText}</SecondaryButton>}
+
+            {props.viewportContainerDimensionsTerm === "tablet" && <PrimaryButton onClick={() => props.setViewportContainerDimensionsTerm("tablet")}>{tabletButtonText}</PrimaryButton>}
+            {props.viewportContainerDimensionsTerm !== "tablet" && <SecondaryButton transparent={true} onClick={() => props.setViewportContainerDimensionsTerm("tablet")}>{tabletButtonText}</SecondaryButton>}
+
+            {props.viewportContainerDimensionsTerm === "desktop" && <PrimaryButton onClick={() => props.setViewportContainerDimensionsTerm("desktop")}>{desktopButtonText}</PrimaryButton>}
+            {props.viewportContainerDimensionsTerm !== "desktop" && <SecondaryButton transparent={true} onClick={() => props.setViewportContainerDimensionsTerm("desktop")}>{desktopButtonText}</SecondaryButton>}
         </div>
     );
 };
