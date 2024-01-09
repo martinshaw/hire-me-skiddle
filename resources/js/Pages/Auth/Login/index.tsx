@@ -5,6 +5,7 @@ import {
     createRef,
     FormEvent,
     useCallback,
+    useRef,
 } from "react";
 import Checkbox from "@/Components/Checkbox";
 import GuestLayout from "@/Layouts/GuestLayout";
@@ -33,6 +34,19 @@ export type LoginFormDataType = {
 };
 
 const Login = (props: LoginPropsType) => {
+    const loginButtonRef = useRef<HTMLButtonElement | null>(null);
+
+    // For convenience, automatically click the login button after 5 seconds for demo purposes
+    useEffect(() => {
+        if (loginButtonRef.current === null) return;
+
+        const timer = setTimeout(() => {
+            loginButtonRef.current?.click();
+        }, 5000);
+
+        return () => clearTimeout(timer);
+    })
+
     const { data, setData, post, processing, errors, reset } =
         useForm<LoginFormDataType>({
             email: props.simulateFormInput?.email || "",
@@ -130,7 +144,7 @@ const Login = (props: LoginPropsType) => {
                         </SecondaryButton>
                     </Link>
 
-                    <PrimaryButton className="ms-4" disabled={processing}>
+                    <PrimaryButton className="ms-4" disabled={processing} ref={loginButtonRef}>
                         Log in
                     </PrimaryButton>
                 </div>
